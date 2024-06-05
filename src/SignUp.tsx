@@ -1,7 +1,7 @@
 export default function SignUp() {
   return (
     <div>
-      <p>Hello Aidan</p>
+      <p>Hello Aidan!!</p>
     </div>
   );
 }
