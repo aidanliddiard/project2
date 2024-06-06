@@ -1,6 +1,6 @@
 const pool = require("../src/server.js");
 const request = require("supertest");
-const { app, server } = require("../index.ts");
+const { app } = require("../index.ts");
 const { setupDb } = require("../src/utils.js");
 
 const mockUser = {
@@ -9,16 +9,21 @@ const mockUser = {
   password: "password",
 };
 
+const signInAndSignUp = async () => {
+  try {
+    const agent = await request.agent(app);
+    const user = await agent.post("/api/auth/users").send(mockUser);
+    return [agent, user];
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 describe("auth backend routes", () => {
   beforeEach(setupDb);
 
   test("POST to /api/auth/users creates new user", async () => {
-    // console.log(server);
-    console.log(app.post("/api/auth/users"));
     const res = await request(app).post("/api/auth/users").send(mockUser);
-
-    console.log(res.body);
-
     const { name, email } = mockUser;
 
     expect(res.status).toBe(200);
@@ -26,6 +31,21 @@ describe("auth backend routes", () => {
       id: expect.any(String),
       email,
       name,
+    });
+  });
+
+  test("GET to /api/auth/users/me returns signed in user`s information", async () => {
+    const [agent] = await signInAndSignUp();
+    const me = await agent.get("/api/auth/users/me");
+    const { name, email } = mockUser;
+
+    expect(me.status).toBe(200);
+    expect(me.body).toEqual({
+      id: expect.any(String),
+      email: mockUser.email,
+      name: mockUser.name,
+      exp: expect.any(Number),
+      iat: expect.any(Number),
     });
   });
 });

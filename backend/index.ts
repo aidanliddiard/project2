@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const port = 3000;
 const itineraryQueries = require("./src/itineraryQueries.js");
+require('dotenv').config();
 
 app.use(cors());
 app.use(cookieParser());

@@ -17,4 +17,27 @@ module.exports = class UserService {
     const user = await User.insert({ name, email, passwordHash });
     return user;
   }
+
+  static async signIn({ email, password }) {
+    try {
+      const user = await User.getByEmail(email);
+      if (!user) {
+        throw new Error("Invalid email");
+      }
+
+      const matching = await bcrypt.compare(password, user.passwordHash);
+      if (!matching) {
+        throw new Error("Invalid password");
+      }
+
+      const token = jwt.sign({ ...user }, "supersecret", {
+        expiresIn: "24h",
+      });
+
+      return token;
+    } catch (error) {
+      error.status = 402;
+      throw error;
+    }
+  }
 };

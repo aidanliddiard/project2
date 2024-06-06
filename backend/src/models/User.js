@@ -6,11 +6,15 @@ module.exports = class User {
   name;
   #passwordHash;
 
-  constructor({ id, email, name, passwordHash }) {
+  constructor({ id, email, name, password_hash }) {
     this.id = id;
     this.email = email;
     this.name = name;
-    this.#passwordHash = passwordHash;
+    this.#passwordHash = password_hash;
+  }
+
+  get passwordHash() {
+    return this.#passwordHash;
   }
 
   static async insert({ email, name, passwordHash }) {
@@ -20,6 +24,18 @@ module.exports = class User {
             RETURNING *`,
       [email, name, passwordHash]
     );
+    return new User(rows[0]);
+  }
+
+  static async getByEmail(email) {
+    const { rows } = await pool.query(
+      `SELECT * FROM users
+            WHERE email = $1`,
+      [email]
+    );
+
+    if (!rows[0]) return null;
+
     return new User(rows[0]);
   }
 };
