@@ -1,9 +1,11 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
-const db = require("./src/queries.js");
+const dbQueries = require("./src/queries.js");
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -11,14 +13,13 @@ app.use(
   })
 );
 
-app.get('/', (request, response) => {
+app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
 });
 
-app.get('/time', db.getTime);
-
+app.get("/api/time", dbQueries.getTime);
 
 app.listen(port, () => {
   console.log(`App running on port http://localhost:${port}`);
-  console.log(db)
+  console.log(dbQueries);
 });
