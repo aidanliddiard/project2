@@ -14,6 +14,7 @@ app.use(
 );
 
 app.get("/api/time", itineraryQueries.getTime);
+app.post("/api/itinerary", itineraryQueries.createItineraryItem);
 
 app.listen(port, () => {
   console.log(`App running on port http://localhost:${port}`);
