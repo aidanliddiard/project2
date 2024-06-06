@@ -48,4 +48,13 @@ describe("auth backend routes", () => {
       iat: expect.any(Number),
     });
   });
+
+  test('DELETE to /api/auth/users/sessions signs out a user', async () => {
+    const [agent] = await signInAndSignUp();
+    const res = await agent.delete('/api/auth/users/sessions');
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ message: 'Successfully signed out.' });
+  });
+  
 });

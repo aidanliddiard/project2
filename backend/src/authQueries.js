@@ -34,7 +34,7 @@ router.post("/sessions", async (req, res, next) => {
         sameSite: process.env.SECURE_COOKIES === "true" ? "none" : "strict",
         secure: process.env.SECURE_COOKIES === "true",
       })
-      .json({ message: "Signed in succesfully!" });
+      .json({ message: "Signed in successfully!" });
   } catch (error) {
     next(error);
   }
@@ -42,6 +42,12 @@ router.post("/sessions", async (req, res, next) => {
 
 router.get("/me", authenticate, async (req, res, next) => {
   res.json(req.user);
+});
+
+router.delete("/sessions", (req, res) => {
+  res
+    .clearCookie(process.env.COOKIE_NAME)
+    .json({ message: "Successfully signed out." });
 });
 
 module.exports = router;
