@@ -54,6 +54,6 @@ CREATE TABLE itinerary (
 
 
 
-INSERT INTO category (type) VALUES ('Hotel'), ('Restaurant'), ('Activity'), ('Transportation');
+INSERT INTO category (type) VALUES ('Hotel'), ('Restaurant'), ('Activity');
 
 INSERT INTO time (time) VALUES ('Morning'), ('Afternoon'), ('Evening'), ('Late Night');
