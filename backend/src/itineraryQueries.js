@@ -45,6 +45,7 @@ const getItinerary = (request, response) => {
       if (error) {
         throw error;
       }
+      // console.log("hellooooo", results);
       response.status(200).json(results.rows);
     }
   );

@@ -18,7 +18,7 @@ const getVacations = (request, response) => {
   const createVacation = (request, response) => {
     const { city, country, description, start_date, end_date, user_id } = request.body;
     pool.query(
-      `INSERT INTO vacations (city, country, description, start_date, end_date, user_id) VALUES ($1, $2, $3, $4, $5, $6)`,
+      `INSERT INTO vacations (city, country, description, start_date, end_date, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
       [city, country, description, start_date, end_date, user_id],
       (error, results) => {
         if (error) {
