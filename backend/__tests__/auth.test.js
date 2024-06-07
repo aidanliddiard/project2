@@ -1,22 +1,8 @@
 const request = require("supertest");
 const { app } = require("../index.ts");
-const { setupDb, closeAll } = require("./utils.js");
+const { setupDb, closeAll, mockUser, signInAndSignUp } = require("./utils.js");
 
-const mockUser = {
-  name: "Test",
-  email: "test@testing.com",
-  password: "password",
-};
 
-const signInAndSignUp = async () => {
-  try {
-    const agent = await request.agent(app);
-    const user = await agent.post("/api/auth/users").send(mockUser);
-    return [agent, user];
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 describe("auth backend routes", () => {
   beforeEach(setupDb);
