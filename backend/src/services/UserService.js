@@ -36,7 +36,7 @@ module.exports = class UserService {
 
       return token;
     } catch (error) {
-      error.status = 402;
+      error.status = 401;
       throw error;
     }
   }
