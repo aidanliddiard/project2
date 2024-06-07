@@ -1,7 +1,7 @@
 const { Router } = require("express");
-const User = require("../src/models/User");
-const UserService = require("../src/services/UserService.js");
-const authenticate = require("../src/middleware/authenticate");
+const User = require("../models/User.js");
+const UserService = require("../services/UserService.js");
+const authenticate = require("../middleware/authenticate.js");
 
 const router = Router();
 
