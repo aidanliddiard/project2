@@ -1,7 +1,6 @@
-const pool = require("../src/server.js");
 const request = require("supertest");
 const { app } = require("../index.ts");
-const { setupDb, closeAll } = require("../src/utils.js");
+const { setupDb, closeAll } = require("./utils.js");
 
 const mockUser = {
   name: "Test",
@@ -64,16 +63,13 @@ describe("auth backend routes", () => {
       password: "correctPassword",
     };
 
-    // First, sign up the user with the correct password
     await request(app).post("/api/auth/users").send(mockUser).expect(200);
 
-    // Then, try to sign in with an incorrect password
     const res = await request(app).post("/api/auth/users/sessions").send({
       email: mockUser.email,
       password: "incorrectPassword",
     });
 
-    // Expect a 401 Unauthorized response
     expect(res.status).toBe(401);
   });
 });

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "jest": {
+    "modulePathIgnorePatterns": ["/backend/__tests__/utils.js"]
+  },
   "scripts": {
     "dev": "vite",
     "test": "jest --watchAll --detectOpenHandles"

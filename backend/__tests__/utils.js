@@ -1,6 +1,6 @@
 const { readFileSync } = require("node:fs");
 const path = require("node:path");
-const pool = require("./server.js");
+const pool = require("../src/server.js");
 const sql = readFileSync(path.join(__dirname, "../src/setup.sql"), "utf-8");
 
 function setupDb() {

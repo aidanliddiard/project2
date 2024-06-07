@@ -41,6 +41,4 @@ if (process.env.NODE_ENV !== "test") {
   });
 }
 
-// const server = app.listen(3001);
-
 module.exports = { app };
