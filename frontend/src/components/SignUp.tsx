@@ -12,7 +12,6 @@ export default function SignUp() {
   useEffect(() => {
     const fetchTimeData = async () => {
       const resp = await fetchTime();
-      console.log(resp);
       setTime(resp);
     };
     fetchTimeData();
