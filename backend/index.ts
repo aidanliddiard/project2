@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const app = express();
-const port = 3000;
+const port = process.env.NODE_ENV === 'test' ? 3001 : 3000;
 const itineraryQueries = require("./src/itineraryQueries.js");
 require('dotenv').config();
 const vacationQueries = require("./src/vacationQueries.js");
@@ -29,11 +29,13 @@ app.delete("/api/vacation/itinerary/item/:id", itineraryQueries.deleteItineraryI
 
 app.use("/api/auth/users", require("./src/authQueries.js"));
 
-app.listen(port, () => {
-  console.log(`App running on port http://localhost:${port}`);
-  console.log(itineraryQueries);
-  console.log(vacationQueries);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => {
+    console.log(`App running on port http://localhost:${port}`);
+    console.log(itineraryQueries);
+    console.log(vacationQueries);
+  });
+}
 
 // const server = app.listen(3001);
 
