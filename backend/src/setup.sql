@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS itinerary CASCADE;
 DROP TABLE IF EXISTS time CASCADE;
 
-
 CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -45,10 +44,6 @@ CREATE TABLE itinerary (
     website VARCHAR(255),
     vacation_id INTEGER REFERENCES vacations(id) ON DELETE CASCADE
 );
-
-
-
-
 
 INSERT INTO category (type) VALUES ('Hotel'), ('Restaurant'), ('Activity');
 

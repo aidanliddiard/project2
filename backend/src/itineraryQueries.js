@@ -101,9 +101,7 @@ const deleteItineraryItem = (request, response) => {
 
 module.exports = {
   createItineraryItem,
-  getCategory,
   getItinerary,
-  getTime,
   updateItineraryItem,
   deleteItineraryItem,
 };
