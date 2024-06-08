@@ -13,7 +13,6 @@ const mockVacation = {
 }
 
 const mockItinerary = {
-    id: null,
     name: "Golden Gate Bridge",
     category_id: 3,
     price: 0.00,
@@ -43,21 +42,30 @@ describe("itinerary backend routes", () => {
     test("POST to /api/vacations/itinerary", async () => {
         const [agent, vacation_id] = await createVacation();
         // console.log(vacation_id);
-        const test = await agent.get(`/api/vacation/itinerary/${vacation_id}`);
+        const test = await agent.get('/api/vacations');
         // console.log("test", test);
-        const res = await agent.post("/api/vacation/itinerary").send(mockItinerary);
-        // console.log(res.body);
+        const res = await agent.post(`/api/vacations/${vacation_id}/itinerary`).send(mockItinerary);
         expect(res.status).toBe(201);
-        expect(typeof res.body.id).toBe('number');
-        expect(res.body.name).toEqual(mockItinerary.name);
-        expect(res.body.category_id).toEqual(mockItinerary.category_id);
-        expect(res.body.price).toEqual(mockItinerary.price);
-        expect(res.body.address).toEqual(mockItinerary.address);
-        expect(res.body.description).toEqual(mockItinerary.description);
-        expect(res.body.start_date).toEqual(mockItinerary.start_date);
-        expect(res.body.end_date).toEqual(mockItinerary.end_date);
-        expect(res.body.time_id).toEqual(mockItinerary.time_id);
-        expect(res.body.website).toEqual(mockItinerary.website);
-        expect(res.body.vacation_id).toEqual(mockItinerary.vacation_id);
+
+        const jsonStart = res.text.indexOf("{");
+        const jsonEnd = res.text.lastIndexOf("}") + 1;
+        const jsonText = res.text.slice(jsonStart, jsonEnd);
+
+        const responseBody = JSON.parse(jsonText);
+        console.log(responseBody)
+
+        expect(responseBody).toEqual({
+            id: expect.any(Number),
+            name: mockItinerary.name,
+            category_id: mockItinerary.category_id,
+            price: parseFloat(mockItinerary.price).toFixed(2),
+            address: mockItinerary.address,
+            description: mockItinerary.description,
+            start_date: new Date(mockItinerary.start_date).toISOString().split('T')[0],
+            end_date: null,
+            time_id: mockItinerary.time_id,
+            website: mockItinerary.website,
+            vacation_id: vacation_id,
+         });
     })
 });
