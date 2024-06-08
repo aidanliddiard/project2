@@ -1,7 +1,6 @@
 const pool = require('./server.js');
 
 const getVacations = (request, response) => {
-    console.log(pool)
     pool.query('SELECT * FROM vacations', (error, results) => {
       if (error) {
         throw error;
@@ -23,7 +22,6 @@ const getVacations = (request, response) => {
         if (error) {
           throw error;
         }
-        console.log(results.rows);
         response.status(200).json(results.rows);
       }
     );

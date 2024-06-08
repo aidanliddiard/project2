@@ -29,7 +29,6 @@ async function createVacation() {
     const [agent, user] = await signInAndSignUp();
     mockVacation.user_id = user._body.id;
     const response = await agent.post("/api/vacations").send(mockVacation);
-    console.log(response.text)
     const responseBody = JSON.parse(response.text);
     const vacation_id = responseBody[0].id
     mockVacation.id = vacation_id;
@@ -41,9 +40,7 @@ describe("itinerary backend routes", () => {
     beforeEach(setupDb);
     test("POST to /api/vacations/itinerary", async () => {
         const [agent, vacation_id] = await createVacation();
-        // console.log(vacation_id);
         const test = await agent.get('/api/vacations');
-        // console.log("test", test);
         const res = await agent.post(`/api/vacations/${vacation_id}/itinerary`).send(mockItinerary);
         expect(res.status).toBe(201);
 
@@ -52,7 +49,6 @@ describe("itinerary backend routes", () => {
         const jsonText = res.text.slice(jsonStart, jsonEnd);
 
         const responseBody = JSON.parse(jsonText);
-        console.log(responseBody)
 
         expect(responseBody).toEqual({
             id: expect.any(Number),
