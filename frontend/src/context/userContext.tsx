@@ -6,14 +6,19 @@ const defaultUser = {
   email: null,
 };
 
-const UserContext = createContext(defaultUser);
+const UserContext = createContext();
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = useState(defaultUser);
 
   const getCurrentUser = async () => {
-    const data = await getUser();
-    setCurrentUser(data);
+    try {
+      const data = await getUser();
+      console.log(data);
+      setCurrentUser(data);
+    } catch (error) {
+      console.log("Error getting user:", error);
+    }
   };
 
   useEffect(() => {
