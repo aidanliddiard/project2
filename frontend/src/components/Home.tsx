@@ -1,7 +1,7 @@
-// import { useUserContext } from "../context/userContext";
+import { useUserContext } from "../context/userContext";
 
 export default function Home() {
-  // const { getCurrentUser } = useUserContext();
+  const { getCurrentUser } = useUserContext();
   return (
     <div>
       <p>Hello Tyler and Lesley</p>

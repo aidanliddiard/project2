@@ -13,6 +13,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const getCurrentUser = async () => {
     const data = await getUser();
+    console.log(data);
     setCurrentUser(data);
   };
 

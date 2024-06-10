@@ -2,7 +2,7 @@
 const url = "http://localhost:3000/";
 
 interface User {
-  name: string;
+  name?: string;
   email: string;
   password: string;
 }
