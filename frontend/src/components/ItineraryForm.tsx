@@ -121,7 +121,7 @@ export default function ItineraryForm() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 >
-                    <option disabled value="">Select A Category</option>
+                    <option disabled value="">Select a Category</option>
                  {categories.map((category: Category) => {
                     return <option key={category.id} value={category.id}>{category.type}</option>
 
@@ -213,11 +213,15 @@ export default function ItineraryForm() {
                 <select
                   name="time"
                   id="time"
+                  value=""
+                  onChange={e => setFormData({ ...formData, time_id: Number(e.target.value) })}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
+                <option disabled value="">Select a Time</option>
+                 {times.map((time: Time) => {
+                    return <option key={time.id} value={time.id}>{time.time}</option>
+                 })}
+
                 </select>
               </div>
 
