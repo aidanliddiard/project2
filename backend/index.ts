@@ -20,24 +20,16 @@ app.use(
 app.get("/api/vacations", vacationQueries.getVacations);
 app.post("/api/vacations/", vacationQueries.createVacation);
 
-app.get("/api/vacation/itinerary/:id", itineraryQueries.getItinerary);
-app.post("/api/vacation/itinerary/", itineraryQueries.createItineraryItem);
-app.put(
-  "/api/vacation/itinerary/item/:id",
-  itineraryQueries.updateItineraryItem
-);
-app.delete(
-  "/api/vacation/itinerary/item/:id",
-  itineraryQueries.deleteItineraryItem
-);
+app.get("/api/vacations/:id", itineraryQueries.getItinerary);
+app.post("/api/vacations/:id/itinerary/", itineraryQueries.createItineraryItem);
+app.put("/api/vacations/:id/itinerary/", itineraryQueries.updateItineraryItem);
+app.delete("/api/vacations/:id/itinerary/",itineraryQueries.deleteItineraryItem);
 
 app.use("/api/auth/users", require("./src/controller/user.js"));
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(port, () => {
     console.log(`App running on port http://localhost:${port}`);
-    console.log(itineraryQueries);
-    console.log(vacationQueries);
   });
 }
 
