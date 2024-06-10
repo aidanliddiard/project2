@@ -38,12 +38,18 @@ export async function loginUser({ email, password }: User) {
 
 export async function getUser() {
   try {
-    const user = await fetch(url + "api/users/me", {
+    const response = await fetch(url + "api/auth/users/me", {
       credentials: "include",
     });
-    const userData = await user.json();
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const userData = await response.json();
     return userData;
   } catch (error) {
+    console.log(error);
     return null;
   }
 }
