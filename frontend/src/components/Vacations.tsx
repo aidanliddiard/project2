@@ -11,13 +11,12 @@ interface VacationObject {
     user_id: Number;
 }
 
-export default function VacationDetail() {
+export default function Vacations() {
     const [vacation, setVacation] = useState<VacationObject[]>([]);
   
     useEffect(() => {
       const fetchVacationData = async () => {
         const resp = await fetchVacations();
-        console.log(resp);
         setVacation(resp);
       };
       fetchVacationData();
@@ -25,9 +24,14 @@ export default function VacationDetail() {
   
     return (
       <div>
-        <p>Hello Aidan!!</p>
-        {vacation.map((vacation: VacationObject) => (
-          <p key={vacation.city}>{vacation.city}</p>
+        {vacation.map((vacation: VacationObject, index: number) => (
+          <div key={index}>
+            <p>{vacation.city}</p>
+            <p>{vacation.country}</p>
+            <p>{vacation.description}</p>
+            <p>{vacation.start_date}</p>
+            <p>{vacation.end_date}</p>
+          </div>
         ))}
       </div>
     );

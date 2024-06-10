@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "jest": {
-    "modulePathIgnorePatterns": ["/backend/__tests__/utils.js"]
+    "modulePathIgnorePatterns": [
+      "/backend/__tests__/utils.js"
+    ]
   },
   "scripts": {
     "dev": "vite",
