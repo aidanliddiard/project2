@@ -1,6 +1,10 @@
+import { ItineraryObject } from "../components/ItineraryForm"
+
+const url = "http://localhost:3000"
+
 export async function fetchCategory() {
   try {
-    const response = await fetch("http://localhost:3000/api/category");
+    const response = await fetch(`${url}/api/category`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -15,7 +19,7 @@ export async function fetchCategory() {
 
 export async function fetchTime() {
   try {
-    const response = await fetch("http://localhost:3000/api/time");
+    const response = await fetch(`${url}/api/time`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -26,4 +30,13 @@ export async function fetchTime() {
     console.error('A problem occurred when fetching the time:', error);
     throw error;
   }
+}
+
+export async function createItinerary(newData: ItineraryObject) {
+    const itinerary = await fetch(`${url}/api/vacations/${newData.vacation_id}/itinerary`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(newData)
+    })
+    return await itinerary.json();
 }

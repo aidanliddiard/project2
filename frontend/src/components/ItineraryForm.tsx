@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { fetchCategory, fetchTime } from "../services/itinerary";
+import { fetchCategory, fetchTime, createItinerary } from "../services/itinerary";
 
-interface ItineraryObject {
+export interface ItineraryObject {
   id: number;
   name: string;
   category_id: number;
   price: number;
   address: string;
   description?: string;
-  start_date: Date;
-  end_date?: Date;
+  start_date: Date | string;
+  end_date?: Date | string;
   time_id: number;
   website?: string;
   vacation_id: number;
@@ -35,11 +35,11 @@ export default function ItineraryForm() {
     price: 0,
     address: "",
     description: "",
-    start_date: new Date(),
-    end_date: new Date(),
+    start_date: "",
+    end_date: "",
     time_id: 0,
     website: "",
-    vacation_id: 0,
+    vacation_id: 1,
   });
 
   useEffect(() => {
@@ -57,6 +57,32 @@ export default function ItineraryForm() {
     fetchTimes();
   }, []);
 
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    try{
+      createItinerary(formData);
+      console.log("submitted")
+
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setFormData({
+        id: 0,
+        name: "",
+        category_id: 0,
+        price: 0,
+        address: "",
+        description: "",
+        start_date: "",
+        end_date: "",
+        time_id: 0,
+        website: "",
+        vacation_id: 1,
+      })
+    }
+  }
+
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -65,7 +91,7 @@ export default function ItineraryForm() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an Itinerary Item
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               {/* Vacation
               <div>
                 <label
@@ -99,6 +125,8 @@ export default function ItineraryForm() {
                   type="text"
                   name="name"
                   id="name"
+                  value={formData.name}
+                  onChange = {e => setFormData({...formData, name: e.target.value})}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="The Grand Canyon"
                   required
@@ -116,12 +144,12 @@ export default function ItineraryForm() {
                 <select
                   name="category"
                   id="category"
-                  value=""
+                  value={formData.category_id}
                   onChange={e => setFormData({ ...formData, category_id: Number(e.target.value) })}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 >
-                    <option disabled value="">Select a Category</option>
+                    <option disabled value="0">Select a Category</option>
                  {categories.map((category: Category) => {
                     return <option key={category.id} value={category.id}>{category.type}</option>
 
@@ -140,11 +168,13 @@ export default function ItineraryForm() {
                 </label>
                 <input
                   type="number"
-                  step="0.1"
+                  step="0.01"
                   min="0"
                   name="price"
                   id="price"
-                  placeholder="0.00"
+                  value={formData.price}
+                  onChange={e => setFormData({...formData, price: Number(e.target.value)
+                  })}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
@@ -162,7 +192,9 @@ export default function ItineraryForm() {
                   type="text"
                   name="address"
                   id="address"
+                  value={formData.address}
                   placeholder="20 South Entrance Road, Grand Canyon National Park Headquarters"
+                  onChange={e => setFormData({...formData, address: e.target.value})}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
@@ -181,6 +213,8 @@ export default function ItineraryForm() {
                   type="date"
                   name="start_date"
                   id="start_date"
+                  value={formData.start_date instanceof Date ? formData.start_date.toISOString().split('T')[0] : formData.start_date.toString()}
+                  onChange={e => setFormData({...formData, start_date:new Date(e.target.value)})}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
@@ -198,6 +232,8 @@ export default function ItineraryForm() {
                   type="date"
                   name="end_date"
                   id="end_date"
+                  value={formData.end_date instanceof Date ? formData.end_date.toISOString().split('T')[0] : ""}
+                  onChange={e => setFormData({...formData, end_date:new Date(e.target.value)})}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
@@ -213,11 +249,11 @@ export default function ItineraryForm() {
                 <select
                   name="time"
                   id="time"
-                  value=""
+                  value={formData.time_id}
                   onChange={e => setFormData({ ...formData, time_id: Number(e.target.value) })}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                <option disabled value="">Select a Time</option>
+                <option disabled value="0">Select a Time</option>
                  {times.map((time: Time) => {
                     return <option key={time.id} value={time.id}>{time.time}</option>
                  })}
@@ -238,6 +274,8 @@ export default function ItineraryForm() {
                   type="text"
                   name="website"
                   id="website"
+                  value={formData.website}
+                  onChange={e => setFormData({...formData, website: e.target.value})}
                   placeholder="https://www.nps.gov/grca/index.htm"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
@@ -255,6 +293,8 @@ export default function ItineraryForm() {
                 <textarea
                   name="description"
                   id="description"
+                  value={formData.description}
+                  onChange={e => setFormData({...formData, description: e.target.value})}
                   placeholder="Add any additional details here"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
