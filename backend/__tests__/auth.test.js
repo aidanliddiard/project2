@@ -1,8 +1,6 @@
 const request = require("supertest");
 const { app } = require("../index.ts");
-const { setupDb, closeAll, mockUser, signInAndSignUp } = require("./utils.js");
-
-
+const { setupDb, mockUser, signInAndSignUp } = require("./utils.js");
 
 describe("auth backend routes", () => {
   beforeEach(setupDb);
