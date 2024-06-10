@@ -2,13 +2,13 @@
 const url = "http://localhost:3000/";
 
 interface User {
-  name: string;
+  name?: string;
   email: string;
   password: string;
 }
 
 export async function signUpUser({ name, email, password }: User) {
-  const user = await fetch(url + "/api/auth/users", {
+  const user = await fetch(url + "api/auth/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -18,11 +18,12 @@ export async function signUpUser({ name, email, password }: User) {
   if (!user.ok) {
     throw new Error("Error creating user");
   }
+  console.log(user);
   return await user.json();
 }
 
 export async function loginUser({ email, password }: User) {
-  const user = await fetch(url + "/api/auth/users/sessions", {
+  const user = await fetch(url + "api/auth/users/sessions", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -37,19 +38,25 @@ export async function loginUser({ email, password }: User) {
 
 export async function getUser() {
   try {
-    const user = await fetch(url + "api/users/me", {
+    const response = await fetch(url + "api/auth/users/me", {
       credentials: "include",
     });
-    const userData = await user.json();
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const userData = await response.json();
     return userData;
   } catch (error) {
+    console.log(error);
     return null;
   }
 }
 
 export async function signOutUser() {
   try {
-    await fetch(url + "/api/auth/users/sessions", {
+    await fetch(url + "api/auth/users/sessions", {
       method: "DELETE",
       credentials: "include",
     });

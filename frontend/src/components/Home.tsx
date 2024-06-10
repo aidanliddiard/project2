@@ -1,10 +1,10 @@
-// import { useUserContext } from "../context/userContext";
+import { useUserContext } from "../context/userContext";
 
 export default function Home() {
-  // const { getCurrentUser } = useUserContext();
+  const { currentUser } = useUserContext();
   return (
     <div>
-      <p>Hello Tyler and Lesley</p>
+      <p>{currentUser.id}</p>
     </div>
   );
 }

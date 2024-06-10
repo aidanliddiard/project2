@@ -6,7 +6,7 @@ import "./index.css";
 
 const rootElement = document.getElementById("root");
 ReactDOM.createRoot(rootElement).render(
-  //   <UserProvider>
-  <App />
-  //   </UserProvider>
+  <UserProvider>
+    <App />
+  </UserProvider>
 );
