@@ -14,7 +14,7 @@ const createItineraryItem = (request, response) => {
     vacation_id,
   } = request.body;
   pool.query(
-    "INSERT INTO itinerary (name, category_id, price, address, description, start_date, end_date, time_id, website, vacation_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+    "INSERT INTO itinerary (name, category_id, price, address, description, start_date, end_date, time_id, website, vacation_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
     [
       name,
       category_id,
@@ -31,16 +31,29 @@ const createItineraryItem = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`Itinerary added with ID: ${results.insertId}`);
+      const createdItem = results.rows[0];
+      response.status(201).json({
+        id: createdItem.id,
+        name: createdItem.name,
+        category_id: createdItem.category_id,
+        price: parseFloat(createdItem.price).toFixed(2),
+        address: createdItem.address,
+        description: createdItem.description,
+        start_date: new Date(createdItem.start_date).toISOString().split('T')[0],
+        end_date: createdItem.end_date,
+        time_id: createdItem.time_id,
+        website: createdItem.website,
+        vacation_id: createdItem.vacation_id,
+      });
     }
   );
 };
 
 const getItinerary = (request, response) => {
-  const id = request.params.id;
+  const vacation_id = request.params.id;
   pool.query(
-    "SELECT name, price, address, description, start_date, end_date, website, time.time, category.type FROM itinerary LEFT JOIN time on time.id = itinerary.time_id LEFT JOIN category on category.id = itinerary.category_id WHERE vacation_id=$1;",
-    [id],
+    'SELECT itinerary.name, itinerary.price, itinerary.address, itinerary.description, itinerary.start_date, itinerary.end_date, itinerary.website, time.time, category.type FROM itinerary LEFT JOIN time on time.id = itinerary.time_id LEFT JOIN category on category.id = itinerary.category_id WHERE vacation_id = $1;',
+    [vacation_id],
     (error, results) => {
       if (error) {
         throw error;
