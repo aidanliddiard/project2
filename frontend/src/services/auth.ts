@@ -8,7 +8,7 @@ interface User {
 }
 
 export async function signUpUser({ name, email, password }: User) {
-  const user = await fetch(url + "/api/auth/users", {
+  const user = await fetch(url + "api/auth/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -18,11 +18,12 @@ export async function signUpUser({ name, email, password }: User) {
   if (!user.ok) {
     throw new Error("Error creating user");
   }
+  console.log(user);
   return await user.json();
 }
 
 export async function loginUser({ email, password }: User) {
-  const user = await fetch(url + "/api/auth/users/sessions", {
+  const user = await fetch(url + "api/auth/users/sessions", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -49,7 +50,7 @@ export async function getUser() {
 
 export async function signOutUser() {
   try {
-    await fetch(url + "/api/auth/users/sessions", {
+    await fetch(url + "api/auth/users/sessions", {
       method: "DELETE",
       credentials: "include",
     });

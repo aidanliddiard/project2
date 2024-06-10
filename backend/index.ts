@@ -8,7 +8,12 @@ const itineraryQueries = require("./src/itineraryQueries.js");
 require("dotenv").config();
 const vacationQueries = require("./src/vacationQueries.js");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(
@@ -23,7 +28,10 @@ app.post("/api/vacations/", vacationQueries.createVacation);
 app.get("/api/vacations/:id", itineraryQueries.getItinerary);
 app.post("/api/vacations/:id/itinerary/", itineraryQueries.createItineraryItem);
 app.put("/api/vacations/:id/itinerary/", itineraryQueries.updateItineraryItem);
-app.delete("/api/vacations/:id/itinerary/",itineraryQueries.deleteItineraryItem);
+app.delete(
+  "/api/vacations/:id/itinerary/",
+  itineraryQueries.deleteItineraryItem
+);
 
 app.use("/api/auth/users", require("./src/controller/user.js"));
 
