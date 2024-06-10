@@ -25,7 +25,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ currentUse, getCurrentUser }}>
+    <UserContext.Provider value={{ currentUser, getCurrentUser }}>
       {children}
     </UserContext.Provider>
   );

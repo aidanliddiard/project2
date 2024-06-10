@@ -1,4 +1,5 @@
-const url = process.env.API_URL;
+// const url = process.env.API_URL;
+const url = "http://localhost:3000/";
 
 interface User {
   name: string;
