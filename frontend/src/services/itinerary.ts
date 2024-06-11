@@ -40,3 +40,8 @@ export async function createItinerary(newData: ItineraryObject) {
     })
     return await itinerary.json();
 }
+
+export async function getVacations(){
+  const vacations = await fetch(`${url}/api/vacations`);
+  return await vacations.json();
+}
