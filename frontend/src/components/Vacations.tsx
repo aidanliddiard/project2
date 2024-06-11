@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchVacations } from "../services/vacations";
 import NavBar from "./NavBar";
+import { useUserContext } from "../context/userContext";
 
 interface VacationObject {
   id: number;
@@ -19,6 +20,9 @@ function formatDate(dateString: string): string {
 }
 
 export default function Vacations() {
+  const { currentUser } = useUserContext();
+  const userName = currentUser.name;
+
   const [vacation, setVacation] = useState<VacationObject[]>([]);
 
   useEffect(() => {
@@ -34,7 +38,8 @@ export default function Vacations() {
       <NavBar />
       <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8">
-      <div className="grid grid-cols-3 gap-3 pt-8">
+      <h1 className="text-3xl font-bold mb-4">{userName}'s Vacations</h1>
+      <div className="grid grid-cols-3 gap-3 pt-6">
             {vacation.map((vacation: VacationObject, index: number) => (
                 <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 card grid-cols-3 gap-3">
                   <a href="#">
