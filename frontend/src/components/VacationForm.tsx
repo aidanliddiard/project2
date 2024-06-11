@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { submitVacation } from '../services/vacationform';
+import { useUserContext } from "../context/userContext"; 
 
 export default function VacationForm() {
+  const { currentUser } = useUserContext();
+  const userId = currentUser.id;
+
   //Create a Form Data variable to data entered into the form fields
   const [formData, setFormData] = useState({
     city: "",
@@ -9,7 +13,7 @@ export default function VacationForm() {
     description: "",
     start_date: "",
     end_date: "",
-    user_id: "",
+    user_id: userId,
   });
 
   //Updates the form data state based on any input into the field
@@ -34,7 +38,7 @@ export default function VacationForm() {
         description: "",
         start_date: "",
         end_date: "",
-        user_id: "",
+        user_id: userId,
       });
     } catch (error) {
       console.error('Error submitting vacation form:', error.message);
@@ -147,24 +151,6 @@ export default function VacationForm() {
                   onChange={handleChange} // Call handleChange function on change
                   placeholder="YYYY-MM-DD"
                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="userID"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  User ID
-                </label>
-                <input
-                  type="number"
-                  name="user_id"
-                  id="userID"
-                  value={formData.user_id} // Make sure to set the value attribute
-                  onChange={handleChange} // Call handleChange function on change
-                  placeholder="1"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
               </div>

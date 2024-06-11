@@ -21,3 +21,4 @@ export async function submitVacation(formData) {
       throw error;
     }
   }
+
