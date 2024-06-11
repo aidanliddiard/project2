@@ -112,9 +112,30 @@ const deleteItineraryItem = (request, response) => {
   });
 };
 
+const getCategory = (request, response) => {
+  pool.query('SELECT * from CATEGORY', (error, results) => {
+    if (error) {
+      throw error;
+    }
+    response.status(200).json(results.rows);
+  })
+} 
+
+const getTime = (request, response) => {
+  console.log(pool);
+  pool.query('SELECT * FROM time', (error, results) => {
+    if (error) {
+      throw error;
+    }
+    response.status(200).json(results.rows);
+  });
+};
+
 module.exports = {
   createItineraryItem,
   getItinerary,
   updateItineraryItem,
   deleteItineraryItem,
+  getCategory,
+  getTime
 };
