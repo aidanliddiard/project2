@@ -30,7 +30,6 @@ function formatDate(dateString: string) {
 export default function Itinerary() {
   const { id } = useParams<{ id: string }>();
   const [vacation, setVacation] = useState<VacationFormData[]>([]);
-  // const [city, setCity] = useState<string | null>("New York City");
   const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -55,17 +54,6 @@ export default function Itinerary() {
 
     fetchVacationData();
   }, []);
-
-  // useEffect(() => {
-  //   // if (!city) return;
-  //   const fetchImagesData = async () => {
-  //     const search = `${vacation[0]?.city}`;
-  //     const results = await fetchImages(search);
-  //     console.log(results.results[0].urls.full);
-  //     setImage(results.results[0].urls.full);
-  //   };
-  //   fetchImagesData();
-  // }, []);
 
   return (
     <>
