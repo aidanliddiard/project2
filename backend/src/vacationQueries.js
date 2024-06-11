@@ -8,10 +8,6 @@ const getVacations = (request, response) => {
       response.status(200).json(results.rows);
     });
   } 
-  
-  module.exports = {
-    getVacations
-  }
 
   const createVacation = (request, response) => {
     const { city, country, description, start_date, end_date, user_id } = request.body;
