@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import NavBar from "./NavBar";
+import { fetchImages } from "../services/images";
 import ItineraryCard from "./ItineraryCard";
 import { LuFerrisWheel } from "react-icons/lu";
 import { FaUtensils } from "react-icons/fa";
@@ -29,16 +30,28 @@ function formatDate(dateString: string) {
 export default function Itinerary() {
   const { id } = useParams<{ id: string }>();
   const [vacation, setVacation] = useState<VacationFormData[]>([]);
+  const [image, setImage] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchVacationData = async () => {
       const resp = await getVacations();
-      console.log(
-        resp.filter((vacation: VacationFormData) => vacation.id === Number(id))
+      const vacationData = resp.filter(
+        (vacation: VacationFormData) => vacation.id === Number(id)
       );
-      setVacation(
-        resp.filter((vacation: VacationFormData) => vacation.id === Number(id))
-      );
+      console.log(vacationData);
+      setVacation(vacationData);
+      if (vacationData[0]?.city) {
+        fetchImagesData(vacationData[0].city);
+      }
     };
+
+    const fetchImagesData = async (search: string) => {
+      console.log(search);
+      const results = await fetchImages(search);
+      console.log(results.results[0].urls.full);
+      setImage(results.results[0].urls.full);
+    };
+
     fetchVacationData();
   }, []);
 
@@ -49,8 +62,7 @@ export default function Itinerary() {
         id="hero"
         className="w-full bg-center h-50% bg-cover"
         style={{
-          backgroundImage:
-            "url(https://images.unsplash.com/photo-1554107136-57b138ea99df?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)",
+          backgroundImage: `url(${image})`,
         }}
       >
         <div className="flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50 py-12">
@@ -67,7 +79,7 @@ export default function Itinerary() {
                 )}
                 <p className="max-w-3xl mx-auto mb-10 text-md text-gray-300">
                   {formatDate(vacation[0]?.start_date)} -{" "}
-                    {formatDate(vacation[0]?.end_date)}
+                  {formatDate(vacation[0]?.end_date)}
                 </p>
                 <a
                   className="inline-block w-full md:w-auto mb-4 md:mr-6 py-3 px-5 text-sm font-bold uppercase border-2 border-transparent bg-gray-200 rounded hover:bg-gray-100 text-gray-800 transition duration-200"

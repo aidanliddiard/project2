@@ -1,6 +1,4 @@
-// const url = process.env.API_URL;
-const url = "http://localhost:3000/";
-
+const url = import.meta.env.VITE_API_URL;
 interface User {
   name?: string;
   email: string;
@@ -8,7 +6,7 @@ interface User {
 }
 
 export async function signUpUser({ name, email, password }: User) {
-  const user = await fetch(url + "api/auth/users", {
+  const user = await fetch(url + "/api/auth/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -23,7 +21,7 @@ export async function signUpUser({ name, email, password }: User) {
 }
 
 export async function loginUser({ email, password }: User) {
-  const user = await fetch(url + "api/auth/users/sessions", {
+  const user = await fetch(url + "/api/auth/users/sessions", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -38,7 +36,7 @@ export async function loginUser({ email, password }: User) {
 
 export async function getUser() {
   try {
-    const response = await fetch(url + "api/auth/users/me", {
+    const response = await fetch(url + "/api/auth/users/me", {
       credentials: "include",
     });
 
@@ -56,7 +54,7 @@ export async function getUser() {
 
 export async function signOutUser() {
   try {
-    await fetch(url + "api/auth/users/sessions", {
+    await fetch(url + "/api/auth/users/sessions", {
       method: "DELETE",
       credentials: "include",
     });
