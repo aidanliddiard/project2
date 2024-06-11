@@ -1,5 +1,5 @@
 import { useEffect, useState, createContext, useContext } from "react";
-import { getUser } from "../services/auth";
+import { getUser, signOutUser } from "../services/auth";
 
 const defaultUser = {
   name: "Example User",
@@ -21,6 +21,11 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const signOut = async () => {
+    await signOutUser();
+    setCurrentUser(defaultUser);
+  };
+
   useEffect(() => {
     try {
       getCurrentUser();
@@ -30,7 +35,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ currentUser, getCurrentUser }}>
+    <UserContext.Provider value={{ currentUser, getCurrentUser, signOut }}>
       {children}
     </UserContext.Provider>
   );
