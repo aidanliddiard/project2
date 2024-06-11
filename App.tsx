@@ -15,7 +15,7 @@ export default function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/vacations" element={<Vacations />} />
-          <Route path="/createVacation" element={<VacationForm submitVacation={submitVacation} />} />
+          <Route path="/create-vacation" element={<VacationForm submitVacation={submitVacation} />} />
         </Routes>
       </BrowserRouter>
     </>

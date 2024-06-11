@@ -1,13 +1,21 @@
-import { useState, useContext } from "react";
+import { useState, useContext, ChangeEvent, FormEvent } from "react";
 import { submitVacation } from '../services/vacationform';
-import { useUserContext } from "../context/userContext"; 
+import { useUserContext } from "../context/userContext";
+
+interface VacationFormData {
+  city: string;
+  country: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  user_id: number;
+}
 
 export default function VacationForm() {
   const { currentUser } = useUserContext();
   const userId = currentUser.id;
 
-  //Create a Form Data variable to data entered into the form fields
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<VacationFormData>({
     city: "",
     country: "",
     description: "",
@@ -16,8 +24,7 @@ export default function VacationForm() {
     user_id: userId,
   });
 
-  //Updates the form data state based on any input into the field
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -25,9 +32,8 @@ export default function VacationForm() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData); // Log the form data
     try {
       const response = await submitVacation(formData);
       console.log(response);
@@ -41,7 +47,7 @@ export default function VacationForm() {
         user_id: userId,
       });
     } catch (error) {
-      console.error('Error submitting vacation form:', error.message);
+      console.error('Error submitting vacation form:', (error as Error).message);
     }
   };
 
@@ -57,12 +63,12 @@ export default function VacationForm() {
             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
             alt="logo"
           />
-          Flowbite
+          Wanderlust
         </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Create A Vacation
+              Create an vacation
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit} action="#">
               <div>
@@ -76,8 +82,8 @@ export default function VacationForm() {
                   type="text"
                   name="city"
                   id="city"
-                  value={formData.city} // Make sure to set the value attribute
-                  onChange={handleChange} // Call handleChange function on change
+                  value={formData.city}
+                  onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="London"
                   required
@@ -94,8 +100,8 @@ export default function VacationForm() {
                   type="text"
                   name="country"
                   id="country"
-                  value={formData.country} // Make sure to set the value attribute
-                  onChange={handleChange} // Call handleChange function on change
+                  value={formData.country}
+                  onChange={handleChange}
                   placeholder="United Kingdom"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
@@ -111,8 +117,8 @@ export default function VacationForm() {
                 <textarea
                   name="description"
                   id="description"
-                  value={formData.description} // Make sure to set the value attribute
-                  onChange={handleChange} // Call handleChange function on change
+                  value={formData.description}
+                  onChange={handleChange}
                   rows="1"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter description..."
@@ -129,10 +135,10 @@ export default function VacationForm() {
                   type="date"
                   name="start_date"
                   id="startDate"
-                  value={formData.start_date} // Make sure to set the value attribute
-                  onChange={handleChange} // Call handleChange function on change
+                  value={formData.start_date}
+                  onChange={handleChange}
                   placeholder="YYYY-MM-DD"
-                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none"
                   required
                 />
               </div>
@@ -147,18 +153,18 @@ export default function VacationForm() {
                   type="date"
                   name="end_date"
                   id="endDate"
-                  value={formData.end_date} // Make sure to set the value attribute
-                  onChange={handleChange} // Call handleChange function on change
+                  value={formData.end_date}
+                  onChange={handleChange}
                   placeholder="YYYY-MM-DD"
-                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none"
                   required
                 />
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                Submit
+                Submit a Vacation
               </button>
             </form>
           </div>
