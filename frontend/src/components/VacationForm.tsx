@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { submitVacation } from '../services/vacationform';
 
-export default function VacationForm({ submitVacation }) {
+export default function VacationForm() {
   //Create a Form Data variable to data entered into the form fields
   const [formData, setFormData] = useState({
     city: "",
