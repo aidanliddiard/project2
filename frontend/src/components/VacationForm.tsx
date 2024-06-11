@@ -7,9 +7,9 @@ export default function VacationForm({ submitVacation }) {
     city: "",
     country: "",
     description: "",
-    start_date: null,
-    end_date: null,
-    user_id: null,
+    start_date: "",
+    end_date: "",
+    user_id: "",
   });
 
   //Updates the form data state based on any input into the field
@@ -125,7 +125,7 @@ export default function VacationForm({ submitVacation }) {
                   type="date"
                   name="start_date"
                   id="startDate"
-                  value={formData.startDate} // Make sure to set the value attribute
+                  value={formData.start_date} // Make sure to set the value attribute
                   onChange={handleChange} // Call handleChange function on change
                   placeholder="YYYY-MM-DD"
                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none"
@@ -143,7 +143,7 @@ export default function VacationForm({ submitVacation }) {
                   type="date"
                   name="end_date"
                   id="endDate"
-                  value={formData.endDate} // Make sure to set the value attribute
+                  value={formData.end_date} // Make sure to set the value attribute
                   onChange={handleChange} // Call handleChange function on change
                   placeholder="YYYY-MM-DD"
                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none"
@@ -161,7 +161,7 @@ export default function VacationForm({ submitVacation }) {
                   type="number"
                   name="user_id"
                   id="userID"
-                  value={formData.userID} // Make sure to set the value attribute
+                  value={formData.user_id} // Make sure to set the value attribute
                   onChange={handleChange} // Call handleChange function on change
                   placeholder="1"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
