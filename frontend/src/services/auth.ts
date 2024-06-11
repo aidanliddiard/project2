@@ -1,7 +1,4 @@
 const url = import.meta.env.VITE_API_URL;
-console.log(url);
-// const url = "http://localhost:3000/";
-
 interface User {
   name?: string;
   email: string;

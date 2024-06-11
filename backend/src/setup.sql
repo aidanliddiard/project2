@@ -1,8 +1,8 @@
 -- DROP TABLE IF EXISTS users CASCADE;
 -- DROP TABLE IF EXISTS vacations CASCADE;
--- DROP TABLE IF EXISTS category CASCADE;
 -- DROP TABLE IF EXISTS itinerary CASCADE;
--- DROP TABLE IF EXISTS time CASCADE;
+DROP TABLE IF EXISTS category CASCADE;
+DROP TABLE IF EXISTS time CASCADE;
 
 CREATE TABLE IF NOT EXISTS users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -44,6 +44,11 @@ CREATE TABLE IF NOT EXISTS itinerary (
     vacation_id INTEGER REFERENCES vacations(id) ON DELETE CASCADE
 );
 
-INSERT INTO category (type) VALUES ('Hotel'), ('Restaurant'), ('Activity');
 
-INSERT INTO time (time) VALUES ('Morning'), ('Afternoon'), ('Evening'), ('Late Night');
+INSERT INTO category (type)
+SELECT * FROM (VALUES ('Hotel'), ('Restaurant'), ('Activity')) AS tmp (type)
+WHERE NOT EXISTS (SELECT 1 FROM category);
+
+INSERT INTO time (time)
+SELECT * FROM (VALUES ('Morning'), ('Afternoon'), ('Evening'), ('Late Night')) AS tmp (time)
+WHERE NOT EXISTS (SELECT 1 FROM time);
