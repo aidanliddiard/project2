@@ -1,10 +1,12 @@
 import { useUserContext } from "../context/userContext";
+import NavBar from "./NavBar";
 
 export default function Home() {
   const { currentUser } = useUserContext();
   return (
     <div>
-      <p>{currentUser.id}</p>
+      <NavBar />
+      {/* <p>{currentUser.id}</p> */}
     </div>
   );
 }
