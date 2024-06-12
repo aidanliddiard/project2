@@ -5,9 +5,10 @@ import NavBar from "./NavBar";
 import { fetchImages } from "../services/images";
 import ItineraryCard from "./ItineraryCard";
 import { LuFerrisWheel } from "react-icons/lu";
-import { FaUtensils } from "react-icons/fa";
-import { FaHotel } from "react-icons/fa6";
-import { getVacations } from "../services/itinerary";
+import { FaUtensils, FaHotel } from "react-icons/fa";
+import { getItinerary, getVacations } from "../services/itinerary";
+import { IconType } from "react-icons";
+
 
 interface VacationFormData {
   id: number;
@@ -19,7 +20,21 @@ interface VacationFormData {
   user_id: number;
 }
 
-function formatDate(dateString: string) {
+interface ItineraryData {
+  id: number;
+  name: string;
+  price: number;
+  address: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  time: string;
+  type: string;
+  website: string;
+  icon: IconType;
+}
+
+export function formatDate(dateString: string) {
   const date = new Date(dateString);
   const month = ("0" + (date.getMonth() + 1)).slice(-2); // add leading zero
   const day = ("0" + date.getDate()).slice(-2); // add leading zero
@@ -31,6 +46,12 @@ export default function Itinerary() {
   const { id } = useParams<{ id: string }>();
   const [vacation, setVacation] = useState<VacationFormData[]>([]);
   const [image, setImage] = useState<string | null>(null);
+  const [itinerary, setItinerary] = useState<ItineraryData[]>([]);
+  const [hotels, setHotels] = useState<ItineraryData[]>([]);
+  const [restaurants, setRestaurants] = useState<ItineraryData[]>([]);
+  const [activities, setActivities] = useState<ItineraryData[]>([]);
+
+
 
   useEffect(() => {
     const fetchVacationData = async () => {
@@ -38,22 +59,43 @@ export default function Itinerary() {
       const vacationData = resp.filter(
         (vacation: VacationFormData) => vacation.id === Number(id)
       );
-      console.log(vacationData);
       setVacation(vacationData);
-      if (vacationData[0]?.city) {
-        fetchImagesData(vacationData[0].city);
-      }
+      // if (vacationData[0]?.city) {
+      //   fetchImagesData(vacationData[0].city);
+      // }
     };
-
-    const fetchImagesData = async (search: string) => {
-      console.log(search);
-      const results = await fetchImages(search);
-      console.log(results.results[0].urls.full);
-      setImage(results.results[0].urls.full);
+    // const fetchImagesData = async (search: string) => {
+    //   console.log(search);
+    //   const results = await fetchImages(search);
+    //   console.log(results.results[0].urls.full);
+    //   setImage(results.results[0].urls.full);
+    // };
+    const fetchItineraryData = async () => {
+      const response = await getItinerary(Number(id));
+      console.log(response);
+      setItinerary(response);
     };
 
     fetchVacationData();
+    fetchItineraryData();
   }, []);
+
+  useEffect(() => {
+    const hotels = itinerary.filter(
+      (item) => item.type === "Hotel"
+    );
+    console.log(hotels)
+    const restaurants = itinerary.filter(
+      (item) => item.type === "Restaurant"
+    );
+    const activities = itinerary.filter(
+      (item) => item.type === "Activity"
+    );
+    setHotels(hotels);
+    setRestaurants(restaurants);
+    setActivities(activities);
+
+  }, [itinerary]);
 
   return (
     <>
@@ -100,17 +142,77 @@ export default function Itinerary() {
           <p id="hotel" className="bg-gray-200">
             Hotel
           </p>
-          <ItineraryCard icon={FaHotel} />
+          <div id="hotelCards">
+            {hotels.map((hotel) => {
+              return (
+                <ItineraryCard
+                  key={hotel.id}
+                  id={hotel.id}
+                  name={hotel.name}
+                  price={hotel.price}
+                  address={hotel.address}
+                  description={hotel.description}
+                  start_date={hotel.start_date}
+                  end_date={hotel.end_date}
+                  time={hotel.time}
+                  type={hotel.type}
+                  website={hotel.website}
+                  icon={FaHotel}
+                />
+              );
+            })}
+
+          </div>
         </div>
         <div>
           <p id="restaurants" className="bg-gray-200">
             Restaurants
           </p>
+          <div id="restaurantCards">
+          {restaurants.map((restaurant) => {
+              return (
+                <ItineraryCard
+                  key={restaurant.id}
+                  id={restaurant.id}
+                  name={restaurant.name}
+                  price={restaurant.price}
+                  address={restaurant.address}
+                  description={restaurant.description}
+                  start_date={restaurant.start_date}
+                  end_date={restaurant.end_date}
+                  time={restaurant.time}
+                  type={restaurant.type}
+                  website={restaurant.website}
+                  icon={FaUtensils}
+                />
+              );
+            })}
+          </div>
         </div>
         <div>
           <p id="activities" className="bg-gray-200">
             Activities
           </p>
+          <div id="activityCards">
+          {activities.map((activity) => {
+              return (
+                <ItineraryCard
+                  key={activity.id}
+                  id={activity.id}
+                  name={activity.name}
+                  price={activity.price}
+                  address={activity.address}
+                  description={activity.description}
+                  start_date={activity.start_date}
+                  end_date={activity.end_date}
+                  time={activity.time}
+                  type={activity.type}
+                  website={activity.website}
+                  icon={LuFerrisWheel}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     </>

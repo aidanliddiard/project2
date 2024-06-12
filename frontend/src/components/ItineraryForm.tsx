@@ -74,7 +74,7 @@ export default function ItineraryForm() {
         id: 0,
         name: "",
         category_id: 0,
-        price: 0,
+        price: 0.00,
         address: "",
         description: "",
         start_date: "",
@@ -188,6 +188,7 @@ export default function ItineraryForm() {
                     min="0"
                     name="price"
                     id="price"
+                    placeholder="0.00"
                     value={formData.price}
                     onChange={(e) =>
                       setFormData({

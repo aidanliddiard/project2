@@ -45,3 +45,8 @@ export async function getVacations(){
   const vacations = await fetch(`${url}/api/vacations`);
   return await vacations.json();
 }
+
+export async function getItinerary(vacation_id: number){
+  const itinerary = await fetch(`${url}/api/vacations/${vacation_id}/`);
+  return await itinerary.json();
+}
