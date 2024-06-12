@@ -6,9 +6,9 @@ import { fetchImages } from "../services/images";
 import ItineraryCard from "./ItineraryCard";
 import { LuFerrisWheel } from "react-icons/lu";
 import { FaUtensils, FaHotel } from "react-icons/fa";
-import { getItinerary, getVacations } from "../services/itinerary";
+import { getItinerary } from "../services/itinerary";
+import { fetchVacations } from "../services/vacations";
 import { IconType } from "react-icons";
-
 
 interface VacationFormData {
   id: number;
@@ -51,11 +51,9 @@ export default function Itinerary() {
   const [restaurants, setRestaurants] = useState<ItineraryData[]>([]);
   const [activities, setActivities] = useState<ItineraryData[]>([]);
 
-
-
   useEffect(() => {
     const fetchVacationData = async () => {
-      const resp = await getVacations();
+      const resp = await fetchVacations();
       const vacationData = resp.filter(
         (vacation: VacationFormData) => vacation.id === Number(id)
       );
@@ -82,20 +80,13 @@ export default function Itinerary() {
   }, []);
 
   useEffect(() => {
-    const hotels = itinerary.filter(
-      (item) => item.type === "Hotel"
-    );
-    console.log(hotels)
-    const restaurants = itinerary.filter(
-      (item) => item.type === "Restaurant"
-    );
-    const activities = itinerary.filter(
-      (item) => item.type === "Activity"
-    );
+    const hotels = itinerary.filter((item) => item.type === "Hotel");
+    console.log(hotels);
+    const restaurants = itinerary.filter((item) => item.type === "Restaurant");
+    const activities = itinerary.filter((item) => item.type === "Activity");
     setHotels(hotels);
     setRestaurants(restaurants);
     setActivities(activities);
-
   }, [itinerary]);
 
   return (
@@ -162,7 +153,6 @@ export default function Itinerary() {
                 />
               );
             })}
-
           </div>
         </div>
         <div>
@@ -170,7 +160,7 @@ export default function Itinerary() {
             Restaurants
           </p>
           <div id="restaurantCards">
-          {restaurants.map((restaurant) => {
+            {restaurants.map((restaurant) => {
               return (
                 <ItineraryCard
                   key={restaurant.id}
@@ -195,7 +185,7 @@ export default function Itinerary() {
             Activities
           </p>
           <div id="activityCards">
-          {activities.map((activity) => {
+            {activities.map((activity) => {
               return (
                 <ItineraryCard
                   key={activity.id}
