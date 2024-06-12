@@ -22,8 +22,10 @@ app.use(
   })
 );
 
-app.get("/api/vacations", vacationQueries.getVacations);
-app.post("/api/vacations/", vacationQueries.createVacation);
+// app.get("/api/vacations", vacationQueries.getVacations);
+app.post("/api/vacations", vacationQueries.createVacation);
+app.use("/api/vacations", require("./src/controller/vacation.js"));
+
 
 app.get("/api/vacations/:id", itineraryQueries.getItinerary);
 app.get("/api/time", itineraryQueries.getTime);
