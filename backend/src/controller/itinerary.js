@@ -16,7 +16,6 @@ router.post("/:id/itinerary", authenticate, async (req, res, next) => {
 router.get("/:id/itinerary", authenticate, async (req, res, next) => {
   try {
     const itinerary = await Itinerary.getItinerary(req.params.id);
-    console.log(itinerary);
     res.json(itinerary);
   } catch (error) {
     next(error);
@@ -49,4 +48,23 @@ router.delete(
     }
   }
 );
+
+router.get("/itinerary/time", async (req, res, next) => {
+  try {
+    const time = await Itinerary.getTimes();
+    console.log(time);
+    res.json(time);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/itinerary/category", async (req, res, next) => {
+  try {
+    const category = await Itinerary.getCategories();
+    res.json(category);
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;

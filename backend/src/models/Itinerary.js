@@ -134,4 +134,15 @@ module.exports = class Itinerary {
     );
     return new Itinerary(rows[0]);
   }
+
+  static async getTimes() {
+    const { rows } = await pool.query(`SELECT * from time`);
+    console.log("rows", rows);
+    return rows;
+  }
+
+  static async getCategories() {
+    const { rows } = await pool.query(`SELECT * from category`);
+    return rows;
+  }
 };

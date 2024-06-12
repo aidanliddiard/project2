@@ -4,7 +4,7 @@ const url = "http://localhost:3000";
 
 export async function fetchCategory() {
   try {
-    const response = await fetch(`${url}/api/category`);
+    const response = await fetch(`${url}/api/vacations/itinerary/category`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -19,7 +19,7 @@ export async function fetchCategory() {
 
 export async function fetchTime() {
   try {
-    const response = await fetch(`${url}/api/time`);
+    const response = await fetch(`${url}/api/vacations/itinerary/time`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -46,17 +46,15 @@ export async function createItinerary(newData: ItineraryObject) {
   return await itinerary.json();
 }
 
-// export async function getVacations() {
-//   const vacations = await fetch(`${url}/api/vacations`);
-//   return await vacations.json();
-// }
-
 export async function getItinerary(vacation_id: number) {
-  const itinerary = await fetch(`${url}/api/vacations/${vacation_id}/`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    mode: "cors",
-  });
+  const itinerary = await fetch(
+    `${url}/api/vacations/${vacation_id}/itinerary`,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      mode: "cors",
+    }
+  );
   return await itinerary.json();
 }

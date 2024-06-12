@@ -37,13 +37,6 @@ async function createVacation() {
   return [agent, vacation_id];
 }
 
-async function createItinerary(agent, vacation_id) {
-  const res = await agent
-    .post(`/api/vacations/${vacation_id}/itinerary`)
-    .send(mockItinerary);
-  return [agent, vacation_id];
-}
-
 describe("itinerary backend routes", () => {
   beforeEach(setupDb);
   test("POST to /api/vacations/itinerary", async () => {
@@ -133,5 +126,26 @@ describe("itinerary backend routes", () => {
       `/api/vacations/${vacation_id}/itinerary/${itinerary_id}`
     );
     expect(resp.status).toBe(204);
+  });
+
+  test("GET to /api/vacations/itinerary/time", async () => {
+    const res = await request(app).get(`/api/vacations/itinerary/time`);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([
+      { id: 1, time: "Morning" },
+      { id: 2, time: "Afternoon" },
+      { id: 3, time: "Evening" },
+      { id: 4, time: "Late Night" },
+    ]);
+  });
+
+  test("GET to /api/vacations/itinerary/category", async () => {
+    const res = await request(app).get(`/api/vacations/itinerary/category`);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([
+      { id: 1, type: "Hotel" },
+      { id: 2, type: "Restaurant" },
+      { id: 3, type: "Activity" },
+    ]);
   });
 });
