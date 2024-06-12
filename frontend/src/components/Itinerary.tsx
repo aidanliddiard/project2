@@ -64,6 +64,7 @@ export default function Itinerary() {
       //   fetchImagesData(vacationData[0].city);
       // }
     };
+
     // const fetchImagesData = async (search: string) => {
     //   console.log(search);
     //   const results = await fetchImages(search);
