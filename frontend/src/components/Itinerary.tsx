@@ -46,7 +46,6 @@ export default function Itinerary() {
     };
 
     const fetchImagesData = async (search: string) => {
-      console.log(search);
       const results = await fetchImages(search);
       console.log(results.results[0].urls.full);
       setImage(results.results[0].urls.full);
