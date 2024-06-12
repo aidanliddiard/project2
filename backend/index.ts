@@ -30,7 +30,7 @@ app.get("/api/time", itineraryQueries.getTime);
 app.get("/api/category", itineraryQueries.getCategory);
 
 // app.post("/api/vacations/:id/itinerary/", itineraryQueries.createItineraryItem);
-app.put("/api/vacations/:id/itinerary/", itineraryQueries.updateItineraryItem);
+// app.put("/api/vacations/:id/itinerary/", itineraryQueries.updateItineraryItem);
 app.delete(
   "/api/vacations/:id/itinerary/",
   itineraryQueries.deleteItineraryItem

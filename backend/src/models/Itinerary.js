@@ -72,12 +72,58 @@ module.exports = class Itinerary {
   }
 
   static async getItinerary(vacationId) {
-    console.log(vacationId);
     const { rows } = await pool.query(
       `SELECT * from itinerary WHERE vacation_id = $1`,
       [vacationId]
     );
     if (!rows[0]) return null;
+    return new Itinerary(rows[0]);
+  }
+
+  static async getItineraryById(vacationId, itemId) {
+    const { rows } = await pool.query(
+      `SELECT * from itinerary WHERE vacation_id = $1 AND id = $2`,
+      [vacationId, itemId]
+    );
+    if (!rows[0]) return null;
+    return new Itinerary(rows[0]);
+  }
+
+  static async updateItineraryItem(vacationId, itemId, body) {
+    const currentItinerary = await this.getItineraryById(vacationId, itemId);
+    if (!currentItinerary) throw new Error("Itinerary item not found");
+    const {
+      name,
+      categoryId,
+      price,
+      address,
+      description,
+      startDate,
+      endDate,
+      timeId,
+      website,
+    } = {
+      ...currentItinerary,
+      ...body,
+    };
+    const { rows } = await pool.query(
+      `UPDATE itinerary SET name = $1, category_id = $2, price = $3, address = $4, description = $5, start_date = $6, end_date = $7, time_id = $8, website = $9
+          WHERE vacation_id = $10 AND id = $11
+          RETURNING *`,
+      [
+        name,
+        categoryId,
+        price,
+        address,
+        description,
+        startDate,
+        endDate,
+        timeId,
+        website,
+        vacationId,
+        itemId,
+      ]
+    );
     return new Itinerary(rows[0]);
   }
 };
