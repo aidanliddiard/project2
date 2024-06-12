@@ -29,7 +29,6 @@ interface ItineraryData {
   start_date: string;
   end_date: string;
   time: string;
-  type: string;
   website: string;
   icon: IconType;
 }
@@ -59,6 +58,7 @@ export default function Itinerary() {
       const vacationData = resp.filter(
         (vacation: VacationFormData) => vacation.id === Number(id)
       );
+      console.log(vacationData);
       setVacation(vacationData);
       // if (vacationData[0]?.city) {
       //   fetchImagesData(vacationData[0].city);
@@ -85,7 +85,6 @@ export default function Itinerary() {
     const hotels = itinerary.filter(
       (item) => item.type === "Hotel"
     );
-    console.log(hotels)
     const restaurants = itinerary.filter(
       (item) => item.type === "Restaurant"
     );
@@ -156,46 +155,44 @@ export default function Itinerary() {
                   start_date={hotel.start_date}
                   end_date={hotel.end_date}
                   time={hotel.time}
-                  type={hotel.type}
                   website={hotel.website}
                   icon={FaHotel}
                 />
               );
             })}
 
+            </div>
           </div>
-        </div>
-        <div>
-          <p id="restaurants" className="bg-gray-200">
+          <div>
+            <p id="restaurants" className="bg-gray-200">
             Restaurants
-          </p>
-          <div id="restaurantCards">
-          {restaurants.map((restaurant) => {
+            </p>
+            <div id="restaurantCards" className="flex">
+            {restaurants.map((restaurant) => {
               return (
-                <ItineraryCard
-                  key={restaurant.id}
-                  id={restaurant.id}
-                  name={restaurant.name}
-                  price={restaurant.price}
-                  address={restaurant.address}
-                  description={restaurant.description}
-                  start_date={restaurant.start_date}
-                  end_date={restaurant.end_date}
-                  time={restaurant.time}
-                  type={restaurant.type}
-                  website={restaurant.website}
-                  icon={FaUtensils}
-                />
+              <ItineraryCard
+                key={restaurant.id}
+                id={restaurant.id}
+                name={restaurant.name}
+                price={restaurant.price}
+                address={restaurant.address}
+                description={restaurant.description}
+                start_date={restaurant.start_date}
+                end_date={restaurant.end_date}
+                time={restaurant.time}
+                website={restaurant.website}
+                icon={FaUtensils}
+              />
               );
             })}
+            </div>
           </div>
-        </div>
-        <div>
-          <p id="activities" className="bg-gray-200">
+          <div>
+            <p id="activities" className="bg-gray-200">
             Activities
-          </p>
-          <div id="activityCards">
-          {activities.map((activity) => {
+            </p>
+            <div id="activityCards" className="flex flex-col justify-center">
+            {activities.map((activity) => {
               return (
                 <ItineraryCard
                   key={activity.id}
@@ -207,7 +204,6 @@ export default function Itinerary() {
                   start_date={activity.start_date}
                   end_date={activity.end_date}
                   time={activity.time}
-                  type={activity.type}
                   website={activity.website}
                   icon={LuFerrisWheel}
                 />
