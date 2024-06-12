@@ -34,7 +34,7 @@ interface ItineraryData {
   icon: IconType;
 }
 
-function formatDate(dateString: string) {
+export function formatDate(dateString: string) {
   const date = new Date(dateString);
   const month = ("0" + (date.getMonth() + 1)).slice(-2); // add leading zero
   const day = ("0" + date.getDate()).slice(-2); // add leading zero
@@ -147,6 +147,7 @@ export default function Itinerary() {
               return (
                 <ItineraryCard
                   key={hotel.id}
+                  id={hotel.id}
                   name={hotel.name}
                   price={hotel.price}
                   address={hotel.address}
@@ -168,7 +169,24 @@ export default function Itinerary() {
             Restaurants
           </p>
           <div id="restaurantCards">
-            <ItineraryCard icon={FaUtensils} />
+          {restaurants.map((restaurant) => {
+              return (
+                <ItineraryCard
+                  key={restaurant.id}
+                  id={restaurant.id}
+                  name={restaurant.name}
+                  price={restaurant.price}
+                  address={restaurant.address}
+                  description={restaurant.description}
+                  start_date={restaurant.start_date}
+                  end_date={restaurant.end_date}
+                  time={restaurant.time}
+                  type={restaurant.type}
+                  website={restaurant.website}
+                  icon={FaUtensils}
+                />
+              );
+            })}
           </div>
         </div>
         <div>
@@ -176,7 +194,24 @@ export default function Itinerary() {
             Activities
           </p>
           <div id="activityCards">
-            <ItineraryCard icon={LuFerrisWheel} />
+          {activities.map((activity) => {
+              return (
+                <ItineraryCard
+                  key={activity.id}
+                  id={activity.id}
+                  name={activity.name}
+                  price={activity.price}
+                  address={activity.address}
+                  description={activity.description}
+                  start_date={activity.start_date}
+                  end_date={activity.end_date}
+                  time={activity.time}
+                  type={activity.type}
+                  website={activity.website}
+                  icon={LuFerrisWheel}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
