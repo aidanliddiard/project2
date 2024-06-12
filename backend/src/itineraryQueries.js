@@ -108,7 +108,8 @@ const deleteItineraryItem = (request, response) => {
     if (error) {
       throw error;
     }
-    response.status(200).send(`Itinerary deleted with ID: ${id}`);
+    console.log(results);
+    response.status(200).json({ message: `Itinerary deleted with ID: ${id}` });
   });
 };
 

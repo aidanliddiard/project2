@@ -167,7 +167,7 @@ export default function Itinerary() {
             <p id="restaurants" className="bg-gray-200">
             Restaurants
             </p>
-            <div id="restaurantCards" className="flex">
+            <div id="restaurantCards">
             {restaurants.map((restaurant) => {
               return (
               <ItineraryCard

@@ -50,3 +50,16 @@ export async function getItinerary(vacation_id: number){
   const itinerary = await fetch(`${url}/api/vacations/${vacation_id}/`);
   return await itinerary.json();
 }
+
+export async function deleteItinerary(id: number){
+  const itinerary = await fetch(`${url}/api/vacations/${id}/itinerary/`, {
+    method: "DELETE",
+    headers: {"Content-Type": "application/json"}
+  })
+
+  if (!itinerary.ok) {
+    throw new Error(`HTTP error! status: ${itinerary.status}`);
+  }
+  console.log(itinerary)
+  return itinerary.status;
+}
