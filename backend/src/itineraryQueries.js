@@ -51,8 +51,9 @@ const createItineraryItem = (request, response) => {
 
 const getItinerary = (request, response) => {
   const vacation_id = request.params.id;
+  console.log(vacation_id)
   pool.query(
-    'SELECT itinerary.name, itinerary.price, itinerary.address, itinerary.description, itinerary.start_date, itinerary.end_date, itinerary.website, time.time, category.type FROM itinerary LEFT JOIN time on time.id = itinerary.time_id LEFT JOIN category on category.id = itinerary.category_id WHERE vacation_id = $1;',
+    'SELECT itinerary.id, itinerary.name, itinerary.price, itinerary.address, itinerary.description, itinerary.start_date, itinerary.end_date, itinerary.website, time.time, category.type FROM itinerary LEFT JOIN time on time.id = itinerary.time_id LEFT JOIN category on category.id = itinerary.category_id WHERE vacation_id = $1;',
     [vacation_id],
     (error, results) => {
       if (error) {
