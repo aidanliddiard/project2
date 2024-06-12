@@ -59,6 +59,7 @@ export default function Itinerary() {
       const vacationData = resp.filter(
         (vacation: VacationFormData) => vacation.id === Number(id)
       );
+      console.log(vacationData);
       setVacation(vacationData);
       // if (vacationData[0]?.city) {
       //   fetchImagesData(vacationData[0].city);
@@ -84,7 +85,6 @@ export default function Itinerary() {
     const hotels = itinerary.filter(
       (item) => item.type === "Hotel"
     );
-    console.log(hotels)
     const restaurants = itinerary.filter(
       (item) => item.type === "Restaurant"
     );
