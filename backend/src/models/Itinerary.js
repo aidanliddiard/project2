@@ -126,4 +126,12 @@ module.exports = class Itinerary {
     );
     return new Itinerary(rows[0]);
   }
+
+  static async deleteItineraryItem(itemId) {
+    const { rows } = await pool.query(
+      `DELETE FROM itinerary WHERE id = $1 RETURNING *`,
+      [itemId]
+    );
+    return new Itinerary(rows[0]);
+  }
 };

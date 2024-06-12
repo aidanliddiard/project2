@@ -117,4 +117,21 @@ describe("itinerary backend routes", () => {
     const resAfter = await agent.get(`/api/vacations/${vacation_id}/itinerary`);
     expect(resAfter.body.name).toBe("The Golden Gate Bridge");
   });
+
+  test("DELETE to /api/vacations/:id/itinerary/:id", async () => {
+    const [agent, vacation_id] = await createVacation();
+    await agent
+      .post(`/api/vacations/${vacation_id}/itinerary`)
+      .send(mockItinerary);
+
+    const resBefore = await agent.get(
+      `/api/vacations/${vacation_id}/itinerary`
+    );
+    const itinerary_id = resBefore.body.id;
+
+    const resp = await agent.delete(
+      `/api/vacations/${vacation_id}/itinerary/${itinerary_id}`
+    );
+    expect(resp.status).toBe(204);
+  });
 });

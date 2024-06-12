@@ -24,7 +24,6 @@ router.get("/:id/itinerary", authenticate, async (req, res, next) => {
 });
 
 router.put("/:id/itinerary/:itemId", authenticate, async (req, res, next) => {
-  console.log(req.params.id, req.params.itemId);
   try {
     const itinerary = await Itinerary.updateItineraryItem(
       req.params.id,
@@ -38,4 +37,16 @@ router.put("/:id/itinerary/:itemId", authenticate, async (req, res, next) => {
   }
 });
 
+router.delete(
+  "/:id/itinerary/:itemId",
+  authenticate,
+  async (req, res, next) => {
+    try {
+      const itinerary = await Itinerary.deleteItineraryItem(req.params.itemId);
+      res.status(204).send();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 module.exports = router;
