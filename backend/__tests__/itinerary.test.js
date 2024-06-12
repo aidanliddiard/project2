@@ -37,6 +37,13 @@ async function createVacation() {
   return [agent, vacation_id];
 }
 
+async function createItinerary(agent, vacation_id) {
+  const res = await agent
+    .post(`/api/vacations/${vacation_id}/itinerary`)
+    .send(mockItinerary);
+  return [agent, vacation_id];
+}
+
 describe("itinerary backend routes", () => {
   beforeEach(setupDb);
   test("POST to /api/vacations/itinerary", async () => {
@@ -63,5 +70,28 @@ describe("itinerary backend routes", () => {
     expect(res.body.startDate.slice(0, 10)).toEqual(
       new Date(mockItinerary.startDate).toISOString().split("T")[0]
     );
+  });
+
+  test("GET to /api/vacations/:id/itinerary", async () => {
+    const [agent, vacation_id] = await createVacation();
+    const response = await agent
+      .post(`/api/vacations/${vacation_id}/itinerary`)
+      .send(mockItinerary);
+    const res = await agent.get(`/api/vacations/${vacation_id}/itinerary`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: expect.any(Number),
+      name: mockItinerary.name,
+      category_id: mockItinerary.categoryId,
+      price: parseFloat(mockItinerary.price).toFixed(2),
+      address: mockItinerary.address,
+      description: mockItinerary.description,
+      startDate: expect.any(String),
+      endDate: null,
+      timeId: mockItinerary.timeId,
+      website: mockItinerary.website,
+      vacationId: vacation_id,
+    });
   });
 });

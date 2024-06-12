@@ -70,4 +70,14 @@ module.exports = class Itinerary {
     );
     return new Itinerary(rows[0]);
   }
+
+  static async getItinerary(vacationId) {
+    console.log(vacationId);
+    const { rows } = await pool.query(
+      `SELECT * from itinerary WHERE vacation_id = $1`,
+      [vacationId]
+    );
+    if (!rows[0]) return null;
+    return new Itinerary(rows[0]);
+  }
 };

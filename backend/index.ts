@@ -25,7 +25,7 @@ app.use(
 app.get("/api/vacations", vacationQueries.getVacations);
 app.post("/api/vacations/", vacationQueries.createVacation);
 
-app.get("/api/vacations/:id", itineraryQueries.getItinerary);
+// app.get("/api/vacations/:id", itineraryQueries.getItinerary);
 app.get("/api/time", itineraryQueries.getTime);
 app.get("/api/category", itineraryQueries.getCategory);
 
@@ -37,7 +37,7 @@ app.delete(
 );
 
 app.use(
-  "/api/vacations/:id/itinerary",
+  "/api/vacations",
   require("./src/controller/itinerary.js")
 );
 
