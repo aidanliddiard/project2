@@ -1,13 +1,23 @@
 const pool = require('./server.js');
 
-const getVacations = (request, response) => {
-  const user_id = request.body.user_id;
+// const getVacations = (request, response) => {
+//   const user_id = request.body.user_id;
 
-  if (!user_id) {
-    response.status(400).json({ error: "User ID is missing in the request body" });
-    return;
-  }
-  pool.query('SELECT * FROM vacations  WHERE user_id = $1',[user_id], (error, results) => {
+//   if (!user_id) {
+//     response.status(400).json({ error: "User ID is missing in the request body" });
+//     return;
+//   }
+//   pool.query('SELECT * FROM vacations  WHERE user_id = $1',[user_id], (error, results) => {
+//       if (error) {
+//         throw error;
+//       }
+//       response.status(200).json(results.rows);
+//     });
+//   } 
+
+const getVacations = (request, response) => {
+
+  pool.query('SELECT * FROM vacations', (error, results) => {
       if (error) {
         throw error;
       }
