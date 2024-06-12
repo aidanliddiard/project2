@@ -26,6 +26,15 @@ function setupDb() {
   return pool.query(sql);
 }
 
+async function deleteTestData() {
+  await pool.query("DELETE FROM users WHERE email = $1", [mockUser.email]);
+  await pool.query("DELETE FROM users WHERE email = $1", ["test@example.com"]);
+}
+
+afterEach(async () => {
+  await deleteTestData();
+});
+
 function closeAll() {
   return pool.end();
 }
