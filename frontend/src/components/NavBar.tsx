@@ -1,15 +1,27 @@
 import React from "react";
 import { useUserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import styles from "./NavBar.module.css";
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { currentUser, getCurrentUser, signOut } = useUserContext();
 
   const handleClick = async () => {
     await signOut();
     await getCurrentUser();
     navigate("/");
+  };
+
+  const getLinkProps = (path: string) => {
+    const isActive = location.pathname === path;
+    return {
+      className: isActive ? styles.active : styles.inactive,
+      "aria-current": isActive ? "page" : undefined,
+    };
   };
 
   return (
@@ -52,11 +64,7 @@ export default function NavBar() {
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              <a
-                onClick={() => navigate("/")}
-                className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
-                aria-current="page"
-              >
+              <a onClick={() => navigate("/")} {...getLinkProps("/")}>
                 {currentUser ? "My vacations" : "Home"}
               </a>
             </li>
@@ -64,27 +72,27 @@ export default function NavBar() {
               <li>
                 <a
                   onClick={() => navigate("/create-vacation")}
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  {...getLinkProps("/create-vacation")}
                 >
                   Create Vacation
                 </a>
               </li>
             )}
             {currentUser && (
-              <li id="createTodoLink">
+              <li>
                 <a
                   onClick={() => navigate("/create-itinerary")}
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  {...getLinkProps("/create-itinerary")}
                 >
                   Create Itinerary Item
                 </a>
               </li>
             )}
             {!currentUser && (
-              <li id="signInLink">
+              <li>
                 <a
                   onClick={() => navigate("/login")}
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  {...getLinkProps("/login")}
                 >
                   Log In
                 </a>
