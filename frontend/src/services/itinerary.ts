@@ -1,10 +1,10 @@
-import { ItineraryObject } from "../components/ItineraryForm"
+import { ItineraryObject } from "../components/ItineraryForm";
 
-const url = "http://localhost:3000"
+const url = "http://localhost:3000";
 
 export async function fetchCategory() {
   try {
-    const response = await fetch(`${url}/api/category`);
+    const response = await fetch(`${url}/api/vacations/itinerary/category`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -12,14 +12,14 @@ export async function fetchCategory() {
     console.log(data);
     return data;
   } catch (error) {
-    console.error('A problem occurred when fetching the categories:', error);
+    console.error("A problem occurred when fetching the categories:", error);
     throw error;
   }
 }
 
 export async function fetchTime() {
   try {
-    const response = await fetch(`${url}/api/time`);
+    const response = await fetch(`${url}/api/vacations/itinerary/time`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -27,26 +27,34 @@ export async function fetchTime() {
     console.log(data);
     return data;
   } catch (error) {
-    console.error('A problem occurred when fetching the time:', error);
+    console.error("A problem occurred when fetching the time:", error);
     throw error;
   }
 }
 
 export async function createItinerary(newData: ItineraryObject) {
-    const itinerary = await fetch(`${url}/api/vacations/${newData.vacation_id}/itinerary`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(newData)
-    })
-    return await itinerary.json();
+  const itinerary = await fetch(
+    `${url}/api/vacations/${newData.vacationId}/itinerary`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      mode: "cors",
+      body: JSON.stringify(newData),
+    }
+  );
+  return await itinerary.json();
 }
 
-export async function getVacations(){
-  const vacations = await fetch(`${url}/api/vacations`);
-  return await vacations.json();
-}
-
-export async function getItinerary(vacation_id: number){
-  const itinerary = await fetch(`${url}/api/vacations/${vacation_id}/`);
+export async function getItinerary(vacation_id: number) {
+  const itinerary = await fetch(
+    `${url}/api/vacations/${vacation_id}/itinerary`,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      mode: "cors",
+    }
+  );
   return await itinerary.json();
 }
