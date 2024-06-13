@@ -1,7 +1,5 @@
 import { ItineraryObject } from "../components/ItineraryForm";
-
 const url = "http://localhost:3000";
-
 export async function fetchCategory() {
   try {
     const response = await fetch(`${url}/api/vacations/itinerary/category`);
@@ -16,7 +14,6 @@ export async function fetchCategory() {
     throw error;
   }
 }
-
 export async function fetchTime() {
   try {
     const response = await fetch(`${url}/api/vacations/itinerary/time`);
@@ -31,7 +28,6 @@ export async function fetchTime() {
     throw error;
   }
 }
-
 export async function createItinerary(newData: ItineraryObject) {
   const itinerary = await fetch(
     `${url}/api/vacations/${newData.vacationId}/itinerary`,
@@ -45,7 +41,6 @@ export async function createItinerary(newData: ItineraryObject) {
   );
   return await itinerary.json();
 }
-
 export async function getItinerary(vacation_id: number) {
   const itinerary = await fetch(
     `${url}/api/vacations/${vacation_id}/itinerary`,
@@ -56,5 +51,24 @@ export async function getItinerary(vacation_id: number) {
       mode: "cors",
     }
   );
-  return await itinerary.json();
+  console.log(itinerary)
+  // console.log(await itinerary.json())
+  const response = await itinerary.json();
+  return response
+}
+
+
+export async function deleteItinerary(id: number, vacation_id: number){
+  const itinerary = await fetch(`${url}/api/vacations/${vacation_id}/itinerary/${id}`, {
+    method: "DELETE",
+    headers: {"Content-Type": "application/json"},
+    credentials: "include",
+    mode: "cors",
+  })
+
+  if (!itinerary.ok) {
+    throw new Error(`HTTP error! status: ${itinerary.status}`);
+  }
+  console.log(itinerary)
+  return itinerary.status;
 }

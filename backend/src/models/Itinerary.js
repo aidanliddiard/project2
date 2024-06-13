@@ -3,38 +3,38 @@ const pool = require("../server.js");
 module.exports = class Itinerary {
   id;
   name;
-  category_id;
+  type;
   price;
   address;
   description;
   startDate;
   endDate;
-  timeId;
+  time;
   website;
   vacationId;
 
   constructor({
     id,
     name,
-    category_id,
+    type,
     price,
     address,
     description,
     start_date,
     end_date,
-    time_id,
+    time,
     website,
     vacation_id,
   }) {
     this.id = id;
     this.name = name;
-    this.category_id = category_id;
+    this.type = type;
     this.price = price;
     this.address = address;
     this.description = description;
     this.startDate = start_date;
     this.endDate = end_date;
-    this.timeId = time_id;
+    this.time = time;
     this.website = website;
     this.vacationId = vacation_id;
   }
@@ -72,12 +72,14 @@ module.exports = class Itinerary {
   }
 
   static async getItinerary(vacationId) {
+
     const { rows } = await pool.query(
-      `SELECT * from itinerary WHERE vacation_id = $1`,
+      `SELECT itinerary.id, itinerary.name, itinerary.price, itinerary.address, itinerary.description, itinerary.start_date, itinerary.end_date, itinerary.website, time.time, category.type, itinerary.vacation_id FROM itinerary LEFT JOIN time on time.id = itinerary.time_id LEFT JOIN category on category.id = itinerary.category_id WHERE vacation_id = $1;`,
       [vacationId]
+  
     );
-    if (!rows[0]) return null;
-    return new Itinerary(rows[0]);
+    console.log(rows[0])
+    return rows.map((row) => new Itinerary(row));
   }
 
   static async getItineraryById(vacationId, itemId) {
