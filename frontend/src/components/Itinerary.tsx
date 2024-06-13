@@ -57,6 +57,7 @@ export default function Itinerary() {
       const vacationData = resp.filter(
         (vacation: VacationFormData) => vacation.id === Number(id)
       );
+      console.log(vacationData);
       setVacation(vacationData);
       // if (vacationData[0]?.city) {
       //   fetchImagesData(vacationData[0].city);
@@ -81,7 +82,6 @@ export default function Itinerary() {
 
   useEffect(() => {
     const hotels = itinerary.filter((item) => item.type === "Hotel");
-    console.log(hotels);
     const restaurants = itinerary.filter((item) => item.type === "Restaurant");
     const activities = itinerary.filter((item) => item.type === "Activity");
     setHotels(hotels);
@@ -147,7 +147,6 @@ export default function Itinerary() {
                   start_date={hotel.start_date}
                   end_date={hotel.end_date}
                   time={hotel.time}
-                  type={hotel.type}
                   website={hotel.website}
                   icon={FaHotel}
                 />
@@ -172,7 +171,6 @@ export default function Itinerary() {
                   start_date={restaurant.start_date}
                   end_date={restaurant.end_date}
                   time={restaurant.time}
-                  type={restaurant.type}
                   website={restaurant.website}
                   icon={FaUtensils}
                 />
@@ -197,7 +195,6 @@ export default function Itinerary() {
                   start_date={activity.start_date}
                   end_date={activity.end_date}
                   time={activity.time}
-                  type={activity.type}
                   website={activity.website}
                   icon={LuFerrisWheel}
                 />
