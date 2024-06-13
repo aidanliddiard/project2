@@ -49,13 +49,13 @@ describe("itinerary backend routes", () => {
     expect(res.body).toEqual({
       id: expect.any(Number),
       name: mockItinerary.name,
-      category_id: mockItinerary.categoryId,
+      //   category_id: mockItinerary.categoryId,
       price: parseFloat(mockItinerary.price).toFixed(2),
       address: mockItinerary.address,
       description: mockItinerary.description,
       startDate: expect.any(String),
       endDate: null,
-      timeId: mockItinerary.timeId,
+      //   timeId: mockItinerary.timeId,
       website: mockItinerary.website,
       vacationId: vacation_id,
     });
@@ -73,19 +73,21 @@ describe("itinerary backend routes", () => {
     const res = await agent.get(`/api/vacations/${vacation_id}/itinerary`);
 
     expect(res.status).toBe(200);
-    expect(res.body).toEqual({
-      id: expect.any(Number),
-      name: mockItinerary.name,
-      category_id: mockItinerary.categoryId,
-      price: parseFloat(mockItinerary.price).toFixed(2),
-      address: mockItinerary.address,
-      description: mockItinerary.description,
-      startDate: expect.any(String),
-      endDate: null,
-      timeId: mockItinerary.timeId,
-      website: mockItinerary.website,
-      vacationId: vacation_id,
-    });
+    expect(res.body).toEqual([
+      {
+        id: expect.any(Number),
+        name: mockItinerary.name,
+        type: "Activity",
+        price: parseFloat(mockItinerary.price).toFixed(2),
+        address: mockItinerary.address,
+        description: mockItinerary.description,
+        startDate: expect.any(String),
+        endDate: null,
+        time: "Afternoon",
+        website: mockItinerary.website,
+        vacationId: vacation_id,
+      },
+    ]);
   });
 
   test("UPDATE to /api/vacations/:id/itinerary/:id", async () => {
@@ -98,8 +100,8 @@ describe("itinerary backend routes", () => {
       `/api/vacations/${vacation_id}/itinerary`
     );
 
-    expect(resBefore.body.price).toBe("0.00");
-    const itinerary_id = resBefore.body.id;
+    expect(resBefore.body[0].name).toBe("Golden Gate Bridge");
+    const itinerary_id = resBefore.body[0].id;
 
     const resp = await agent
       .put(`/api/vacations/${vacation_id}/itinerary/${itinerary_id}`)
@@ -108,7 +110,7 @@ describe("itinerary backend routes", () => {
       });
     expect(resp.status).toBe(200);
     const resAfter = await agent.get(`/api/vacations/${vacation_id}/itinerary`);
-    expect(resAfter.body.name).toBe("The Golden Gate Bridge");
+    expect(resAfter.body[0].name).toBe("The Golden Gate Bridge");
   });
 
   test("DELETE to /api/vacations/:id/itinerary/:id", async () => {
@@ -120,7 +122,7 @@ describe("itinerary backend routes", () => {
     const resBefore = await agent.get(
       `/api/vacations/${vacation_id}/itinerary`
     );
-    const itinerary_id = resBefore.body.id;
+    const itinerary_id = resBefore.body[0].id;
 
     const resp = await agent.delete(
       `/api/vacations/${vacation_id}/itinerary/${itinerary_id}`

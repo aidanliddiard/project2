@@ -2,7 +2,6 @@ import React from "react";
 import { useUserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import styles from "./NavBar.module.css";
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -19,7 +18,9 @@ export default function NavBar() {
   const getLinkProps = (path: string) => {
     const isActive = location.pathname === path;
     return {
-      className: isActive ? styles.active : styles.inactive,
+      className: isActive
+        ? "block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+        : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent",
       "aria-current": isActive ? "page" : undefined,
     };
   };
