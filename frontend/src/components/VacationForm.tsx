@@ -1,4 +1,10 @@
-import React, { useState, useContext, ChangeEvent, FormEvent, useEffect } from "react";
+import React, {
+  useState,
+  useContext,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+} from "react";
 import { submitVacation } from "../services/vacationform";
 import { useUserContext } from "../context/userContext";
 import { fetchImages } from "../services/images";
@@ -8,11 +14,11 @@ interface VacationFormData {
   city: string;
   country: string;
   description: string;
-  start_date: string;
-  end_date: string;
-  image_url: string;
+  startDate: Date | string;
+  endDate: Date | string;
+  imageUrl: string;
   alt: string;
-  user_id: number;
+  userId: number;
 }
 
 export default function VacationForm() {
@@ -23,11 +29,11 @@ export default function VacationForm() {
     city: "",
     country: "",
     description: "",
-    start_date: "",
-    end_date: "",
-    image_url: "",
+    startDate: "",
+    endDate: "",
+    imageUrl: "",
     alt: "",
-    user_id: userId,
+    userId: userId,
   });
 
   const handleChange = (
@@ -50,7 +56,8 @@ export default function VacationForm() {
       const updatedFormData = {
         ...formData,
         alt: altDescription,
-        image_url: imageUnsplashUrl,
+        imageUrl: imageUnsplashUrl,
+        userId: Number(currentUser.id),
       };
 
       const response = await submitVacation(updatedFormData);
@@ -59,11 +66,11 @@ export default function VacationForm() {
         city: "",
         country: "",
         description: "",
-        start_date: "",
-        end_date: "",
-        image_url: "",
+        startDate: "",
+        endDate: "",
+        imageUrl: "",
         alt: "",
-        user_id: userId,
+        userId: userId,
       });
     } catch (error) {
       console.error(
@@ -150,9 +157,13 @@ export default function VacationForm() {
                   </label>
                   <input
                     type="date"
-                    name="start_date"
+                    name="startDate"
                     id="startDate"
-                    value={formData.start_date}
+                    value={
+                      formData.startDate instanceof Date
+                        ? formData.startDate.toISOString().split("T")[0]
+                        : formData.startDate.toString()
+                    }
                     onChange={handleChange}
                     placeholder="YYYY-MM-DD"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none"
@@ -161,20 +172,22 @@ export default function VacationForm() {
                 </div>
                 <div>
                   <label
-                    htmlFor="endDate"
+                    htmlFor="end_date"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     End Date
                   </label>
                   <input
                     type="date"
-                    name="end_date"
+                    name="endDate"
                     id="endDate"
-                    value={formData.end_date}
+                    value={
+                      formData.endDate instanceof Date
+                        ? formData.endDate.toISOString().split("T")[0]
+                        : formData.endDate.toString()
+                    }
                     onChange={handleChange}
-                    placeholder="YYYY-MM-DD"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none"
-                    required
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                 </div>
                 <button
