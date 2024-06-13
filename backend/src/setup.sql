@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS vacations (
     description TEXT,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
+    image_url VARCHAR(255),
+    alt VARCHAR(255),
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
 
