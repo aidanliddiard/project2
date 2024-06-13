@@ -137,7 +137,6 @@ module.exports = class Itinerary {
 
   static async getTimes() {
     const { rows } = await pool.query(`SELECT * from time`);
-    console.log("rows", rows);
     return rows;
   }
 

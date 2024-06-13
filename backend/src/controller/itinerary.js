@@ -52,7 +52,6 @@ router.delete(
 router.get("/itinerary/time", async (req, res, next) => {
   try {
     const time = await Itinerary.getTimes();
-    console.log(time);
     res.json(time);
   } catch (error) {
     next(error);
