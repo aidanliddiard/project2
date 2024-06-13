@@ -1,6 +1,7 @@
-import React, { useState, useContext, ChangeEvent, FormEvent } from "react";
+import React, { useState, useContext, ChangeEvent, FormEvent, useEffect } from "react";
 import { submitVacation } from "../services/vacationform";
 import { useUserContext } from "../context/userContext";
+import { fetchImages } from "../services/images";
 import NavBar from "./NavBar";
 
 interface VacationFormData {
@@ -9,6 +10,8 @@ interface VacationFormData {
   description: string;
   start_date: string;
   end_date: string;
+  image_url: string;
+  alt: string;
   user_id: number;
 }
 
@@ -22,6 +25,8 @@ export default function VacationForm() {
     description: "",
     start_date: "",
     end_date: "",
+    image_url: "",
+    alt: "",
     user_id: userId,
   });
 
@@ -38,15 +43,31 @@ export default function VacationForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await submitVacation(formData);
-      console.log(response);
+      const imageUrl = fetchImages(formData.city);
+      //Call Unsplash API to get an image and alt based on the city and country
+      const imageUnsplashURL = await fetchImages(formData.city);
+      const altDescription = imageUnsplashURL.results[0].alt_description;
+      const imageUnsplashUrl = imageUnsplashURL.results[0].urls.full;
 
+      //Create a new Form Data Variable
+      const updatedFormData = {
+        ...formData,
+        alt: altDescription,
+        image_url: imageUnsplashUrl,
+      };
+
+      const response = await submitVacation(updatedFormData);
+      console.log("Response", response);
+
+      //Reset the form data after submission
       setFormData({
         city: "",
         country: "",
         description: "",
         start_date: "",
         end_date: "",
+        image_url: "",
+        alt: "",
         user_id: userId,
       });
     } catch (error) {
