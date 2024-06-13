@@ -96,13 +96,17 @@ export default function ItineraryForm() {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Create an Itinerary Item
               </h1>
+              <p className="text-sm dark:text-white">
+                <span className="text-red-500 text-small">*</span> indicates a required field
+
+              </p>
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
               <label
               htmlFor="vacation"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-              Vacation
+              Vacation<span className="text-red-500 text-small"> *</span>
               </label>
               <select
               name="category"
@@ -123,7 +127,7 @@ export default function ItineraryForm() {
                     htmlFor="name"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Name
+                    Name<span className="text-red-500 text-small"> *</span>
                   </label>
                   <input
                     type="text"
@@ -145,7 +149,7 @@ export default function ItineraryForm() {
                     htmlFor="category"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Category
+                    Category<span className="text-red-500 text-small"> *</span>
                   </label>
                   <select
                     name="category"
@@ -179,7 +183,7 @@ export default function ItineraryForm() {
                     htmlFor="confirm-password"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Price
+                    Price <span className="text-red-500 text-small">*</span>
                   </label>
                   <input
                     type="number"
@@ -206,7 +210,7 @@ export default function ItineraryForm() {
                     htmlFor="address"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Address
+                    Address <span className="text-red-500 text-small">*</span>
                   </label>
                   <input
                     type="text"
@@ -228,7 +232,7 @@ export default function ItineraryForm() {
                     htmlFor="start_date"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Start Date
+                    Start Date <span className="text-red-500 text-small">*</span>
                   </label>
                   <input
                     type="date"
@@ -256,7 +260,7 @@ export default function ItineraryForm() {
                     htmlFor="end_date"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    End Date
+                    End Date<span className="text-red-500 text-small"> *</span>
                   </label>
                   <input
                     type="date"
@@ -283,7 +287,7 @@ export default function ItineraryForm() {
                     htmlFor="time"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Time of Day
+                    Time of Day <span className="text-red-500 text-small"> *</span>
                   </label>
                   <select
                     name="time"
