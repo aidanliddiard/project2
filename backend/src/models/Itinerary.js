@@ -78,7 +78,6 @@ module.exports = class Itinerary {
       [vacationId]
   
     );
-    console.log(rows[0])
     return rows.map((row) => new Itinerary(row));
   }
 
