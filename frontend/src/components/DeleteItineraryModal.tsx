@@ -2,16 +2,17 @@ import { deleteItinerary } from "../services/itinerary";
 
 interface DeleteModalProps {
   id: number;
+  vacation_id: number;
   name: string;
   onClose: () => void;
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ onClose, id, name }) => {
+const DeleteModal: React.FC<DeleteModalProps> = ({ onClose, id, vacation_id, name }) => {
     const handleDelete = async () => {
-        console.log("deleting");
-        console.log("id:", id);  // Add this line
+        console.log("deleting")
+        console.log("id:", id, "vacation_id:", vacation_id);  // Add this line
         try {
-          const response = await deleteItinerary(id);
+          const response = await deleteItinerary(id, vacation_id);
           console.log(response);
           console.log("deleted");
         } catch (error) {

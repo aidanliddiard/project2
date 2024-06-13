@@ -9,15 +9,15 @@ import NavBar from "./NavBar";
 export interface ItineraryObject {
   id: number;
   name: string;
-  category_id: number;
+  categoryId: number;
   price: number;
   address: string;
   description?: string;
-  start_date: Date | string;
-  end_date?: Date | string;
-  time_id: number;
+  startDate: Date | string;
+  endDate?: Date | string;
+  timeId: number;
   website?: string;
-  vacation_id: number;
+  vacationId: number;
 }
 
 interface Category {
@@ -36,15 +36,15 @@ export default function ItineraryForm() {
   const [formData, setFormData] = useState<ItineraryObject>({
     id: 0,
     name: "",
-    category_id: 0,
+    categoryId: 0,
     price: 0,
     address: "",
     description: "",
-    start_date: "",
-    end_date: "",
-    time_id: 0,
+    startDate: "",
+    endDate: "",
+    timeId: 0,
     website: "",
-    vacation_id: 1,
+    vacationId: 1,
   });
 
   useEffect(() => {
@@ -73,15 +73,15 @@ export default function ItineraryForm() {
       setFormData({
         id: 0,
         name: "",
-        category_id: 0,
-        price: 0.00,
+        categoryId: 0,
+        price: 0.0,
         address: "",
         description: "",
-        start_date: "",
-        end_date: "",
-        time_id: 0,
+        startDate: "",
+        endDate: "",
+        timeId: 0,
         website: "",
-        vacation_id: 1,
+        vacationId: 1,
       });
     }
   }
@@ -151,11 +151,11 @@ export default function ItineraryForm() {
                   <select
                     name="category"
                     id="category"
-                    value={formData.category_id}
+                    value={formData.categoryId}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        category_id: Number(e.target.value),
+                        categoryId: Number(e.target.value),
                       })
                     }
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -236,14 +236,14 @@ export default function ItineraryForm() {
                     name="start_date"
                     id="start_date"
                     value={
-                      formData.start_date instanceof Date
-                        ? formData.start_date.toISOString().split("T")[0]
-                        : formData.start_date.toString()
+                      formData.startDate instanceof Date
+                        ? formData.startDate.toISOString().split("T")[0]
+                        : formData.startDate.toString()
                     }
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        start_date: new Date(e.target.value),
+                        startDate: new Date(e.target.value),
                       })
                     }
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -264,14 +264,14 @@ export default function ItineraryForm() {
                     name="end_date"
                     id="end_date"
                     value={
-                      formData.end_date instanceof Date
-                        ? formData.end_date.toISOString().split("T")[0]
+                      formData.endDate instanceof Date
+                        ? formData.endDate.toISOString().split("T")[0]
                         : ""
                     }
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        end_date: new Date(e.target.value),
+                        endDate: new Date(e.target.value),
                       })
                     }
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -289,11 +289,11 @@ export default function ItineraryForm() {
                   <select
                     name="time"
                     id="time"
-                    value={formData.time_id}
+                    value={formData.timeId}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        time_id: Number(e.target.value),
+                        timeId: Number(e.target.value),
                       })
                     }
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
