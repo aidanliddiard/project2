@@ -21,7 +21,7 @@ const router = Router();
   });
 
   //Create a Vacation
-  router.post("/vacations", authenticate, async (req, res, next) => {
+  router.post("/", authenticate, async (req, res, next) => {
     try {
       const vacation = await Vacation.insert(req.body);
       res.json(vacation);
