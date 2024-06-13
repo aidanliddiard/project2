@@ -188,7 +188,7 @@ export default function ItineraryForm() {
                     name="price"
                     id="price"
                     placeholder="0.00"
-                    value={formData.price}
+                    value={formData.price ? formData.price: ""}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
