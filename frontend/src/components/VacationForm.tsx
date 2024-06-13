@@ -43,13 +43,10 @@ export default function VacationForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const imageUrl = fetchImages(formData.city);
-      //Call Unsplash API to get an image and alt based on the city and country
       const imageUnsplashURL = await fetchImages(formData.city);
       const altDescription = imageUnsplashURL.results[0].alt_description;
       const imageUnsplashUrl = imageUnsplashURL.results[0].urls.full;
 
-      //Create a new Form Data Variable
       const updatedFormData = {
         ...formData,
         alt: altDescription,
@@ -57,9 +54,7 @@ export default function VacationForm() {
       };
 
       const response = await submitVacation(updatedFormData);
-      console.log("Response", response);
 
-      //Reset the form data after submission
       setFormData({
         city: "",
         country: "",
