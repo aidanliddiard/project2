@@ -10,7 +10,7 @@ export interface ItineraryObject {
   id: number;
   name: string;
   categoryId: number;
-  price: number;
+  price: number | null;
   address: string;
   description?: string;
   startDate: Date | string;
@@ -37,14 +37,14 @@ export default function ItineraryForm() {
     id: 0,
     name: "",
     categoryId: 0,
-    price: 0,
+    price: null,
     address: "",
     description: "",
     startDate: "",
     endDate: "",
     timeId: 0,
     website: "",
-    vacationId: 1,
+    vacationId: 0,
   });
 
   useEffect(() => {
@@ -74,14 +74,14 @@ export default function ItineraryForm() {
         id: 0,
         name: "",
         categoryId: 0,
-        price: 0.0,
+        price: null,
         address: "",
         description: "",
         startDate: "",
         endDate: "",
         timeId: 0,
         website: "",
-        vacationId: 1,
+        vacationId: 0,
       });
     }
   }
@@ -97,7 +97,6 @@ export default function ItineraryForm() {
                 Create an Itinerary Item
               </h1>
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-                {/* Vacation
               <div>
               <label
               htmlFor="vacation"
@@ -116,7 +115,7 @@ export default function ItineraryForm() {
               <option>3</option>
               </select>
               
-            </div> */}
+            </div>
 
                 {/* Name */}
                 <div>

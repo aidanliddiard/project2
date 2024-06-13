@@ -35,7 +35,6 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({ id, name, price, address,
     <div id="container" className="max-w-sm border rounded-md grid grid-cols-5 w-full mt-3 lg:max-w-full">
       <div className="col-span-4 rounded-md bg-white p-4 flex flex-col justify-between leading-normal">
         <div id="name" className="text-blue-800 font-bold text-xl mb-1">{name}</div>
-        <p>Vacation ID:{vacation_id}</p>
         <p id="description" className="text-gray-700">{description}</p>
         <p id="address" className="text-gray-700">Address: {address}</p>
         <p id="price" className="text-gray-700">Price: ${price}</p>
