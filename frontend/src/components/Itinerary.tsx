@@ -15,8 +15,8 @@ interface VacationFormData {
   city: string;
   country: string;
   description: string;
-  start_date: string;
-  end_date: string;
+  startDate: string;
+  endDate: string;
   user_id: number;
 }
 
@@ -32,6 +32,7 @@ interface ItineraryData {
   type: string;
   website: string;
   icon: IconType;
+  vacationId: number;
 }
 
 export function formatDate(dateString: string) {
@@ -72,8 +73,8 @@ export default function Itinerary() {
     // };
     const fetchItineraryData = async () => {
       const response = await getItinerary(Number(id));
-      console.log(response);
       setItinerary(response);
+      console.log("fetch itinerary data", response)
     };
 
     fetchVacationData();
@@ -81,9 +82,11 @@ export default function Itinerary() {
   }, []);
 
   useEffect(() => {
+    console.log("running useEffect. itin:", itinerary)
     const hotels = itinerary.filter((item) => item.type === "Hotel");
     const restaurants = itinerary.filter((item) => item.type === "Restaurant");
     const activities = itinerary.filter((item) => item.type === "Activity");
+    console.log(hotels, restaurants, activities)
     setHotels(hotels);
     setRestaurants(restaurants);
     setActivities(activities);
@@ -112,9 +115,10 @@ export default function Itinerary() {
                   ""
                 )}
                 <p className="max-w-3xl mx-auto mb-10 text-md text-gray-300">
-                  {formatDate(vacation[0]?.start_date)} -{" "}
-                  {formatDate(vacation[0]?.end_date)}
+                  {formatDate(vacation[0]?.startDate)} -{" "}
+                  {formatDate(vacation[0]?.endDate)}
                 </p>
+              
                 <a
                   className="inline-block w-full md:w-auto mb-4 md:mr-6 py-3 px-5 text-sm font-bold uppercase border-2 border-transparent bg-gray-200 rounded hover:bg-gray-100 text-gray-800 transition duration-200"
                   href="http://localhost:8083/todos"
@@ -140,7 +144,7 @@ export default function Itinerary() {
                 <ItineraryCard
                   key={hotel.id}
                   id={hotel.id}
-                  name={hotel.name}
+                  name={hotel.name} 
                   price={hotel.price}
                   address={hotel.address}
                   description={hotel.description}
@@ -149,6 +153,7 @@ export default function Itinerary() {
                   time={hotel.time}
                   website={hotel.website}
                   icon={FaHotel}
+                  vacation_id={hotel.vacationId}
                 />
               );
             })}
@@ -173,6 +178,7 @@ export default function Itinerary() {
                   time={restaurant.time}
                   website={restaurant.website}
                   icon={FaUtensils}
+                  vacation_id={restaurant.vacationId}
                 />
               );
             })}
@@ -197,6 +203,7 @@ export default function Itinerary() {
                   time={activity.time}
                   website={activity.website}
                   icon={LuFerrisWheel}
+                  vacation_id={activity.vacationId}
                 />
               );
             })}

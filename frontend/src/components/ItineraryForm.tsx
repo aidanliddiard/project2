@@ -44,7 +44,7 @@ export default function ItineraryForm() {
     endDate: "",
     timeId: 0,
     website: "",
-    vacationId: 127,
+    vacationId: 1,
   });
 
   useEffect(() => {
