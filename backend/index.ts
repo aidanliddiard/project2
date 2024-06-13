@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const app = express();
 const port = process.env.NODE_ENV === "test" ? 3001 : 3000;
-const itineraryQueries = require("./src/itineraryQueries.js");
 require("dotenv").config();
 const vacationQueries = require("./src/vacationQueries.js");
 
@@ -25,7 +24,6 @@ app.use(
 // app.get("/api/vacations", vacationQueries.getVacations);
 app.post("/api/vacations", vacationQueries.createVacation);
 app.use("/api/vacations", require("./src/controller/vacation.js"));
-
 
 app.use("/api/vacations", require("./src/controller/itinerary.js"));
 
