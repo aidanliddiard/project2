@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const app = express();
 const port = process.env.NODE_ENV === "test" ? 3001 : 3000;
-const itineraryQueries = require("./src/itineraryQueries.js");
 require("dotenv").config();
 const vacationQueries = require("./src/vacationQueries.js");
 
