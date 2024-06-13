@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchVacations } from "../services/vacations";
 import NavBar from "../components/NavBar";
 import { useUserContext } from "../context/userContext";
@@ -8,20 +8,36 @@ interface VacationObject {
   city: string;
   country: string;
   description?: string;
-  start_date: string;
-  end_date: string;
-  user_id: Number;
+  startDate: string;
+  endDate: string;
+  imageUrl: string;
+  alt: string;
+  userId: Number;
+}
+
+interface User {
+  name: string;
 }
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  const options: Intl.DateTimeFormatOptions = { month: "long", day: "numeric" };
-  return date.toLocaleDateString(undefined, options);
+  const options: Intl.DateTimeFormatOptions = {
+    month: "2-digit",
+    day: "2-digit",
+    year: "2-digit",
+  };
+  return date.toLocaleDateString(undefined, options).replace(/\//g, "/");
+}
+
+function formatRange(startDate: string, endDate: string): string {
+  return `${formatDate(startDate)} - ${formatDate(endDate)}`;
 }
 
 export default function Vacations() {
-  const { currentUser } = useUserContext();
-  const userName = currentUser.name;
+  const { currentUser }: { currentUser: User } = useUserContext();
+  const userName: string = currentUser.name;
+  // const { currentUser } = useUserContext();
+  // const userName = currentUser.name;
 
   const [vacation, setVacation] = useState<VacationObject[]>([]);
 
@@ -36,7 +52,7 @@ export default function Vacations() {
   return (
     <>
       <NavBar />
-      <section className="bg-gray-50 dark:bg-gray-900">
+      <section className="bg-gray-50 dark:bg-gray-900 h-screen">
         <div className="flex flex-col items-center justify-center px-6 py-8">
           <h1 className="text-3xl font-bold mb-4">{userName}'s Vacations</h1>
           <div className="grid grid-cols-3 gap-3 pt-6">
@@ -48,8 +64,8 @@ export default function Vacations() {
                 <a href="#">
                   <img
                     className="rounded-t-lg"
-                    src="frontend/src/components/paris.jpg"
-                    alt="paris"
+                    src={vacation.imageUrl}
+                    alt={vacation.alt}
                   />
                 </a>
                 <div className="p-5">
@@ -59,8 +75,8 @@ export default function Vacations() {
                     </h5>
                   </a>
                   <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    {formatDate(vacation.start_date)} -{" "}
-                    {formatDate(vacation.end_date)}
+                    {formatDate(vacation.startDate)} -{" "}
+                    {formatDate(vacation.endDate)}
                   </p>
                   <a
                     href={`/vacations/${vacation.id}/`}
@@ -76,9 +92,9 @@ export default function Vacations() {
                     >
                       <path
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M1 5h12m0 0L9 1m4 4L9 9"
                       />
                     </svg>
