@@ -13,6 +13,10 @@ interface VacationObject {
   userId: Number;
 }
 
+interface User {
+  name: string;
+}
+
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = { month: '2-digit', day: '2-digit', year: '2-digit' };
@@ -24,8 +28,10 @@ function formatRange(startDate: string, endDate: string): string {
 }
 
 export default function Vacations() {
-  const { currentUser } = useUserContext();
-  const userName = currentUser.name;
+  const { currentUser }: { currentUser: User } = useUserContext();
+  const userName: string = currentUser.name;
+  // const { currentUser } = useUserContext();
+  // const userName = currentUser.name;
 
   const [vacation, setVacation] = useState<VacationObject[]>([]);
 
@@ -40,7 +46,7 @@ export default function Vacations() {
   return (
     <>
       <NavBar />
-      <section className="bg-gray-50 dark:bg-gray-900">
+      <section className="bg-gray-50 dark:bg-gray-900 h-screen">
         <div className="flex flex-col items-center justify-center px-6 py-8">
           <h1 className="text-3xl font-bold mb-4">{userName}'s Vacations</h1>
           <div className="grid grid-cols-3 gap-3 pt-6">
