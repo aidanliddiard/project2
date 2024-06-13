@@ -2,7 +2,6 @@ import React from "react";
 import { useUserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import styles from "./NavBar.module.css";
 
 export default function NavBar() {
   const navigate = useNavigate();
