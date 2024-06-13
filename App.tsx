@@ -1,13 +1,13 @@
 import React from "react";
-import Home from "./frontend/src/components/Home";
-import SignUp from "./frontend/src/components/SignUp";
-import LogIn from "./frontend/src/components/LogIn";
-import Vacations from "./frontend/src/components/Vacations";
+import Home from "./frontend/src/views/Home";
+import SignUp from "./frontend/src/views/SignUp";
+import LogIn from "./frontend/src/views/LogIn";
+import Vacations from "./frontend/src/views/Vacations";
 import VacationForm from "./frontend/src/components/VacationForm";
 import { submitVacation } from "./frontend/src/services/vacationform";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ItineraryForm from "./frontend/src/components/ItineraryForm";
-import Itinerary from "./frontend/src/components/Itinerary";
+import Itinerary from "./frontend/src/views/Itinerary";
 import PrivateRoutes from "./frontend/src/components/PrivateRoutes";
 
 export default function App() {

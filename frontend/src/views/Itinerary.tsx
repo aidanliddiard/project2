@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 import { fetchImages } from "../services/images";
-import ItineraryCard from "./ItineraryCard";
+import ItineraryCard from "../components/ItineraryCard";
 import { LuFerrisWheel } from "react-icons/lu";
 import { FaUtensils, FaHotel } from "react-icons/fa";
 import { getItinerary } from "../services/itinerary";
@@ -74,7 +74,7 @@ export default function Itinerary() {
     const fetchItineraryData = async () => {
       const response = await getItinerary(Number(id));
       setItinerary(response);
-      console.log("fetch itinerary data", response)
+      console.log("fetch itinerary data", response);
     };
 
     fetchVacationData();
@@ -82,11 +82,11 @@ export default function Itinerary() {
   }, []);
 
   useEffect(() => {
-    console.log("running useEffect. itin:", itinerary)
+    console.log("running useEffect. itin:", itinerary);
     const hotels = itinerary.filter((item) => item.type === "Hotel");
     const restaurants = itinerary.filter((item) => item.type === "Restaurant");
     const activities = itinerary.filter((item) => item.type === "Activity");
-    console.log(hotels, restaurants, activities)
+    console.log(hotels, restaurants, activities);
     setHotels(hotels);
     setRestaurants(restaurants);
     setActivities(activities);
@@ -118,7 +118,7 @@ export default function Itinerary() {
                   {formatDate(vacation[0]?.startDate)} -{" "}
                   {formatDate(vacation[0]?.endDate)}
                 </p>
-              
+
                 <a
                   className="inline-block w-full md:w-auto mb-4 md:mr-6 py-3 px-5 text-sm font-bold uppercase border-2 border-transparent bg-gray-200 rounded hover:bg-gray-100 text-gray-800 transition duration-200"
                   href="http://localhost:8083/todos"
@@ -144,7 +144,7 @@ export default function Itinerary() {
                 <ItineraryCard
                   key={hotel.id}
                   id={hotel.id}
-                  name={hotel.name} 
+                  name={hotel.name}
                   price={hotel.price}
                   address={hotel.address}
                   description={hotel.description}
