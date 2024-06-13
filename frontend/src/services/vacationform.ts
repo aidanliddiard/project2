@@ -14,6 +14,8 @@ export async function submitVacation(formData: VacationFormData) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
+        mode: "cors",  
         body: JSON.stringify(formData),
       });
   

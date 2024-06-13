@@ -10,6 +10,8 @@ interface VacationObject {
   description?: string;
   startDate: string;
   endDate: string;
+  imageUrl: string;
+  alt: string;
   userId: Number;
 }
 
@@ -53,7 +55,7 @@ export default function Vacations() {
             {vacation.map((vacation: VacationObject, index: number) => (
               <div key={vacation.id} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 card grid-cols-3 gap-3">
                 <a href="#">
-                  <img className="rounded-t-lg" src="frontend/src/components/paris.jpg" alt="paris" />
+                  <img className="rounded-t-lg" src={vacation.imageUrl} alt={vacation.alt} />
                 </a>
                 <div className="p-5">
                   <a href="#">
