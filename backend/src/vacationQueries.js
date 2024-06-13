@@ -24,11 +24,25 @@ const getVacations = (request, response) => {
 //     });
 //   } 
 
-  const createVacation = (request, response) => {
-    const { city, country, description, start_date, end_date, user_id } = request.body;
+  // const createVacation = (request, response) => {
+  //   const { city, country, description, start_date, end_date, user_id } = request.body;
+  //   pool.query(
+  //     `INSERT INTO vacations (city, country, description, start_date, end_date, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+  //     [city, country, description, start_date, end_date, user_id],
+  //     (error, results) => {
+  //       if (error) {
+  //         throw error;
+  //       }
+  //       response.status(200).json(results.rows);
+  //     }
+  //   );
+  // };
+
+    const createVacation = (request, response) => {
+    const { city, country, description, start_date, end_date, image_url, alt, user_id } = request.body;
     pool.query(
-      `INSERT INTO vacations (city, country, description, start_date, end_date, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
-      [city, country, description, start_date, end_date, user_id],
+      `INSERT INTO vacations (city, country, description, start_date, end_date, image_url, alt, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+      [city, country, description, start_date, end_date, image_url, alt, user_id],
       (error, results) => {
         if (error) {
           throw error;
@@ -37,6 +51,7 @@ const getVacations = (request, response) => {
       }
     );
   };
+  
   
   module.exports = {
     getVacations,
