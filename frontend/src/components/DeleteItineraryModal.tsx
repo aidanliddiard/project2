@@ -3,7 +3,7 @@ import { deleteItinerary } from "../services/itinerary";
 
 interface DeleteModalProps {
   id: number;
-  vacation_id: number;
+  vacationId: number;
   name: string;
   onClose: () => void;
 }
@@ -11,7 +11,7 @@ interface DeleteModalProps {
 const DeleteModal: React.FC<DeleteModalProps> = ({
   onClose,
   id,
-  vacation_id,
+  vacationId,
   name,
 }) => {
   const handleDelete = async () => {
