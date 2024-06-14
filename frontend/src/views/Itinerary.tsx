@@ -76,11 +76,9 @@ export default function Itinerary() {
   }, []);
 
   useEffect(() => {
-    console.log("running useEffect. itin:", itinerary);
     const hotels = itinerary.filter((item) => item.type === "Hotel");
     const restaurants = itinerary.filter((item) => item.type === "Restaurant");
     const activities = itinerary.filter((item) => item.type === "Activity");
-    console.log(hotels, restaurants, activities);
     setHotels(hotels);
     setRestaurants(restaurants);
     setActivities(activities);
@@ -148,6 +146,7 @@ export default function Itinerary() {
                   website={hotel.website}
                   icon={FaHotel}
                   vacationId={hotel.vacationId}
+                  setItinerary={setItinerary}
                 />
               );
             })}
@@ -173,6 +172,7 @@ export default function Itinerary() {
                   website={restaurant.website}
                   icon={FaUtensils}
                   vacationId={restaurant.vacationId}
+                  setItinerary={setItinerary}
                 />
               );
             })}
@@ -198,6 +198,7 @@ export default function Itinerary() {
                   website={activity.website}
                   icon={LuFerrisWheel}
                   vacationId={activity.vacationId}
+                  setItinerary={setItinerary}
                 />
               );
             })}

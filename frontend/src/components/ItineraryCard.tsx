@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { formatDate } from "../views/Itinerary";
 import DeleteModal from "./DeleteItineraryModal";
 import EditModal from "./EditItineraryModal";
+import { ItineraryObject } from "./ItineraryForm";
 
 interface ItineraryCardProps {
   id: number;
@@ -20,6 +21,7 @@ interface ItineraryCardProps {
   website: string;
   icon: IconType;
   vacationId: number;
+  setItinerary: (itinerary: ItineraryObject[]) => void;
 }
 
 const ItineraryCard: React.FC<ItineraryCardProps> = ({
@@ -34,6 +36,7 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
   website,
   icon: Icon,
   vacationId,
+  setItinerary,
 }: ItineraryCardProps) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -112,6 +115,7 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
             id={id}
             vacationId={vacationId}
             name={name}
+            setItinerary={setItinerary}
           />
         )}
       </div>

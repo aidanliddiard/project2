@@ -1,29 +1,32 @@
-import React from "react";
-import { deleteItinerary } from "../services/itinerary";
+import React, { useState } from "react";
+import { deleteItinerary, getItinerary } from "../services/itinerary";
+import { ItineraryObject } from "./ItineraryForm";
 
 interface DeleteModalProps {
   id: number;
   vacationId: number;
   name: string;
   onClose: () => void;
+  setItinerary: (itinerary: ItineraryObject[]) => void;
 }
 
 const DeleteModal: React.FC<DeleteModalProps> = ({
   onClose,
+  setItinerary,
   id,
   vacationId,
   name,
 }: DeleteModalProps) => {
   const handleDelete = async () => {
-    console.log("deleting");
-    console.log("id:", id, "vacation id:", vacationId); // Add this line
     try {
-      const response = await deleteItinerary(id, vacationId);
-      console.log(response);
-      console.log("deleted");
+      await deleteItinerary(id, vacationId);
     } catch (error) {
       console.error("Error deleting itinerary:", error);
     }
+    const updatedItinerary = await getItinerary(vacationId);
+    console.log(updatedItinerary);
+    console.log(typeof setItinerary);
+    setItinerary(updatedItinerary)
     onClose();
   };
 
