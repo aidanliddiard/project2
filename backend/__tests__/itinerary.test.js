@@ -7,9 +7,9 @@ const mockVacation = {
   city: "San Francisco",
   country: "United States",
   description: "My vacation to San Francisco",
-  start_date: "2024-06-21",
-  end_date: "2024-06-28",
-  user_id: null,
+  startDate: "2024-06-21",
+  endDate: "2024-06-28",
+  userId: null,
 };
 
 const mockItinerary = {
@@ -31,7 +31,7 @@ async function createVacation() {
   mockVacation.user_id = user._body.id;
   const response = await agent.post("/api/vacations").send(mockVacation);
   const responseBody = JSON.parse(response.text);
-  const vacation_id = responseBody[0].id;
+  const vacation_id = responseBody.id;
   mockVacation.id = vacation_id;
   mockItinerary.vacationId = vacation_id;
   return [agent, vacation_id];

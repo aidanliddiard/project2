@@ -24,7 +24,6 @@ export async function submitVacation(formData: VacationFormData) {
     }
 
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error submitting vacation form:", (error as Error).message);
