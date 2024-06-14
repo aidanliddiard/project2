@@ -52,7 +52,6 @@ class Vacation {
                 RETURNING *`,
       [city, country, description, startDate, endDate, imageUrl, alt, userId]
     );
-    console.log(rows[0]);
     return new Vacation(rows[0]);
   }
 }

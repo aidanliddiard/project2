@@ -90,11 +90,7 @@ export default function ItineraryForm() {
     try {
       createItinerary(formData);
       console.log("submitted");
-      // console.log("toastvacations", formData.vacationId, vacations[formData.vacationId])
-      console.log("formData vaationid", formData.vacationId)
-      console.log("vacatoions", vacations)
       let vacation = vacations.find(vacation => vacation.id === formData.vacationId);
-      console.log("vacation", vacation)
       if (formData.vacationId && vacation) {
         setToastVacation({
           id: formData.vacationId,
@@ -120,6 +116,7 @@ export default function ItineraryForm() {
         website: "",
         vacationId: 0,
       });
+      window.scrollTo(0,0)
     }
   }
 
