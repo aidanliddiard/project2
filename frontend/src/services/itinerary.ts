@@ -73,13 +73,16 @@ export async function deleteItinerary(id: number, vacation_id: number) {
   return itinerary.status;
 }
 
-export async function getItineraryById(id: number) {
-  const itinerary = await fetch(`${url}/api/vacations/itinerary/${id}`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    mode: "cors",
-  });
+export async function getItineraryById(id: number, vacationId: number) {
+  const itinerary = await fetch(
+    `${url}/api/vacations/${vacationId}/itinerary/${id}`,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      mode: "cors",
+    }
+  );
 
   if (!itinerary.ok) {
     throw new Error(`HTTP error! status: ${itinerary.status}`);

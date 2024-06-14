@@ -22,6 +22,15 @@ router.get("/:id/itinerary", authenticate, async (req, res, next) => {
   }
 });
 
+router.get("/:id/itinerary/:itemId", authenticate, async (req, res, next) => {
+  try {
+    const itinerary = await Itinerary.getItineraryById(req.params.id, req.params.itemId);
+    res.json(itinerary);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.put("/:id/itinerary/:itemId", authenticate, async (req, res, next) => {
   try {
     const itinerary = await Itinerary.updateItineraryItem(

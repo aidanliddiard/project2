@@ -11,6 +11,8 @@ module.exports = class Itinerary {
   endDate;
   time;
   website;
+  categoryId;
+  timeId;
   vacationId;
 
   constructor({
@@ -24,6 +26,8 @@ module.exports = class Itinerary {
     end_date,
     time,
     website,
+    category_id,
+    time_id,
     vacation_id,
   }) {
     this.id = id;
@@ -36,6 +40,8 @@ module.exports = class Itinerary {
     this.endDate = end_date;
     this.time = time;
     this.website = website;
+    this.categoryId = category_id;
+    this.timeId = time_id;
     this.vacationId = vacation_id;
   }
 
@@ -72,20 +78,19 @@ module.exports = class Itinerary {
   }
 
   static async getItinerary(vacationId) {
-
     const { rows } = await pool.query(
       `SELECT itinerary.id, itinerary.name, itinerary.price, itinerary.address, itinerary.description, itinerary.start_date, itinerary.end_date, itinerary.website, time.time, category.type, itinerary.vacation_id FROM itinerary LEFT JOIN time on time.id = itinerary.time_id LEFT JOIN category on category.id = itinerary.category_id WHERE vacation_id = $1;`,
       [vacationId]
-  
     );
     return rows.map((row) => new Itinerary(row));
   }
 
   static async getItineraryById(vacationId, itemId) {
     const { rows } = await pool.query(
-      `SELECT * from itinerary WHERE vacation_id = $1 AND id = $2`,
+      `SELECT * FROM itinerary WHERE vacation_id = $1 AND itinerary.id = $2;`,
       [vacationId, itemId]
     );
+    console.log(rows[0]);
     if (!rows[0]) return null;
     return new Itinerary(rows[0]);
   }
