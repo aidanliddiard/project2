@@ -8,7 +8,6 @@ import {
 import { fetchVacations } from "../services/vacations";
 import NavBar from "./NavBar";
 
-
 export interface ItineraryObject {
   id: number;
   name: string;
@@ -415,7 +414,9 @@ export default function ItineraryForm() {
       ) : (
         <div>
           <h1>You have no vacations!</h1>
-          <button onClick={() => navigate("/create-vacation")}>Create A Vacation</button>
+          <button onClick={() => navigate("/create-vacation")}>
+            Create A Vacation
+          </button>
         </div>
       )}
     </>
