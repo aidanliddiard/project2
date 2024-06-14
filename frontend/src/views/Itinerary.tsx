@@ -62,6 +62,7 @@ export default function Itinerary() {
       );
       console.log(vacationData);
       setVacation(vacationData);
+      setImage(vacationData[0]?.imageUrl);
     };
 
     const fetchItineraryData = async () => {
