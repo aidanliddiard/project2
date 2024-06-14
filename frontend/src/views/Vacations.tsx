@@ -54,7 +54,7 @@ export default function Vacations() {
       <NavBar />
       <section className="bg-gray-50 dark:bg-gray-900 min-h-screen">
         <div className="flex flex-col items-center justify-center px-6 py-8">
-          <h1 className="text-3xl font-bold mb-4">{userName}'s Vacations</h1>
+          <h1 className="text-3xl font-bold mb-4 dark:text-white">{userName}'s Vacations</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-3 pt-6">
             {vacation.map((vacation: VacationObject, index: number) => (
               <div
