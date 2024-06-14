@@ -63,7 +63,7 @@ export default function Vacations() {
               >
                 <a href="#">
                   <img
-                    className="rounded-t-lg"
+                    className="rounded-t-lg h-60 w-full object-cover"
                     src={vacation.imageUrl}
                     alt={vacation.alt}
                   />
