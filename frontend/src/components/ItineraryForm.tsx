@@ -194,7 +194,7 @@ export default function ItineraryForm() {
                         setFormData({ ...formData, name: e.target.value })
                       }
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="The Grand Canyon"
+                      placeholder="Ex: The Grand Canyon"
                       required
                     />
                   </div>
@@ -274,7 +274,7 @@ export default function ItineraryForm() {
                       name="address"
                       id="address"
                       value={formData.address}
-                      placeholder="20 South Entrance Road, Grand Canyon National Park Headquarters"
+                      placeholder="Ex: 20 South Entrance Road, Grand Canyon National Park Headquarters"
                       onChange={(e) =>
                         setFormData({ ...formData, address: e.target.value })
                       }
@@ -390,7 +390,7 @@ export default function ItineraryForm() {
                       onChange={(e) =>
                         setFormData({ ...formData, website: e.target.value })
                       }
-                      placeholder="https://www.nps.gov/grca/index.htm"
+                      placeholder="Ex: https://www.nps.gov/grca/index.htm"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                   </div>
