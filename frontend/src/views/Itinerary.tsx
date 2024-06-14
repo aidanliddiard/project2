@@ -26,8 +26,8 @@ interface ItineraryData {
   price: number;
   address: string;
   description: string;
-  start_date: string;
-  end_date: string;
+  startDate: string;
+  endDate: string;
   time: string;
   type: string;
   website: string;
@@ -141,12 +141,12 @@ export default function Itinerary() {
                   price={hotel.price}
                   address={hotel.address}
                   description={hotel.description}
-                  start_date={hotel.start_date}
-                  end_date={hotel.end_date}
+                  startDate={hotel.startDate}
+                  endDate={hotel.endDate}
                   time={hotel.time}
                   website={hotel.website}
                   icon={FaHotel}
-                  vacation_id={hotel.vacationId}
+                  vacationId={hotel.vacationId}
                 />
               );
             })}
@@ -166,12 +166,12 @@ export default function Itinerary() {
                   price={restaurant.price}
                   address={restaurant.address}
                   description={restaurant.description}
-                  start_date={restaurant.start_date}
-                  end_date={restaurant.end_date}
+                  startDate={restaurant.startDate}
+                  endDate={restaurant.endDate}
                   time={restaurant.time}
                   website={restaurant.website}
                   icon={FaUtensils}
-                  vacation_id={restaurant.vacationId}
+                  vacationId={restaurant.vacationId}
                 />
               );
             })}
@@ -191,12 +191,12 @@ export default function Itinerary() {
                   price={activity.price}
                   address={activity.address}
                   description={activity.description}
-                  start_date={activity.start_date}
-                  end_date={activity.end_date}
+                  startDate={activity.startDate}
+                  endDate={activity.endDate}
                   time={activity.time}
                   website={activity.website}
                   icon={LuFerrisWheel}
-                  vacation_id={activity.vacationId}
+                  vacationId={activity.vacationId}
                 />
               );
             })}

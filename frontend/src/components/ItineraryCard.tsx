@@ -14,12 +14,12 @@ interface ItineraryCardProps {
   price: number;
   address: string;
   description: string;
-  start_date: string;
-  end_date: string;
+  startDate: string;
+  endDate: string;
   time: string;
   website: string;
   icon: IconType;
-  vacation_id: number;
+  vacationId: number;
 }
 
 const ItineraryCard: React.FC<ItineraryCardProps> = ({
@@ -28,12 +28,12 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
   price,
   address,
   description,
-  start_date,
-  end_date,
+  startDate,
+  endDate,
   time,
   website,
   icon: Icon,
-  vacation_id,
+  vacationId,
 }: ItineraryCardProps) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -65,7 +65,7 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
           Price: ${price}
         </p>
         <p id="dates" className="text-gray-700">
-          {formatDate(start_date)} - {formatDate(end_date)}
+          {formatDate(startDate)} - {formatDate(endDate)}
         </p>
         <p id="time" className="text-gray-700">
           Time of Day: {time}
@@ -101,14 +101,14 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
           <EditModal
             onClose={toggleUpdateModal}
             id={id}
-            vacation_id={vacation_id}
+            vacationId={vacationId}
           />
         )}
         {isDeleteModalOpen && (
           <DeleteModal
             onClose={toggleDeleteModal}
             id={id}
-            vacation_id={vacation_id}
+            vacationId={vacationId}
             name={name}
           />
         )}
