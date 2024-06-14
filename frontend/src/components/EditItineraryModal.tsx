@@ -118,6 +118,10 @@ const EditModal: React.FC<EditModalProps> = ({ onClose, id, vacationId }) => {
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                       Update Itinerary Item
                     </h1>
+                    <p className="text-sm dark:text-white">
+                      <span className="text-red-500 text-small">*</span>{" "}
+                      indicates a required field
+                    </p>
                     <form
                       className="space-y-4 md:space-y-6"
                       onSubmit={handleUpdate}
@@ -128,7 +132,8 @@ const EditModal: React.FC<EditModalProps> = ({ onClose, id, vacationId }) => {
                           htmlFor="name"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Name
+                          Name{" "}
+                          <span className="text-red-500 text-small">*</span>
                         </label>
                         <input
                           type="text"
@@ -149,7 +154,8 @@ const EditModal: React.FC<EditModalProps> = ({ onClose, id, vacationId }) => {
                           htmlFor="category"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Category
+                          Category{" "}
+                          <span className="text-red-500 text-small">*</span>
                         </label>
                         <select
                           name="category"
@@ -183,7 +189,8 @@ const EditModal: React.FC<EditModalProps> = ({ onClose, id, vacationId }) => {
                           htmlFor="confirm-password"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Price
+                          Price{" "}
+                          <span className="text-red-500 text-small">*</span>
                         </label>
                         <input
                           type="number"
@@ -210,7 +217,8 @@ const EditModal: React.FC<EditModalProps> = ({ onClose, id, vacationId }) => {
                           htmlFor="address"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Address
+                          Address{" "}
+                          <span className="text-red-500 text-small">*</span>
                         </label>
                         <input
                           type="text"
@@ -297,7 +305,8 @@ const EditModal: React.FC<EditModalProps> = ({ onClose, id, vacationId }) => {
                           htmlFor="time"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Time of Day
+                          Time of Day{" "}
+                          <span className="text-red-500 text-small">*</span>
                         </label>
                         <select
                           name="time"

@@ -49,13 +49,13 @@ describe("itinerary backend routes", () => {
     expect(res.body).toEqual({
       id: expect.any(Number),
       name: mockItinerary.name,
-      //   category_id: mockItinerary.categoryId,
+      categoryId: mockItinerary.categoryId,
       price: parseFloat(mockItinerary.price).toFixed(2),
       address: mockItinerary.address,
       description: mockItinerary.description,
       startDate: expect.any(String),
       endDate: null,
-      //   timeId: mockItinerary.timeId,
+      timeId: mockItinerary.timeId,
       website: mockItinerary.website,
       vacationId: vacation_id,
     });
