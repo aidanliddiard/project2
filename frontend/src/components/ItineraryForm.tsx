@@ -4,6 +4,7 @@ import {
   fetchTime,
   createItinerary,
 } from "../services/itinerary";
+import { fetchVacations } from "../services/vacations";
 import NavBar from "./NavBar";
 
 export interface ItineraryObject {
@@ -20,6 +21,11 @@ export interface ItineraryObject {
   vacationId: number;
 }
 
+interface Vacation {
+  id: number;
+  city: string;
+}
+
 interface Category {
   id: number;
   type: string;
@@ -33,6 +39,7 @@ interface Time {
 export default function ItineraryForm() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [times, setTimes] = useState<Time[]>([]);
+  const [vacations, setVacations] = useState([]);
   const [formData, setFormData] = useState<ItineraryObject>({
     id: 0,
     name: "",
@@ -58,6 +65,13 @@ export default function ItineraryForm() {
       setTimes(timeResult);
     };
 
+    const fetchVacationData = async () => {
+      const vacationResult = await fetchVacations();
+      vacationResult.sort((a: Vacation, b: Vacation) => a.city.localeCompare(b.city));
+      setVacations(vacationResult);
+    };
+
+    fetchVacationData();
     fetchCategories();
     fetchTimes();
   }, []);
@@ -111,12 +125,25 @@ export default function ItineraryForm() {
               <select
               name="category"
               id="category"
+              value={formData.vacationId}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  vacationId: Number(e.target.value),
+                })
+              }
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
               >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
+                <option disabled value="0">Select A Vacation</option>
+                {vacations.map((vacation: Vacation)=> {
+                  console.log("vacationid", vacation)
+                  return (
+                    <option key={vacation.id} value={vacation.id}>
+                      {vacation.city}
+                    </option>
+                  );
+                })}
               </select>
               
             </div>

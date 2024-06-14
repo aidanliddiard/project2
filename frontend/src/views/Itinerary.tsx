@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import NavBar from "../components/NavBar";
 import { fetchImages } from "../services/images";
@@ -52,6 +52,8 @@ export default function Itinerary() {
   const [restaurants, setRestaurants] = useState<ItineraryData[]>([]);
   const [activities, setActivities] = useState<ItineraryData[]>([]);
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     const fetchVacationData = async () => {
       const resp = await fetchVacations();
@@ -60,17 +62,8 @@ export default function Itinerary() {
       );
       console.log(vacationData);
       setVacation(vacationData);
-      // if (vacationData[0]?.city) {
-      //   fetchImagesData(vacationData[0].city);
-      // }
     };
 
-    // const fetchImagesData = async (search: string) => {
-    //   console.log(search);
-    //   const results = await fetchImages(search);
-    //   console.log(results.results[0].urls.full);
-    //   setImage(results.results[0].urls.full);
-    // };
     const fetchItineraryData = async () => {
       const response = await getItinerary(Number(id));
       setItinerary(response);
@@ -119,12 +112,12 @@ export default function Itinerary() {
                   {formatDate(vacation[0]?.endDate)}
                 </p>
 
-                <a
+                <button onClick={() => navigate("/create-itinerary")}
                   className="inline-block w-full md:w-auto mb-4 md:mr-6 py-3 px-5 text-sm font-bold uppercase border-2 border-transparent bg-gray-200 rounded hover:bg-gray-100 text-gray-800 transition duration-200"
-                  href="http://localhost:8083/todos"
+                  
                 >
                   Create a New Itinerary Item
-                </a>
+                </button>
               </div>
             </div>
           </div>

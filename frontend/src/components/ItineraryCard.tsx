@@ -34,7 +34,7 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
   website,
   icon: Icon,
   vacation_id,
-}) => {
+}: ItineraryCardProps) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -55,7 +55,6 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
         <div id="name" className="text-blue-800 font-bold text-xl mb-1">
           {name}
         </div>
-        <p>Vacation ID:{vacation_id}</p>
         <p id="description" className="text-gray-700">
           {description}
         </p>
