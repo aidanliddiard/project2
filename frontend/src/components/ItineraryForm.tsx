@@ -7,7 +7,7 @@ import {
 } from "../services/itinerary";
 import { fetchVacations } from "../services/vacations";
 import NavBar from "./NavBar";
-
+import ToastNotification from "./ToastNotification";
 
 export interface ItineraryObject {
   id: number;
@@ -23,7 +23,7 @@ export interface ItineraryObject {
   vacationId: number;
 }
 
-interface Vacation {
+export interface Vacation {
   id: number;
   city: string;
 }
@@ -38,10 +38,13 @@ interface Time {
   time: string;
 }
 
+
 export default function ItineraryForm() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [times, setTimes] = useState<Time[]>([]);
-  const [vacations, setVacations] = useState([]);
+  const [vacations, setVacations] = useState<Vacation[]>([]);
+  const [toastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastVacation, setToastVacation] = useState<Vacation>()
   const [formData, setFormData] = useState<ItineraryObject>({
     id: 0,
     name: "",
@@ -71,10 +74,10 @@ export default function ItineraryForm() {
 
     const fetchVacationData = async () => {
       const vacationResult = await fetchVacations();
-      vacationResult.sort((a: Vacation, b: Vacation) =>
-        a.city.localeCompare(b.city)
-      );
-      setVacations(vacationResult);
+        vacationResult.sort((a: Vacation, b: Vacation) =>
+          a.city.localeCompare(b.city)
+        );
+        setVacations(vacationResult);
     };
 
     fetchVacationData();
@@ -87,6 +90,20 @@ export default function ItineraryForm() {
     try {
       createItinerary(formData);
       console.log("submitted");
+      // console.log("toastvacations", formData.vacationId, vacations[formData.vacationId])
+      console.log("formData vaationid", formData.vacationId)
+      console.log("vacatoions", vacations)
+      let vacation = vacations.find(vacation => vacation.id === formData.vacationId);
+      console.log("vacation", vacation)
+      if (formData.vacationId && vacation) {
+        setToastVacation({
+          id: formData.vacationId,
+          city: vacation.city
+        })
+        setToastOpen(true);
+      } else {
+        console.error("No vacation selected");
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -109,8 +126,11 @@ export default function ItineraryForm() {
   return (
     <>
       <NavBar />
-      {vacations.length > 0 ? (
+      {/* {vacations.length > 0 ? ( */}
         <section className="bg-gray-50 dark:bg-gray-900">
+          <div className={`${toastOpen ? "": "hidden"}`}>
+          <ToastNotification vacation={toastVacation}/>
+            </div>
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -412,12 +432,16 @@ export default function ItineraryForm() {
             </div>
           </div>
         </section>
-      ) : (
+      
+      {/* : (
         <div>
           <h1>You have no vacations!</h1>
-          <button onClick={() => navigate("/create-vacation")}>Create A Vacation</button>
+          <button onClick={() => navigate("/create-vacation")}>
+            Create A Vacation
+          </button>
         </div>
-      )}
+      ) */}
+      {/* } */}
     </>
   );
 }
