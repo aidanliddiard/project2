@@ -23,7 +23,6 @@ app.use(
 app.use("/api/vacations", require("./src/controller/vacation.js"));
 
 app.use("/api/vacations", require("./src/controller/itinerary.js"));
-
 app.use("/api/auth/users", require("./src/controller/user.js"));
 
 if (process.env.NODE_ENV !== "test") {
