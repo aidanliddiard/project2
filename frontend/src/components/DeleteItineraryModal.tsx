@@ -13,12 +13,12 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
   id,
   vacationId,
   name,
-}) => {
+}: DeleteModalProps) => {
   const handleDelete = async () => {
     console.log("deleting");
-    console.log("id:", id, "vacation_id:", vacation_id); // Add this line
+    console.log("id:", id, "vacation id:", vacationId); // Add this line
     try {
-      const response = await deleteItinerary(id, vacation_id);
+      const response = await deleteItinerary(id, vacationId);
       console.log(response);
       console.log("deleted");
     } catch (error) {
