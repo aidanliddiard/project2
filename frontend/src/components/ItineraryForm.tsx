@@ -7,6 +7,7 @@ import {
 } from "../services/itinerary";
 import { fetchVacations } from "../services/vacations";
 import NavBar from "./NavBar";
+import ToastNotification from "./ToastNotification";
 
 export interface ItineraryObject {
   id: number;
@@ -22,7 +23,7 @@ export interface ItineraryObject {
   vacationId: number;
 }
 
-interface Vacation {
+export interface Vacation {
   id: number;
   city: string;
 }
@@ -37,10 +38,13 @@ interface Time {
   time: string;
 }
 
+
 export default function ItineraryForm() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [times, setTimes] = useState<Time[]>([]);
-  const [vacations, setVacations] = useState([]);
+  const [vacations, setVacations] = useState<Vacation[]>([]);
+  const [toastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastVacation, setToastVacation] = useState<Vacation>()
   const [formData, setFormData] = useState<ItineraryObject>({
     id: 0,
     name: "",
@@ -70,10 +74,10 @@ export default function ItineraryForm() {
 
     const fetchVacationData = async () => {
       const vacationResult = await fetchVacations();
-      vacationResult.sort((a: Vacation, b: Vacation) =>
-        a.city.localeCompare(b.city)
-      );
-      setVacations(vacationResult);
+        vacationResult.sort((a: Vacation, b: Vacation) =>
+          a.city.localeCompare(b.city)
+        );
+        setVacations(vacationResult);
     };
 
     fetchVacationData();
@@ -86,6 +90,16 @@ export default function ItineraryForm() {
     try {
       createItinerary(formData);
       console.log("submitted");
+      let vacation = vacations.find(vacation => vacation.id === formData.vacationId);
+      if (formData.vacationId && vacation) {
+        setToastVacation({
+          id: formData.vacationId,
+          city: vacation.city
+        })
+        setToastOpen(true);
+      } else {
+        console.error("No vacation selected");
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -102,14 +116,18 @@ export default function ItineraryForm() {
         website: "",
         vacationId: 0,
       });
+      window.scrollTo(0,0)
     }
   }
 
   return (
     <>
       <NavBar />
-      {vacations.length > 0 ? (
+      {/* {vacations.length > 0 ? ( */}
         <section className="bg-gray-50 dark:bg-gray-900">
+          <div className={`${toastOpen ? "": "hidden"}`}>
+          <ToastNotification vacation={toastVacation}/>
+            </div>
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -176,7 +194,7 @@ export default function ItineraryForm() {
                         setFormData({ ...formData, name: e.target.value })
                       }
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="The Grand Canyon"
+                      placeholder="Ex: The Grand Canyon"
                       required
                     />
                   </div>
@@ -256,7 +274,7 @@ export default function ItineraryForm() {
                       name="address"
                       id="address"
                       value={formData.address}
-                      placeholder="20 South Entrance Road, Grand Canyon National Park Headquarters"
+                      placeholder="Ex: 20 South Entrance Road, Grand Canyon National Park Headquarters"
                       onChange={(e) =>
                         setFormData({ ...formData, address: e.target.value })
                       }
@@ -372,7 +390,7 @@ export default function ItineraryForm() {
                       onChange={(e) =>
                         setFormData({ ...formData, website: e.target.value })
                       }
-                      placeholder="https://www.nps.gov/grca/index.htm"
+                      placeholder="Ex: https://www.nps.gov/grca/index.htm"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                   </div>
@@ -411,14 +429,16 @@ export default function ItineraryForm() {
             </div>
           </div>
         </section>
-      ) : (
+      
+      {/* : (
         <div>
           <h1>You have no vacations!</h1>
           <button onClick={() => navigate("/create-vacation")}>
             Create A Vacation
           </button>
         </div>
-      )}
+      ) */}
+      {/* } */}
     </>
   );
 }
