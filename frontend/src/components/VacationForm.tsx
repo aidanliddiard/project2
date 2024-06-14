@@ -9,6 +9,7 @@ import { submitVacation } from "../services/vacationform";
 import { useUserContext } from "../context/userContext";
 import { fetchImages } from "../services/images";
 import NavBar from "./NavBar";
+import { useNavigate } from "react-router-dom";
 
 interface VacationFormData {
   city: string;
@@ -25,6 +26,7 @@ export default function VacationForm() {
   const { currentUser } = useUserContext();
   const userId = currentUser.id;
 
+  const navigate = useNavigate(); // Hook provided by react-router-dom
   const [formData, setFormData] = useState<VacationFormData>({
     city: "",
     country: "",
@@ -72,6 +74,9 @@ export default function VacationForm() {
         alt: "",
         userId: userId,
       });
+
+      navigate("/vacations");
+
     } catch (error) {
       console.error(
         "Error submitting vacation form:",
