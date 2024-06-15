@@ -59,8 +59,6 @@ export default function ItineraryForm() {
     vacationId: 0,
   });
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const fetchCategories = async () => {
       const categoryResult = await fetchCategory();
@@ -89,7 +87,6 @@ export default function ItineraryForm() {
     e.preventDefault();
     try {
       createItinerary(formData);
-      console.log("submitted");
       let vacation = vacations.find(vacation => vacation.id === formData.vacationId);
       if (formData.vacationId && vacation) {
         setToastVacation({
@@ -167,7 +164,6 @@ export default function ItineraryForm() {
                         Select A Vacation
                       </option>
                       {vacations.map((vacation: Vacation) => {
-                        console.log("vacationid", vacation);
                         return (
                           <option key={vacation.id} value={vacation.id}>
                             {vacation.city}

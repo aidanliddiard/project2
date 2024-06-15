@@ -1,13 +1,12 @@
-import React, { useState } from "react";
 import { deleteItinerary, getItinerary } from "../services/itinerary";
-import { ItineraryObject } from "./ItineraryForm";
+import { ItineraryData } from "../views/Itinerary";
 
 interface DeleteModalProps {
   id: number;
   vacationId: number;
   name: string;
   onClose: () => void;
-  setItinerary: (itinerary: ItineraryObject[]) => void;
+  setItinerary: (itinerary: ItineraryData[]) => void;
 }
 
 const DeleteModal: React.FC<DeleteModalProps> = ({
@@ -24,8 +23,6 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
       console.error("Error deleting itinerary:", error);
     }
     const updatedItinerary = await getItinerary(vacationId);
-    console.log(updatedItinerary);
-    console.log(typeof setItinerary);
     setItinerary(updatedItinerary)
     onClose();
   };
