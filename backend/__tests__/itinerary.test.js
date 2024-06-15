@@ -28,7 +28,7 @@ const mockItinerary = {
 
 async function createVacation() {
   const [agent, user] = await signInAndSignUp();
-  mockVacation.user_id = user._body.id;
+  mockVacation.userId = user._body.id;
   const response = await agent.post("/api/vacations").send(mockVacation);
   const responseBody = JSON.parse(response.text);
   const vacation_id = responseBody.id;

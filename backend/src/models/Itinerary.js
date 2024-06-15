@@ -79,7 +79,11 @@ module.exports = class Itinerary {
 
   static async getItinerary(vacationId) {
     const { rows } = await pool.query(
-      `SELECT itinerary.id, itinerary.name, itinerary.price, itinerary.address, itinerary.description, itinerary.start_date, itinerary.end_date, itinerary.website, time.time, category.type, itinerary.vacation_id FROM itinerary LEFT JOIN time on time.id = itinerary.time_id LEFT JOIN category on category.id = itinerary.category_id WHERE vacation_id = $1;`,
+      `SELECT itinerary.id, itinerary.name, itinerary.price, itinerary.address, itinerary.description, itinerary.start_date, itinerary.end_date, itinerary.website, time.time, category.type, itinerary.vacation_id 
+      FROM itinerary 
+      LEFT JOIN time on time.id = itinerary.time_id 
+      LEFT JOIN category on category.id = itinerary.category_id 
+      WHERE vacation_id = $1;`,
       [vacationId]
     );
     return rows.map((row) => new Itinerary(row));
