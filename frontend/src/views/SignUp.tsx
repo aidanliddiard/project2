@@ -32,7 +32,7 @@ export default function SignUp() {
     try {
       await signUpUser({ name, email, password });
       await getCurrentUser();
-      navigate("/");
+      navigate("/create-vacation");
     } catch (error) {
       console.log(error);
     }
@@ -45,6 +45,10 @@ export default function SignUp() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an account
             </h1>
+            <p className="text-sm dark:text-white">
+              <span className="text-red-500 text-small">*</span> indicates a
+              required field
+            </p>
             <form
               className="space-y-4 md:space-y-6"
               onSubmit={(e) => handleSubmit(e, name, email, password)}
@@ -55,6 +59,7 @@ export default function SignUp() {
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Name
+                  <span className="text-red-500 text-small"> *</span>
                 </label>
                 <input
                   type="name"
@@ -72,6 +77,7 @@ export default function SignUp() {
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Email
+                  <span className="text-red-500 text-small"> *</span>
                 </label>
                 <input
                   type="email"
@@ -89,6 +95,7 @@ export default function SignUp() {
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Password
+                  <span className="text-red-500 text-small"> *</span>
                 </label>
                 <input
                   type="password"
@@ -105,6 +112,7 @@ export default function SignUp() {
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Confirm password
+                  <span className="text-red-500 text-small"> *</span>
                 </label>
                 <input
                   type="password"
