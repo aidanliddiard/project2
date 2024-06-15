@@ -1,3 +1,4 @@
+import React from "react";
 import { deleteItinerary, getItinerary } from "../services/itinerary";
 import { ItineraryData } from "../views/Itinerary";
 
@@ -23,7 +24,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
       console.error("Error deleting itinerary:", error);
     }
     const updatedItinerary = await getItinerary(vacationId);
-    setItinerary(updatedItinerary)
+    setItinerary(updatedItinerary);
     onClose();
   };
 
