@@ -27,7 +27,8 @@ export default function VacationForm() {
   const userId = currentUser.id;
 
   const navigate = useNavigate();
-  
+  type NavigateFn = ReturnType<typeof useNavigate>;
+
   const [formData, setFormData] = useState<VacationFormData>({
     city: "",
     country: "",
@@ -68,9 +69,8 @@ export default function VacationForm() {
         return;
       }
 
-
-      const altDescription = imageUnsplashURL.results[0].alt_description;
-      const imageUnsplashUrl = imageUnsplashURL.results[0].urls.full;
+      const altDescription: string = imageUnsplashURL.results[0].alt_description;
+      const imageUnsplashUrl: string = imageUnsplashURL.results[0].urls.full;
 
       const updatedFormData = {
         ...formData,
@@ -133,6 +133,9 @@ export default function VacationForm() {
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     City<span className="text-red-500 text-small"> *</span>
+                    {cityNotFoundError && (
+                    <p className="text-sm text-red-500 mt-1">No images found for this city. Please enter a different city.</p>
+                  )}
                   </label>
                   <input
                     type="text"
@@ -144,9 +147,6 @@ export default function VacationForm() {
                     placeholder="Ex: London"
                     required
                   />
-                  {cityNotFoundError && (
-                    <p className="text-sm text-red-500 mt-1">No images found for this city. Please enter a different city.</p>
-                  )}
                 </div>
                 <div>
                   <label
