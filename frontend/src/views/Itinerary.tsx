@@ -83,7 +83,7 @@ export default function Itinerary() {
   }, [itinerary]);
 
   return (
-    <div className="bg-gray-50 min-h-screen dark:bg-gray-900">
+    <div className="bg-gray-50 min-h-screen pb-10 dark:bg-gray-900">
       <NavBar />
       <div
         id="hero"
