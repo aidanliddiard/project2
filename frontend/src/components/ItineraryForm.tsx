@@ -12,15 +12,15 @@ import ToastNotification from "./ToastNotification";
 export interface ItineraryObject {
   id: number;
   name: string;
-  categoryId: number;
-  price: number | null;
+  categoryId: number | string;
+  price: number | string;
   address: string;
   description?: string;
   startDate: Date | string;
   endDate?: Date | string;
-  timeId: number;
+  timeId: number | string;
   website?: string;
-  vacationId: number;
+  vacationId: number | string;
 }
 
 export interface Vacation {
@@ -48,18 +48,16 @@ export default function ItineraryForm() {
   const [formData, setFormData] = useState<ItineraryObject>({
     id: 0,
     name: "",
-    categoryId: 0,
-    price: null,
+    categoryId: "",
+    price: "",
     address: "",
     description: "",
     startDate: "",
     endDate: "",
-    timeId: 0,
+    timeId: "",
     website: "",
-    vacationId: 0,
+    vacationId: "",
   });
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -89,11 +87,10 @@ export default function ItineraryForm() {
     e.preventDefault();
     try {
       createItinerary(formData);
-      console.log("submitted");
       let vacation = vacations.find(vacation => vacation.id === formData.vacationId);
       if (formData.vacationId && vacation) {
         setToastVacation({
-          id: formData.vacationId,
+          id: Number(formData.vacationId),
           city: vacation.city
         })
         setToastOpen(true);
@@ -106,15 +103,15 @@ export default function ItineraryForm() {
       setFormData({
         id: 0,
         name: "",
-        categoryId: 0,
-        price: null,
+        categoryId: "",
+        price: "",
         address: "",
         description: "",
         startDate: "",
         endDate: "",
-        timeId: 0,
+        timeId: "",
         website: "",
-        vacationId: 0,
+        vacationId: "",
       });
       window.scrollTo(0,0)
     }
@@ -163,11 +160,10 @@ export default function ItineraryForm() {
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required
                     >
-                      <option disabled value="0">
+                      <option disabled value="">
                         Select A Vacation
                       </option>
                       {vacations.map((vacation: Vacation) => {
-                        console.log("vacationid", vacation);
                         return (
                           <option key={vacation.id} value={vacation.id}>
                             {vacation.city}
@@ -221,7 +217,7 @@ export default function ItineraryForm() {
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required
                     >
-                      <option disabled value="0">
+                      <option disabled value="">
                         Select a Category
                       </option>
                       {categories.map((category: Category) => {
@@ -337,6 +333,7 @@ export default function ItineraryForm() {
                         })
                       }
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required
                     />
                   </div>
 
@@ -360,8 +357,9 @@ export default function ItineraryForm() {
                         })
                       }
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
                     >
-                      <option disabled value="0">
+                      <option disabled value="">
                         Select a Time
                       </option>
                       {times.map((time: Time) => {
