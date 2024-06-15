@@ -17,7 +17,7 @@ export interface ItineraryObject {
   address: string;
   description?: string;
   startDate: Date | string;
-  endDate?: Date | string;
+  endDate: Date | string;
   timeId: number | string;
   website?: string;
   vacationId: number | string;
@@ -45,6 +45,7 @@ export default function ItineraryForm() {
   const [vacations, setVacations] = useState<Vacation[]>([]);
   const [toastOpen, setToastOpen] = useState<boolean>(false);
   const [toastVacation, setToastVacation] = useState<Vacation>()
+  const [endDateError, setEndDateError] = useState<boolean>(false);
   const [formData, setFormData] = useState<ItineraryObject>({
     id: 0,
     name: "",
@@ -85,6 +86,11 @@ export default function ItineraryForm() {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (new Date(formData.endDate) < new Date(formData.startDate)) {
+      console.error("End date cannot be before start date");
+      setEndDateError(true);
+      return;
+    }
     try {
       createItinerary(formData);
       let vacation = vacations.find(vacation => vacation.id === formData.vacationId);
@@ -359,6 +365,7 @@ export default function ItineraryForm() {
                     >
                       End Date
                       <span className="text-red-500 text-small"> *</span>
+                      
                     </label>
                     <input
                       type="date"
@@ -369,17 +376,25 @@ export default function ItineraryForm() {
                           ? formData.endDate.toISOString().split("T")[0]
                           : ""
                       }
-                      onChange={(e) =>
+                      onChange={(e) =>{
                         setFormData({
                           ...formData,
                           endDate: new Date(e.target.value),
-                        })
+                          
+                        }
+                      )
+                      setEndDateError(false);
+                      }
+
                       }
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required
                     />
                   </div>
 
+                  {endDateError && (
+                    <p className="text-sm col-span-2 mb-3 text-red-500 mt-1">Please select a new date. End date must be after the start date.</p>
+                  )}
 
                   {/* Website */}
                   <div className="mb-3 col-span-2">
