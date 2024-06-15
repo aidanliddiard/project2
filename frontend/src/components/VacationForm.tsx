@@ -10,8 +10,6 @@ import { useUserContext } from "../context/userContext";
 import { fetchImages } from "../services/images";
 import NavBar from "./NavBar";
 import { useNavigate } from "react-router-dom";
-import ToastNotification from "./ToastNotification";
-
 
 interface VacationFormData {
   city: string;
@@ -28,7 +26,7 @@ export default function VacationForm() {
   const { currentUser } = useUserContext();
   const userId = currentUser.id;
 
-  const navigate = useNavigate(); // Hook provided by react-router-dom
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<VacationFormData>({
     city: "",
     country: "",
@@ -40,7 +38,7 @@ export default function VacationForm() {
     userId: userId,
   });
 
-  const [toastOpen, setToastOpen] = useState<boolean>(false);
+  const [endDateError, setEndDateError] = useState<boolean>(false);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -54,6 +52,11 @@ export default function VacationForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (new Date(formData.endDate) < new Date(formData.startDate)) {
+      console.error("End date cannot be before start date");
+      setEndDateError(true);
+      return;
+    }
     try {
       const imageUnsplashURL = await fetchImages(formData.city);
       const altDescription = imageUnsplashURL.results[0].alt_description;
@@ -89,10 +92,16 @@ export default function VacationForm() {
     }
   };
 
+  useEffect(() => {
+    if (formData.endDate) {
+      setEndDateError(false); // Reset error state if end date is filled
+    }
+  }, [formData.endDate]);
+
   return (
     <>
       <NavBar />
-     <section className="bg-gray-50 dark:bg-gray-900 py-0">
+      <section className="bg-gray-50 dark:bg-gray-900 py-0">
         <div className="flex flex-col items-center justify-center px-6 mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -100,9 +109,9 @@ export default function VacationForm() {
                 Create a vacation
               </h1>
               <p className="text-sm dark:text-white">
-              <span className="text-red-500 text-small">*</span> indicates a
-              required field
-            </p>
+                <span className="text-red-500 text-small">*</span> indicates a
+                required field
+              </p>
               <form
                 className="space-y-4 md:space-y-6"
                 onSubmit={handleSubmit}
@@ -189,6 +198,9 @@ export default function VacationForm() {
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     End Date<span className="text-red-500 text-small"> *</span>
+                    {endDateError && (
+                    <p className="text-sm text-red-500 mt-1">Please select a new date. End date must be prior to the start date.</p>
+                  )}
                   </label>
                   <input
                     type="date"
