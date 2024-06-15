@@ -121,7 +121,7 @@ export default function ItineraryForm() {
     <>
       <NavBar />
       {/* {vacations.length > 0 ? ( */}
-        <section className="bg-gray-50 dark:bg-gray-900">
+        <section className="bg-gray-50 dark:bg-gray-900 pt-32 pb-10">
           <div className={`${toastOpen ? "": "hidden"}`}>
           <ToastNotification vacation={toastVacation}/>
             </div>
