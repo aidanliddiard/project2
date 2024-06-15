@@ -87,9 +87,9 @@ export default function Itinerary() {
       <NavBar />
       <div
         id="hero"
-        className="w-full bg-center h-50% bg-cover"
+        className="w-full bg-center bg-cover"
         style={{
-          backgroundImage: `url(${image})`,
+          backgroundImage: `url(${image})`, height: "40vh",
         }}
       >
         <div className="flex items-center justify-center pt-5 w-full h-full bg-gray-900 bg-opacity-50 py-12">
