@@ -121,17 +121,17 @@ export default function ItineraryForm() {
     <>
       <NavBar />
       {/* {vacations.length > 0 ? ( */}
-        <section className="bg-gray-50 dark:bg-gray-900 pt-32 pb-10">
+        <section className="bg-gray-50 dark:bg-gray-900 min-h-screen pt-10 pb-8">
           <div className={`${toastOpen ? "": "hidden"}`}>
           <ToastNotification vacation={toastVacation}/>
             </div>
-          <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+          <div className="flex flex-col items-center justify-center pt-6 py-8 mx-auto lg:py-0">
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-              <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <div className="px-4 pt-4 space-y-4 md:space-y-4 sm:px-8 sm:pt-8 sm:p-4">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Create an Itinerary Item
                 </h1>
-                <p className="text-sm dark:text-white">
+                <p className="text-sm dark:text-white mt-0">
                   <span className="text-red-500 text-small">*</span> indicates a
                   required field
                 </p>
@@ -139,7 +139,9 @@ export default function ItineraryForm() {
                   className="space-y-4 md:space-y-6"
                   onSubmit={handleSubmit}
                 >
-                  <div>
+                  <div className="grid grid-cols-1 md:grid-cols-2">
+                    {/* Vacation */}
+                    <div className="col-span-2 mb-3">
                     <label
                       htmlFor="vacation"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -174,7 +176,7 @@ export default function ItineraryForm() {
                   </div>
 
                   {/* Name */}
-                  <div>
+                  <div className="col-span-2 mb-3">
                     <label
                       htmlFor="name"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -195,8 +197,57 @@ export default function ItineraryForm() {
                     />
                   </div>
 
+                  {/* Address */}
+                  <div className="col-span-2 mb-3">
+                    <label
+                      htmlFor="address"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Address <span className="text-red-500 text-small">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="address"
+                      id="address"
+                      value={formData.address}
+                      placeholder="Ex: 20 South Entrance Road, Grand Canyon National Park Headquarters"
+                      onChange={(e) =>
+                        setFormData({ ...formData, address: e.target.value })
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required
+                    />
+                  </div>
+
+                  {/* Price */}
+                  <div className="mb-3 col-span-2">
+                    <label
+                      htmlFor="confirm-password"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Price <span className="text-red-500 text-small">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      name="price"
+                      id="price"
+                      placeholder="0.00"
+                      value={formData.price}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          price: Number(e.target.value),
+                        })
+                      }
+                      className="bg-gray-50 border h-10 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required
+                    />
+                  </div>
+
                   {/* Category */}
-                  <div>
+                  <div className="mb-3 mr-2">
                     <label
                       htmlFor="category"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -230,115 +281,10 @@ export default function ItineraryForm() {
                     </select>
                   </div>
 
-                  {/* Price */}
-                  <div>
-                    <label
-                      htmlFor="confirm-password"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Price <span className="text-red-500 text-small">*</span>
-                    </label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      name="price"
-                      id="price"
-                      placeholder="0.00"
-                      value={formData.price}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          price: Number(e.target.value),
-                        })
-                      }
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required
-                    />
-                  </div>
 
-                  {/* Address */}
-                  <div>
-                    <label
-                      htmlFor="address"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Address <span className="text-red-500 text-small">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="address"
-                      id="address"
-                      value={formData.address}
-                      placeholder="Ex: 20 South Entrance Road, Grand Canyon National Park Headquarters"
-                      onChange={(e) =>
-                        setFormData({ ...formData, address: e.target.value })
-                      }
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required
-                    />
-                  </div>
-
-                  {/* Start Date */}
-                  <div>
-                    <label
-                      htmlFor="start_date"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Start Date{" "}
-                      <span className="text-red-500 text-small">*</span>
-                    </label>
-                    <input
-                      type="date"
-                      name="start_date"
-                      id="start_date"
-                      value={
-                        formData.startDate instanceof Date
-                          ? formData.startDate.toISOString().split("T")[0]
-                          : formData.startDate.toString()
-                      }
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          startDate: new Date(e.target.value),
-                        })
-                      }
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required
-                    />
-                  </div>
-
-                  {/* End Date */}
-                  <div>
-                    <label
-                      htmlFor="end_date"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      End Date
-                      <span className="text-red-500 text-small"> *</span>
-                    </label>
-                    <input
-                      type="date"
-                      name="end_date"
-                      id="end_date"
-                      value={
-                        formData.endDate instanceof Date
-                          ? formData.endDate.toISOString().split("T")[0]
-                          : ""
-                      }
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          endDate: new Date(e.target.value),
-                        })
-                      }
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required
-                    />
-                  </div>
 
                   {/* Time */}
-                  <div>
+                  <div className="ml-2 mb-3">
                     <label
                       htmlFor="time"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -372,8 +318,71 @@ export default function ItineraryForm() {
                     </select>
                   </div>
 
+                  
+
+                  
+
+                  {/* Start Date */}
+                  <div className="mb-3 mr-2">
+                    <label
+                      htmlFor="start_date"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Start Date{" "}
+                      <span className="text-red-500 text-small">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      name="start_date"
+                      id="start_date"
+                      value={
+                        formData.startDate instanceof Date
+                          ? formData.startDate.toISOString().split("T")[0]
+                          : formData.startDate.toString()
+                      }
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          startDate: new Date(e.target.value),
+                        })
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required
+                    />
+                  </div>
+
+                  {/* End Date */}
+                  <div className="mb-3 ml-2">
+                    <label
+                      htmlFor="end_date"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      End Date
+                      <span className="text-red-500 text-small"> *</span>
+                    </label>
+                    <input
+                      type="date"
+                      name="end_date"
+                      id="end_date"
+                      value={
+                        formData.endDate instanceof Date
+                          ? formData.endDate.toISOString().split("T")[0]
+                          : ""
+                      }
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          endDate: new Date(e.target.value),
+                        })
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required
+                    />
+                  </div>
+
+
                   {/* Website */}
-                  <div>
+                  <div className="mb-3 col-span-2">
                     <label
                       htmlFor="website"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -394,7 +403,7 @@ export default function ItineraryForm() {
                   </div>
 
                   {/* Description */}
-                  <div>
+                  <div className="col-span-2">
                     <label
                       htmlFor="description"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -414,6 +423,7 @@ export default function ItineraryForm() {
                       placeholder="Add any additional details here"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
+                  </div>
                   </div>
 
                   <button
