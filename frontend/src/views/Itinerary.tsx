@@ -20,7 +20,7 @@ interface VacationFormData {
   user_id: number;
 }
 
-interface ItineraryData {
+export interface ItineraryData {
   id: number;
   name: string;
   price: number;
@@ -40,7 +40,7 @@ export function formatDate(dateString: string) {
   const month = ("0" + (date.getMonth() + 1)).slice(-2); // add leading zero
   const day = ("0" + date.getDate()).slice(-2); // add leading zero
   const year = date.getFullYear();
-  return `${month}-${day}-${year}`;
+  return `${month}/${day}/${year}`;
 }
 
 export default function Itinerary() {
@@ -83,24 +83,24 @@ export default function Itinerary() {
   }, [itinerary]);
 
   return (
-    <>
+    <div className="bg-gray-50 min-h-screen dark:bg-gray-900">
       <NavBar />
       <div
         id="hero"
-        className="w-full bg-center h-50% bg-cover"
+        className="w-full bg-center bg-cover"
         style={{
-          backgroundImage: `url(${image})`,
+          backgroundImage: `url(${image})`, height: "40vh",
         }}
       >
-        <div className="flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50 py-12">
+        <div className="flex items-center justify-center pt-5 w-full h-full bg-gray-900 bg-opacity-50 py-12">
           <div className="text-center">
             <div className="container px-4 mx-auto">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="mt-8 mb-6 text-4xl lg:text-5xl font-bold text-gray-100">
+                <h2 className="mt-8 mb-5 text-4xl lg:text-5xl font-bold text-gray-100">
                   {`Your Trip to ${vacation[0]?.city}, ${vacation[0]?.country}`}
                 </h2>
                 {vacation[0]?.description ? (
-                  <p className="max-w-3xl mx-auto mb-5 text-lg text-gray-300"></p>
+                  <p className="max-w-3xl mx-auto text-xl text-gray-300">{vacation[0]?.description}</p>
                 ) : (
                   ""
                 )}
@@ -122,10 +122,10 @@ export default function Itinerary() {
       </div>
       <div
         id="vacationData"
-        className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 pt-2"
+        className="grid grid-cols-1 md:grid-cols-3 gap-10 px-10 pt-5"
       >
         <div>
-          <p id="hotel" className="bg-gray-200">
+          <p id="hotel" className="bg-blue-300 dark:bg-blue-800 dark:text-gray-200 font-semibold uppercase tracking-widest text-center py-2 rounded-md">
             Hotel
           </p>
           <div id="hotelCards">
@@ -144,13 +144,14 @@ export default function Itinerary() {
                   website={hotel.website}
                   icon={FaHotel}
                   vacationId={hotel.vacationId}
+                  setItinerary={setItinerary}
                 />
               );
             })}
           </div>
         </div>
         <div>
-          <p id="restaurants" className="bg-gray-200">
+          <p id="restaurants" className="bg-blue-300 dark:bg-blue-800 dark:text-gray-200 font-semibold uppercase tracking-widest text-center py-2 rounded-md">
             Restaurants
           </p>
           <div id="restaurantCards">
@@ -169,13 +170,14 @@ export default function Itinerary() {
                   website={restaurant.website}
                   icon={FaUtensils}
                   vacationId={restaurant.vacationId}
+                  setItinerary={setItinerary}
                 />
               );
             })}
           </div>
         </div>
         <div>
-          <p id="activities" className="bg-gray-200">
+          <p id="activities" className="bg-blue-300 dark:bg-blue-800 dark:text-gray-200 font-semibold uppercase tracking-widest text-center py-2 rounded-md">
             Activities
           </p>
           <div id="activityCards">
@@ -194,12 +196,13 @@ export default function Itinerary() {
                   website={activity.website}
                   icon={LuFerrisWheel}
                   vacationId={activity.vacationId}
+                  setItinerary={setItinerary}
                 />
               );
             })}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

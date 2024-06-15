@@ -49,6 +49,7 @@ export async function getItinerary(vacationId: number) {
       mode: "cors",
     }
   );
+
   const response = await itinerary.json();
   return response;
 }

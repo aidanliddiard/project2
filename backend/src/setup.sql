@@ -54,3 +54,5 @@ WHERE NOT EXISTS (SELECT 1 FROM category);
 INSERT INTO time (time)
 SELECT * FROM (VALUES ('Morning'), ('Afternoon'), ('Evening'), ('Late Night')) AS tmp (time)
 WHERE NOT EXISTS (SELECT 1 FROM time);
+
+
