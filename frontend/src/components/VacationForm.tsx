@@ -9,6 +9,7 @@ import { submitVacation } from "../services/vacationform";
 import { useUserContext } from "../context/userContext";
 import { fetchImages } from "../services/images";
 import NavBar from "./NavBar";
+import { useNavigate } from "react-router-dom";
 
 interface VacationFormData {
   city: string;
@@ -25,6 +26,9 @@ export default function VacationForm() {
   const { currentUser } = useUserContext();
   const userId = currentUser.id;
 
+  const navigate = useNavigate();
+  type NavigateFn = ReturnType<typeof useNavigate>;
+
   const [formData, setFormData] = useState<VacationFormData>({
     city: "",
     country: "",
@@ -35,6 +39,9 @@ export default function VacationForm() {
     alt: "",
     userId: userId,
   });
+
+  const [endDateError, setEndDateError] = useState<boolean>(false);
+  const [cityNotFoundError, setCityNotFoundError] = useState<boolean>(false);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -48,10 +55,22 @@ export default function VacationForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (new Date(formData.endDate) < new Date(formData.startDate)) {
+      console.error("End date cannot be before start date");
+      setEndDateError(true);
+      return;
+    }
     try {
       const imageUnsplashURL = await fetchImages(formData.city);
-      const altDescription = imageUnsplashURL.results[0].alt_description;
-      const imageUnsplashUrl = imageUnsplashURL.results[0].urls.full;
+
+      if (imageUnsplashURL.results.length === 0) {
+        setCityNotFoundError(true); // Set state to display error message
+        //Display error message on the form below city input
+        return;
+      }
+
+      const altDescription: string = imageUnsplashURL.results[0].alt_description;
+      const imageUnsplashUrl: string = imageUnsplashURL.results[0].urls.full;
 
       const updatedFormData = {
         ...formData,
@@ -72,6 +91,9 @@ export default function VacationForm() {
         alt: "",
         userId: userId,
       });
+
+      navigate("/vacations");
+
     } catch (error) {
       console.error(
         "Error submitting vacation form:",
@@ -80,16 +102,26 @@ export default function VacationForm() {
     }
   };
 
+  useEffect(() => {
+    if (formData.endDate) {
+      setEndDateError(false); 
+    }
+  }, [formData.endDate]);
+
   return (
     <>
       <NavBar />
-     <section className="bg-gray-50 dark:bg-gray-900 py-0">
-        <div className="flex flex-col items-center justify-center px-6 mx-auto md:h-screen lg:py-0">
+      <section className="bg-gray-50 dark:bg-gray-900 py-0 min-h-screen">
+        <div className="flex flex-col items-center justify-center px-6 mx-auto md:h-screen lg:py-0 sm:pt-20">
           <div className="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Create a vacation
               </h1>
+              <p className="text-sm dark:text-white">
+                <span className="text-red-500 text-small">*</span> indicates a
+                required field
+              </p>
               <form
                 className="space-y-4 md:space-y-6"
                 onSubmit={handleSubmit}
@@ -100,7 +132,10 @@ export default function VacationForm() {
                     htmlFor="city"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    City
+                    City<span className="text-red-500 text-small"> *</span>
+                    {cityNotFoundError && (
+                    <p className="text-sm text-red-500 mt-1">No images found for this city. Please enter a different city.</p>
+                  )}
                   </label>
                   <input
                     type="text"
@@ -109,7 +144,7 @@ export default function VacationForm() {
                     value={formData.city}
                     onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="London"
+                    placeholder="Ex: London"
                     required
                   />
                 </div>
@@ -118,7 +153,7 @@ export default function VacationForm() {
                     htmlFor="country"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Country
+                    Country<span className="text-red-500 text-small"> *</span>
                   </label>
                   <input
                     type="text"
@@ -126,7 +161,7 @@ export default function VacationForm() {
                     id="country"
                     value={formData.country}
                     onChange={handleChange}
-                    placeholder="United Kingdom"
+                    placeholder="Ex: United Kingdom"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
@@ -145,7 +180,7 @@ export default function VacationForm() {
                     onChange={handleChange}
                     rows="1"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Enter description..."
+                    placeholder="Ex: Spring Break Trip to London"
                   ></textarea>
                 </div>
                 <div>
@@ -153,7 +188,7 @@ export default function VacationForm() {
                     htmlFor="startDate"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Start Date
+                    Start Date<span className="text-red-500 text-small"> *</span>
                   </label>
                   <input
                     type="date"
@@ -175,7 +210,10 @@ export default function VacationForm() {
                     htmlFor="end_date"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    End Date
+                    End Date<span className="text-red-500 text-small"> *</span>
+                    {endDateError && (
+                    <p className="text-sm text-red-500 mt-1">Please select a new date. End date must be prior to the start date.</p>
+                  )}
                   </label>
                   <input
                     type="date"
@@ -188,6 +226,7 @@ export default function VacationForm() {
                     }
                     onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
                   />
                 </div>
                 <button
