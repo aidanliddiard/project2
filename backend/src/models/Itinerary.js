@@ -94,7 +94,6 @@ module.exports = class Itinerary {
       `SELECT * FROM itinerary WHERE vacation_id = $1 AND itinerary.id = $2;`,
       [vacationId, itemId]
     );
-    console.log(rows[0]);
     if (!rows[0]) return null;
     return new Itinerary(rows[0]);
   }

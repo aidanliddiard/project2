@@ -40,7 +40,6 @@ const EditModal: React.FC<EditModalProps> = ({ onClose, id, vacationId }) => {
     categoryId: 0,
     vacationId: vacationId,
   });
-  console.log(id, vacationId);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -60,19 +59,14 @@ const EditModal: React.FC<EditModalProps> = ({ onClose, id, vacationId }) => {
   useEffect(() => {
     const getItineraryData = async () => {
       const response = await getItineraryById(id, vacationId);
-      console.log("by id", response);
       setFormData(response);
     };
     getItineraryData();
   }, []);
 
   const handleUpdate = async () => {
-    console.log("updating");
-    console.log("id:", id, vacationId);
     try {
       const response = await updateItinerary(id, vacationId, formData);
-      console.log(response);
-      console.log("updated");
     } catch (error) {
       console.error("Error updating itinerary:", error);
     }

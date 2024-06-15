@@ -60,7 +60,6 @@ export default function Itinerary() {
       const vacationData = resp.filter(
         (vacation: VacationFormData) => vacation.id === Number(id)
       );
-      console.log(vacationData);
       setVacation(vacationData);
       setImage(vacationData[0]?.imageUrl);
     };
@@ -68,7 +67,6 @@ export default function Itinerary() {
     const fetchItineraryData = async () => {
       const response = await getItinerary(Number(id));
       setItinerary(response);
-      console.log("fetch itinerary data", response);
     };
 
     fetchVacationData();
@@ -76,11 +74,9 @@ export default function Itinerary() {
   }, []);
 
   useEffect(() => {
-    console.log("running useEffect. itin:", itinerary);
     const hotels = itinerary.filter((item) => item.type === "Hotel");
     const restaurants = itinerary.filter((item) => item.type === "Restaurant");
     const activities = itinerary.filter((item) => item.type === "Activity");
-    console.log(hotels, restaurants, activities);
     setHotels(hotels);
     setRestaurants(restaurants);
     setActivities(activities);

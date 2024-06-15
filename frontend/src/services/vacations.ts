@@ -7,7 +7,6 @@ export async function fetchVacations() {
   });
 
   const data = await response.json();
-  console.log(data);
   return data;
 }
 

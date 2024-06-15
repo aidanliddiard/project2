@@ -38,8 +38,6 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  console.log("vacaid", vacationId);
-
   const toggleUpdateModal = () => {
     setIsUpdateModalOpen((prevState) => !prevState);
   };

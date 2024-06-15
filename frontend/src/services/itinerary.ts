@@ -49,8 +49,6 @@ export async function getItinerary(vacationId: number) {
       mode: "cors",
     }
   );
-  // console.log(itinerary.json());
-  // console.log(await itinerary.json())
   const response = await itinerary.json();
   return response;
 }
@@ -69,7 +67,6 @@ export async function deleteItinerary(id: number, vacation_id: number) {
   if (!itinerary.ok) {
     throw new Error(`HTTP error! status: ${itinerary.status}`);
   }
-  console.log(itinerary);
   return itinerary.status;
 }
 

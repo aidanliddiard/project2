@@ -14,7 +14,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const getCurrentUser = async () => {
     try {
       const data = await getUser();
-      console.log(data);
       setCurrentUser(data);
     } catch (error) {
       console.log("Error getting user:", error);
