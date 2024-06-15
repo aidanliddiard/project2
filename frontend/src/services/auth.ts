@@ -16,7 +16,6 @@ export async function signUpUser({ name, email, password }: User) {
   if (!user.ok) {
     throw new Error("Error creating user");
   }
-  console.log(user);
   return await user.json();
 }
 
