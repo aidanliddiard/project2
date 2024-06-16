@@ -73,9 +73,9 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
         <p id="time" className="text-gray-700  dark:text-gray-400">
           Time of Day: {time}
         </p>
-        <p id="website" className="text-gray-700  dark:text-gray-400 underline">
+        {website!="" ? <p id="website" className="text-gray-700  dark:text-gray-400 underline">
           <a href={`http://${website}`}>Website</a>
-        </p>
+        </p>: ""}
       </div>
       <div className="col-span-1 flex flex-col items-center w-full justify-center">
         {
