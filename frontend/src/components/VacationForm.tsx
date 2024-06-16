@@ -47,6 +47,11 @@ export default function VacationForm() {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+
+    if (name === 'city' && cityNotFoundError) {
+      setCityNotFoundError(false);
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -212,7 +217,7 @@ export default function VacationForm() {
                   >
                     End Date<span className="text-red-500 text-small"> *</span>
                     {endDateError && (
-                    <p className="text-sm text-red-500 mt-1">Please select a new date. End date must be prior to the start date.</p>
+                    <p className="text-sm text-red-500 mt-1">Please select a new date. End date must be after the start date.</p>
                   )}
                   </label>
                   <input
