@@ -22,6 +22,17 @@ interface VacationFormData {
   userId: number;
 }
 
+interface updatedFormData {
+  city: string;
+  country: string;
+  description: string;
+  startDate: Date | string;
+  endDate: Date | string;
+  imageUrl: string;
+  alt: string;
+  userId: number;
+}
+
 export default function VacationForm() {
   const { currentUser } = useUserContext();
   const userId = currentUser.id;
@@ -69,8 +80,7 @@ export default function VacationForm() {
       const imageUnsplashURL = await fetchImages(formData.city);
 
       if (imageUnsplashURL.results.length === 0) {
-        setCityNotFoundError(true); // Set state to display error message
-        //Display error message on the form below city input
+        setCityNotFoundError(true); 
         return;
       }
 
