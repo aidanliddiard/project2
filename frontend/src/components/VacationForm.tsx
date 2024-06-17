@@ -34,7 +34,7 @@ interface updatedFormData {
 }
 
 export default function VacationForm() {
-  const { currentUser } = useUserContext();
+  const { currentUser, addVacation } = useUserContext();
   const userId = currentUser.id;
 
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ export default function VacationForm() {
   ) => {
     const { name, value } = e.target;
 
-    if (name === 'city' && cityNotFoundError) {
+    if (name === "city" && cityNotFoundError) {
       setCityNotFoundError(false);
     }
 
@@ -80,11 +80,12 @@ export default function VacationForm() {
       const imageUnsplashURL = await fetchImages(formData.city);
 
       if (imageUnsplashURL.results.length === 0) {
-        setCityNotFoundError(true); 
+        setCityNotFoundError(true);
         return;
       }
 
-      const altDescription: string = imageUnsplashURL.results[0].alt_description;
+      const altDescription: string =
+        imageUnsplashURL.results[0].alt_description;
       const imageUnsplashUrl: string = imageUnsplashURL.results[0].urls.full;
 
       const updatedFormData = {
@@ -94,7 +95,7 @@ export default function VacationForm() {
         userId: Number(currentUser.id),
       };
 
-      const response = await submitVacation(updatedFormData);
+      const response = await submitVacation(updatedFormData, addVacation);
 
       setFormData({
         city: "",
@@ -108,7 +109,6 @@ export default function VacationForm() {
       });
 
       navigate("/vacations");
-
     } catch (error) {
       console.error(
         "Error submitting vacation form:",
@@ -119,7 +119,7 @@ export default function VacationForm() {
 
   useEffect(() => {
     if (formData.endDate) {
-      setEndDateError(false); 
+      setEndDateError(false);
     }
   }, [formData.endDate]);
 
@@ -129,7 +129,7 @@ export default function VacationForm() {
       <section className="bg-gray-50 dark:bg-gray-900 min-h-screen">
         <div className="flex flex-col items-center px-6 mx-auto md:h-screen pt-10">
           <div className="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="px-4 pt-4 space-y-4 md:space-y-4 sm:px-8 sm:pt-8 sm:p-4">
+            <div className="px-4 pt-4 space-y-4 md:space-y-4 sm:px-8 sm:pt-8 sm:p-4">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Create a Vacation
               </h1>
@@ -149,8 +149,11 @@ export default function VacationForm() {
                   >
                     City <span className="text-red-500 text-small"> *</span>
                     {cityNotFoundError && (
-                    <p className="text-sm text-red-500 mt-1">No images found for this city. Please enter a different city.</p>
-                  )}
+                      <p className="text-sm text-red-500 mt-1">
+                        No images found for this city. Please enter a different
+                        city.
+                      </p>
+                    )}
                   </label>
                   <input
                     type="text"
@@ -203,7 +206,8 @@ export default function VacationForm() {
                     htmlFor="startDate"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Start Date<span className="text-red-500 text-small"> *</span>
+                    Start Date
+                    <span className="text-red-500 text-small"> *</span>
                   </label>
                   <input
                     type="date"
@@ -227,8 +231,11 @@ export default function VacationForm() {
                   >
                     End Date<span className="text-red-500 text-small"> *</span>
                     {endDateError && (
-                    <p className="text-sm text-red-500 mt-1">Please select a new date. End date must be after the start date.</p>
-                  )}
+                      <p className="text-sm text-red-500 mt-1">
+                        Please select a new date. End date must be after the
+                        start date.
+                      </p>
+                    )}
                   </label>
                   <input
                     type="date"

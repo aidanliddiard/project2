@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useUserContext } from "../context/userContext";
 import { useNavigate, useLocation } from "react-router-dom";
+import { UserContext } from "../context/userContext";
+
+export interface Vacation {
+  id: number;
+  city: string;
+}
 
 export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const { currentUser, getCurrentUser, signOut } = useUserContext();
+  const { vacations } = useContext(UserContext);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
 
   const handleClick = async () => {
     await signOut();
@@ -29,14 +41,19 @@ export default function NavBar() {
     <nav className="bg-white border-gray-200 dark:bg-gray-900 z-10">
       <div className="flex flex-wrap items-center justify-between mx-auto p-4">
         <div className="flex items-center">
-          <img
-            src="../images/icons8-suitcase-100.png"
-            className="h-8 bg-white rounded-full p-1"
-            alt="Logo"
-          />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white m-4">
-            Wanderlust
-          </span>
+          <a
+            href="/"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <img
+              src="../images/icons8-suitcase-100.png"
+              className="h-8 bg-white rounded-full p-1"
+              alt="Logo"
+            />
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white m-4">
+              Wanderlust
+            </span>
+          </a>
         </div>
         <button
           data-collapse-toggle="navbar-default"
@@ -63,7 +80,7 @@ export default function NavBar() {
             />
           </svg>
         </button>
-        
+
         <div
           className={`${
             isMenuOpen ? "block" : "hidden"
@@ -71,11 +88,72 @@ export default function NavBar() {
           id="navbar-default"
         >
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <a onClick={() => navigate("/vacations")} {...getLinkProps("/")}>
-                {currentUser ? "My Vacations" : "Home"}
-              </a>
-            </li>
+            {currentUser && (
+              <li>
+                <button
+                  id="dropdownNavbarLink"
+                  data-dropdown-toggle="dropdownNavbar"
+                  className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                  onClick={toggleDropdown}
+                >
+                  My Vacations{" "}
+                  <svg
+                    className="w-2.5 h-2.5 ms-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 10 6"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 1 4 4 4-4"
+                    />
+                  </svg>
+                </button>
+                {isDropdownOpen && (
+                  <div
+                    id="dropdownNavbar"
+                    className="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute"
+                  >
+                    <ul
+                      className="py-2 text-sm text-gray-700 dark:text-gray-400"
+                      aria-labelledby="dropdownLargeButton"
+                    >
+                      <li>
+                        <a
+                          href="/vacations"
+                          className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >
+                          All Vacations
+                        </a>
+                      </li>
+                      {vacations.map((vacation: Vacation) => {
+                        return (
+                          <li key={vacation.id}>
+                            <a
+                              href={`/vacations/${vacation.id}`}
+                              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >
+                              {vacation.city}
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </li>
+            )}
+            {!currentUser && (
+              <li>
+                <a onClick={() => navigate("/")} {...getLinkProps("/")}>
+                  Home
+                </a>
+              </li>
+            )}
             {currentUser && (
               <li>
                 <a
