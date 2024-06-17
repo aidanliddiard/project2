@@ -147,7 +147,7 @@ export default function VacationForm() {
                     htmlFor="city"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    City<span className="text-red-500 text-small"> *</span>
+                    City <span className="text-red-500 text-small"> *</span>
                     {cityNotFoundError && (
                     <p className="text-sm text-red-500 mt-1">No images found for this city. Please enter a different city.</p>
                   )}
