@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { IconType } from "react-icons";
 import { FaTrashCan } from "react-icons/fa6";
@@ -55,7 +55,10 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
       className="max-w-sm bg-gray-50 dark:bg-gray-900 border dark:border-gray-600 shadow-md rounded-md grid grid-cols-5 w-full mt-3 lg:max-w-full"
     >
       <div className="col-span-4 rounded-md  bg-gray-50 dark:bg-gray-900 p-4 flex flex-col justify-between leading-normal">
-        <div id="name" className="text-blue-800 dark:text-blue-500 font-bold text-xl mb-1">
+        <div
+          id="name"
+          className="text-blue-800 dark:text-blue-500 font-bold text-xl mb-1"
+        >
           {name}
         </div>
         <p id="description" className="text-gray-700 dark:text-gray-400">
@@ -73,9 +76,16 @@ const ItineraryCard: React.FC<ItineraryCardProps> = ({
         <p id="time" className="text-gray-700  dark:text-gray-400">
           Time of Day: {time}
         </p>
-        {website!="" ? <p id="website" className="text-gray-700  dark:text-gray-400 underline">
-          <a href={`http://${website}`}>Website</a>
-        </p>: ""}
+        {website != "" ? (
+          <p
+            id="website"
+            className="text-gray-700  dark:text-gray-400 underline"
+          >
+            <a href={`http://${website}`}>Website</a>
+          </p>
+        ) : (
+          ""
+        )}
       </div>
       <div className="col-span-1 flex flex-col items-center w-full justify-center">
         {
