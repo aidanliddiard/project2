@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
+
 interface VacationFormData {
   city: string;
   country: string;
@@ -7,7 +10,15 @@ interface VacationFormData {
   userId: number;
 }
 
-export async function submitVacation(formData: VacationFormData) {
+export interface Vacation {
+  id: number;
+  city: string;
+}
+
+export async function submitVacation(
+  formData: VacationFormData,
+  addVacation: (vacation: Vacation) => void
+) {
   try {
     const response = await fetch("http://localhost:3000/api/vacations", {
       method: "POST",
@@ -24,9 +35,8 @@ export async function submitVacation(formData: VacationFormData) {
     }
 
     const data = await response.json();
-    return data;
+    addVacation(data);
   } catch (error) {
-    console.error("Error submitting vacation form:", (error as Error).message);
-    throw error;
+    console.error("Error submitting vacation form:", error);
   }
 }
