@@ -80,7 +80,7 @@ const EditModal: React.FC<EditModalProps> = ({ onClose, id, vacationId }) => {
         tabIndex={-1}
         className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-90 md:inset-0 h-[calc(100%-1rem)] max-h-full"
       >
-        <div className="relative bg-white dark:border mt-12 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-full max-w-md max-h-full">
+        <div className="relative bg-white dark:border mt-12 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-full max-w-md max-h-full overflow-auto">
           <div className="relative">
             <div className="flex flex-col items-center justify-center px-3 py-4 mx-auto lg:py-0">
               <div className="w-full rounded-lg md:mt-0 sm:max-w-md xl:p-0 ">
