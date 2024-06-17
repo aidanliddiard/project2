@@ -48,7 +48,7 @@ export async function getUser() {
     const userData = await response.json();
     return userData;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return null;
   }
 }

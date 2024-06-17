@@ -47,6 +47,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const signOut = async () => {
     await signOutUser();
     setCurrentUser(defaultUser);
+    setVacations([]);
   };
 
   useEffect(() => {
@@ -62,9 +63,11 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
     };
 
-    getVacations();
+    if (currentUser) {
+      getVacations();
+    }
     getCurrentUser();
-  }, []);
+  }, [currentUser]);
 
   const addVacation = (newVacation: Vacation) => {
     setVacations((prevVacations) => [...prevVacations, newVacation]);

@@ -27,7 +27,7 @@ module.exports = class User {
       );
       return new User(rows[0]);
     } catch (error) {
-      if (error.code === "23505") {
+      if (error.code === "409") {
         throw new Error("A user with this email already exists");
       }
       throw error;
