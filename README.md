@@ -9,7 +9,7 @@ Wanderlust is a comprehensive vacation planning application designed to simplify
 
 - **Frontend**: The frontend of the application is built with React and TypeScript, and styled with Tailwind CSS. It also uses the Unsplash API for image generation.
 
-- **Backend**: The server-side logic is written in Node.js and TypeScript.
+- **Backend**: The server-side logic is written in Node.js and JavaScript.
 
 - **Testing**: Unit tests for the backend are written using Jest and Supertest, and can be found in the [`__tests__`](backend/__tests__) directory.
 
