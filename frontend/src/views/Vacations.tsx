@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchVacations } from "../services/vacations";
 import NavBar from "../components/NavBar";
 import { useUserContext } from "../context/userContext";
