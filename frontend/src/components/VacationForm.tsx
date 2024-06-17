@@ -22,6 +22,17 @@ interface VacationFormData {
   userId: number;
 }
 
+interface updatedFormData {
+  city: string;
+  country: string;
+  description: string;
+  startDate: Date | string;
+  endDate: Date | string;
+  imageUrl: string;
+  alt: string;
+  userId: number;
+}
+
 export default function VacationForm() {
   const { currentUser } = useUserContext();
   const userId = currentUser.id;
@@ -47,6 +58,11 @@ export default function VacationForm() {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+
+    if (name === 'city' && cityNotFoundError) {
+      setCityNotFoundError(false);
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -64,8 +80,7 @@ export default function VacationForm() {
       const imageUnsplashURL = await fetchImages(formData.city);
 
       if (imageUnsplashURL.results.length === 0) {
-        setCityNotFoundError(true); // Set state to display error message
-        //Display error message on the form below city input
+        setCityNotFoundError(true); 
         return;
       }
 
@@ -212,7 +227,7 @@ export default function VacationForm() {
                   >
                     End Date<span className="text-red-500 text-small"> *</span>
                     {endDateError && (
-                    <p className="text-sm text-red-500 mt-1">Please select a new date. End date must be prior to the start date.</p>
+                    <p className="text-sm text-red-500 mt-1">Please select a new date. End date must be after the start date.</p>
                   )}
                   </label>
                   <input
