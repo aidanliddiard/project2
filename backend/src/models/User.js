@@ -18,13 +18,20 @@ module.exports = class User {
   }
 
   static async insert({ email, name, passwordHash }) {
-    const { rows } = await pool.query(
-      `INSERT INTO users (email, name, password_hash)
-            VALUES ($1, $2, $3)
-            RETURNING *`,
-      [email, name, passwordHash]
-    );
-    return new User(rows[0]);
+    try {
+      const { rows } = await pool.query(
+        `INSERT INTO users (email, name, password_hash)
+              VALUES ($1, $2, $3)
+              RETURNING *`,
+        [email, name, passwordHash]
+      );
+      return new User(rows[0]);
+    } catch (error) {
+      if (error.code === "23505") {
+        throw new Error("A user with this email already exists");
+      }
+      throw error;
+    }
   }
 
   static async getByEmail(email) {

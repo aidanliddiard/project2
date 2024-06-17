@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/auth";
 import { useUserContext } from "../context/userContext";
 import NavBar from "../components/NavBar";
+import ToastError from "../components/ToastError";
 
 export default function LogIn() {
   const navigate = useNavigate();
   const { getCurrentUser } = useUserContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [toastOpen, setToastOpen] = useState<boolean>(false);
 
   const handleSubmit = async (
     e: React.SyntheticEvent,
@@ -22,13 +24,17 @@ export default function LogIn() {
       await getCurrentUser();
       navigate("/vacations");
     } catch (error) {
-      console.log(error);
+      setErrorMessage(error);
+      setToastOpen(true);
     }
   };
   return (
     <>
       <NavBar />
       <section className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+        <div className={`${toastOpen ? "" : "hidden"}`}>
+          <ToastError errorMessage={errorMessage} setToastOpen={setToastOpen} />
+        </div>
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

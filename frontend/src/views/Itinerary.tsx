@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import NavBar from "../components/NavBar";
-import { fetchImages } from "../services/images";
 import ItineraryCard from "../components/ItineraryCard";
 import { LuFerrisWheel } from "react-icons/lu";
 import { FaUtensils, FaHotel } from "react-icons/fa";
@@ -52,7 +51,7 @@ export default function Itinerary() {
   const [restaurants, setRestaurants] = useState<ItineraryData[]>([]);
   const [activities, setActivities] = useState<ItineraryData[]>([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVacationData = async () => {
@@ -83,126 +82,140 @@ export default function Itinerary() {
   }, [itinerary]);
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-10 dark:bg-gray-900">
+    <>
       <NavBar />
-      <div
-        id="hero"
-        className="w-full bg-center bg-cover"
-        style={{
-          backgroundImage: `url(${image})`, height: "40vh",
-        }}
-      >
-        <div className="flex items-center justify-center pt-5 w-full h-full bg-gray-900 bg-opacity-50 py-12">
-          <div className="text-center">
-            <div className="container px-4 mx-auto">
-              <div className="max-w-4xl mx-auto text-center">
-                <h2 className="mt-8 mb-5 text-4xl lg:text-5xl font-bold text-gray-100">
-                  {`Your Trip to ${vacation[0]?.city}, ${vacation[0]?.country}`}
-                </h2>
-                {vacation[0]?.description ? (
-                  <p className="max-w-3xl mx-auto text-xl text-gray-300">{vacation[0]?.description}</p>
-                ) : (
-                  ""
-                )}
-                <p className="max-w-3xl mx-auto mb-10 text-md text-gray-300">
-                  {formatDate(vacation[0]?.startDate)} -{" "}
-                  {formatDate(vacation[0]?.endDate)}
-                </p>
+      <div className="bg-gray-50 min-h-screen pb-10 dark:bg-gray-900">
+        <div
+          id="hero"
+          className="w-full bg-center bg-cover"
+          style={{
+            backgroundImage: `url(${image})`,
+            height: "40vh",
+          }}
+        >
+          <div className="flex items-center justify-center pt-5 w-full h-full bg-gray-900 bg-opacity-50 py-12">
+            <div className="text-center">
+              <div className="container px-4 mx-auto">
+                <div className="max-w-4xl mx-auto text-center">
+                  <h2 className="mt-8 mb-5 text-4xl lg:text-5xl font-bold text-gray-100">
+                    {`Your Trip to ${vacation[0]?.city}, ${vacation[0]?.country}`}
+                  </h2>
+                  {vacation[0]?.description ? (
+                    <p className="max-w-3xl mx-auto text-xl text-gray-300">
+                      {vacation[0]?.description}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                  <p className="max-w-3xl mx-auto mb-10 text-md text-gray-300">
+                    {formatDate(vacation[0]?.startDate)} -{" "}
+                    {formatDate(vacation[0]?.endDate)}
+                  </p>
 
-                <button onClick={() => navigate("/create-itinerary")}
-                  className="inline-block w-full md:w-auto mb-4 md:mr-6 py-3 px-5 text-sm font-bold uppercase border-2 border-transparent bg-gray-200 rounded hover:bg-gray-100 text-gray-800 transition duration-200"
-                  
-                >
-                  Create a New Itinerary Item
-                </button>
+                  <button
+                    onClick={() => navigate("/create-itinerary")}
+                    className="inline-block w-full md:w-auto mb-4 md:mr-6 py-3 px-5 text-sm font-bold uppercase border-2 border-transparent bg-gray-200 rounded hover:bg-gray-100 text-gray-800 transition duration-200"
+                  >
+                    Create a New Itinerary Item
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div
+          id="vacationData"
+          className="grid grid-cols-1 md:grid-cols-3 gap-10 px-10 pt-5"
+        >
+          <div>
+            <p
+              id="hotel"
+              className="bg-blue-300 dark:bg-blue-800 dark:text-gray-200 font-semibold uppercase tracking-widest text-center py-2 rounded-md"
+            >
+              Hotel
+            </p>
+            <div id="hotelCards">
+              {hotels.map((hotel) => {
+                return (
+                  <ItineraryCard
+                    key={hotel.id}
+                    id={hotel.id}
+                    name={hotel.name}
+                    price={hotel.price}
+                    address={hotel.address}
+                    description={hotel.description}
+                    startDate={hotel.startDate}
+                    endDate={hotel.endDate}
+                    time={hotel.time}
+                    website={hotel.website}
+                    icon={FaHotel}
+                    vacationId={hotel.vacationId}
+                    setItinerary={setItinerary}
+                  />
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <p
+              id="restaurants"
+              className="bg-blue-300 dark:bg-blue-800 dark:text-gray-200 font-semibold uppercase tracking-widest text-center py-2 rounded-md"
+            >
+              Restaurants
+            </p>
+            <div id="restaurantCards">
+              {restaurants.map((restaurant) => {
+                return (
+                  <ItineraryCard
+                    key={restaurant.id}
+                    id={restaurant.id}
+                    name={restaurant.name}
+                    price={restaurant.price}
+                    address={restaurant.address}
+                    description={restaurant.description}
+                    startDate={restaurant.startDate}
+                    endDate={restaurant.endDate}
+                    time={restaurant.time}
+                    website={restaurant.website}
+                    icon={FaUtensils}
+                    vacationId={restaurant.vacationId}
+                    setItinerary={setItinerary}
+                  />
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <p
+              id="activities"
+              className="bg-blue-300 dark:bg-blue-800 dark:text-gray-200 font-semibold uppercase tracking-widest text-center py-2 rounded-md"
+            >
+              Activities
+            </p>
+            <div id="activityCards">
+              {activities.map((activity) => {
+                return (
+                  <ItineraryCard
+                    key={activity.id}
+                    id={activity.id}
+                    name={activity.name}
+                    price={activity.price}
+                    address={activity.address}
+                    description={activity.description}
+                    startDate={activity.startDate}
+                    endDate={activity.endDate}
+                    time={activity.time}
+                    website={activity.website}
+                    icon={LuFerrisWheel}
+                    vacationId={activity.vacationId}
+                    setItinerary={setItinerary}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
-      <div
-        id="vacationData"
-        className="grid grid-cols-1 md:grid-cols-3 gap-10 px-10 pt-5"
-      >
-        <div>
-          <p id="hotel" className="bg-blue-300 dark:bg-blue-800 dark:text-gray-200 font-semibold uppercase tracking-widest text-center py-2 rounded-md">
-            Hotel
-          </p>
-          <div id="hotelCards">
-            {hotels.map((hotel) => {
-              return (
-                <ItineraryCard
-                  key={hotel.id}
-                  id={hotel.id}
-                  name={hotel.name}
-                  price={hotel.price}
-                  address={hotel.address}
-                  description={hotel.description}
-                  startDate={hotel.startDate}
-                  endDate={hotel.endDate}
-                  time={hotel.time}
-                  website={hotel.website}
-                  icon={FaHotel}
-                  vacationId={hotel.vacationId}
-                  setItinerary={setItinerary}
-                />
-              );
-            })}
-          </div>
-        </div>
-        <div>
-          <p id="restaurants" className="bg-blue-300 dark:bg-blue-800 dark:text-gray-200 font-semibold uppercase tracking-widest text-center py-2 rounded-md">
-            Restaurants
-          </p>
-          <div id="restaurantCards">
-            {restaurants.map((restaurant) => {
-              return (
-                <ItineraryCard
-                  key={restaurant.id}
-                  id={restaurant.id}
-                  name={restaurant.name}
-                  price={restaurant.price}
-                  address={restaurant.address}
-                  description={restaurant.description}
-                  startDate={restaurant.startDate}
-                  endDate={restaurant.endDate}
-                  time={restaurant.time}
-                  website={restaurant.website}
-                  icon={FaUtensils}
-                  vacationId={restaurant.vacationId}
-                  setItinerary={setItinerary}
-                />
-              );
-            })}
-          </div>
-        </div>
-        <div>
-          <p id="activities" className="bg-blue-300 dark:bg-blue-800 dark:text-gray-200 font-semibold uppercase tracking-widest text-center py-2 rounded-md">
-            Activities
-          </p>
-          <div id="activityCards">
-            {activities.map((activity) => {
-              return (
-                <ItineraryCard
-                  key={activity.id}
-                  id={activity.id}
-                  name={activity.name}
-                  price={activity.price}
-                  address={activity.address}
-                  description={activity.description}
-                  startDate={activity.startDate}
-                  endDate={activity.endDate}
-                  time={activity.time}
-                  website={activity.website}
-                  icon={LuFerrisWheel}
-                  vacationId={activity.vacationId}
-                  setItinerary={setItinerary}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
