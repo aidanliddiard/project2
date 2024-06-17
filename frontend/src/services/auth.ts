@@ -13,8 +13,10 @@ export async function signUpUser({ name, email, password }: User) {
     mode: "cors",
     body: JSON.stringify({ name, email, password }),
   });
+
   if (!user.ok) {
-    throw new Error("Error creating user");
+    const errorData = await user.json();
+    throw new Error(errorData.error);
   }
   return await user.json();
 }
