@@ -38,6 +38,7 @@ export default function Vacations() {
   const userName: string = currentUser.name;
   const [vacation, setVacation] = useState<VacationObject[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchVacationData = async () => {
@@ -56,11 +57,10 @@ export default function Vacations() {
   return (
     <>
       <NavBar />
-      <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+      <section className="bg-gray-50 dark:bg-gray-900 min-h-screen justify-center">
         <div className="flex flex-col items-center justify-center px-6 py-8">
-        <h1 className="text-3xl font-bold mb-4 dark:text-white">{userName}'s Vacations</h1>
+          <h1 className="text-3xl font-bold mb-4 dark:text-white">{userName}'s Vacations</h1>
           {loading ? (
-            <div>
               <div role="status" className="mx-auto">
                 <svg
                   aria-hidden="true"
@@ -80,7 +80,6 @@ export default function Vacations() {
                 </svg>
                 <span className="sr-only">Loading...</span>
               </div>
-            </div>
             // <div className="h-screen flex justify-center">
             //   <div className="spinner-wrapper">
             //     <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -95,17 +94,18 @@ export default function Vacations() {
               <div className="flex items-center pt-6">
                 <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                   <a href="#" className="block text-center pb-2">
-                    <img className="w-24 h-24 mx-auto mb-3"
-                      src="images/image-not-found.png" alt="Image Not Found" />
+                  <div className="block text-center pb-2">
+                    <img
+                      className="w-24 h-24 mx-auto mb-3 dark:filter-invert dark:grayscale"
+                      src="https://img.icons8.com/?size=100&id=g8pigrD7Rmyv&format=png&color=000000"
+                      alt="Icon"
+                    />
                     <h6 className="text-2xl font-bold tracking-tight text-center text-gray-900 dark:text-white pb-">It appears there are no vacations scheduled at the moment.</h6>
                     <p className="text-center font-normal text-gray-700 dark:text-gray-400 pb-6 pt-2">Start planning your next trip by creating one!</p>
-                    {/* <button type="button" className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-auto block dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Create Vacation</button> */}
-                    {/* <button href="/localhost:5173/create-vacation" type="button" className="bg-blue-500 hover:bg-blue-600 text-white border border-blue-500 focus:ring-2 focus:ring-blue-300 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 mx-auto block">
-                      Create Vacation
-                    </button> */}
                     <a href="http://localhost:5173/create-vacation" className="bg-blue-500 hover:bg-blue-600 text-white border border-blue-500 focus:ring-2 focus:ring-blue-300 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 mx-auto block">
                       Create Vacation
                     </a>
+                  </div>
                   </a>
                 </div>
               </div>
