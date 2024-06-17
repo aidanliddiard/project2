@@ -38,13 +38,12 @@ interface Time {
   time: string;
 }
 
-
 export default function ItineraryForm() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [times, setTimes] = useState<Time[]>([]);
   const [vacations, setVacations] = useState<Vacation[]>([]);
   const [toastOpen, setToastOpen] = useState<boolean>(false);
-  const [toastVacation, setToastVacation] = useState<Vacation>()
+  const [toastVacation, setToastVacation] = useState<Vacation>();
   const [endDateError, setEndDateError] = useState<boolean>(false);
   const [formData, setFormData] = useState<ItineraryObject>({
     id: 0,
@@ -73,10 +72,10 @@ export default function ItineraryForm() {
 
     const fetchVacationData = async () => {
       const vacationResult = await fetchVacations();
-        vacationResult.sort((a: Vacation, b: Vacation) =>
-          a.city.localeCompare(b.city)
-        );
-        setVacations(vacationResult);
+      vacationResult.sort((a: Vacation, b: Vacation) =>
+        a.city.localeCompare(b.city)
+      );
+      setVacations(vacationResult);
     };
 
     fetchVacationData();
@@ -93,12 +92,14 @@ export default function ItineraryForm() {
     }
     try {
       createItinerary(formData);
-      let vacation = vacations.find(vacation => vacation.id === formData.vacationId);
+      let vacation = vacations.find(
+        (vacation) => vacation.id === formData.vacationId
+      );
       if (formData.vacationId && vacation) {
         setToastVacation({
           id: Number(formData.vacationId),
-          city: vacation.city
-        })
+          city: vacation.city,
+        });
         setToastOpen(true);
       } else {
         console.error("No vacation selected");
@@ -119,7 +120,7 @@ export default function ItineraryForm() {
         website: "",
         vacationId: "",
       });
-      window.scrollTo(0,0)
+      window.scrollTo(0, 0);
     }
   }
 
@@ -127,27 +128,24 @@ export default function ItineraryForm() {
     <>
       <NavBar />
       {/* {vacations.length > 0 ? ( */}
-        <section className="bg-gray-50 dark:bg-gray-900 min-h-screen pt-10 pb-8">
-          <div className={`${toastOpen ? "": "hidden"}`}>
-          <ToastNotification vacation={toastVacation}/>
-            </div>
-          <div className="flex flex-col items-center justify-center pt-6 py-8 mx-auto lg:py-0">
-            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-              <div className="px-4 pt-4 space-y-4 md:space-y-4 sm:px-8 sm:pt-8 sm:p-4">
-                <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                  Create an Itinerary Item
-                </h1>
-                <p className="text-sm dark:text-white mt-0">
-                  <span className="text-red-500 text-small">*</span> indicates a
-                  required field
-                </p>
-                <form
-                  className="space-y-4 md:space-y-6"
-                  onSubmit={handleSubmit}
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2">
-                    {/* Vacation */}
-                    <div className="col-span-2 mb-3">
+      <section className="bg-gray-50 dark:bg-gray-900 min-h-screen pt-10 pb-8">
+        <div className={`${toastOpen ? "" : "hidden"}`}>
+          <ToastNotification vacation={toastVacation} />
+        </div>
+        <div className="flex flex-col items-center justify-center pt-6 py-8 mx-auto lg:py-0">
+          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div className="px-4 pt-4 space-y-4 md:space-y-4 sm:px-8 sm:pt-8 sm:p-4">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                Create an Itinerary Item
+              </h1>
+              <p className="text-sm dark:text-white mt-0">
+                <span className="text-red-500 text-small">*</span> indicates a
+                required field
+              </p>
+              <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 md:grid-cols-2">
+                  {/* Vacation */}
+                  <div className="col-span-2 mb-3">
                     <label
                       htmlFor="vacation"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -287,8 +285,6 @@ export default function ItineraryForm() {
                     </select>
                   </div>
 
-
-
                   {/* Time */}
                   <div className="ml-2 mb-3">
                     <label
@@ -309,7 +305,7 @@ export default function ItineraryForm() {
                         })
                       }
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required
+                      required
                     >
                       <option disabled value="">
                         Select a Time
@@ -323,10 +319,6 @@ export default function ItineraryForm() {
                       })}
                     </select>
                   </div>
-
-                  
-
-                  
 
                   {/* Start Date */}
                   <div className="mb-3 mr-2">
@@ -365,7 +357,6 @@ export default function ItineraryForm() {
                     >
                       End Date
                       <span className="text-red-500 text-small"> *</span>
-                      
                     </label>
                     <input
                       type="date"
@@ -376,24 +367,23 @@ export default function ItineraryForm() {
                           ? formData.endDate.toISOString().split("T")[0]
                           : ""
                       }
-                      onChange={(e) =>{
+                      onChange={(e) => {
                         setFormData({
                           ...formData,
                           endDate: new Date(e.target.value),
-                          
-                        }
-                      )
-                      setEndDateError(false);
-                      }
-
-                      }
+                        });
+                        setEndDateError(false);
+                      }}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required
                     />
                   </div>
 
                   {endDateError && (
-                    <p className="text-sm col-span-2 mb-3 text-red-500 mt-1">Please select a new date. End date must be after the start date.</p>
+                    <p className="text-sm col-span-2 mb-3 text-red-500 mt-1">
+                      Please select a new date. End date must be after the start
+                      date.
+                    </p>
                   )}
 
                   {/* Website */}
@@ -439,20 +429,20 @@ export default function ItineraryForm() {
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                   </div>
-                  </div>
+                </div>
 
-                  <button
-                    type="submit"
-                    className="w-full text-black dark:text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  >
-                    Create an Itinerary Item
-                  </button>
-                </form>
-              </div>
+                <button
+                  type="submit"
+                  className="w-full text-black dark:text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                >
+                  Create an Itinerary Item
+                </button>
+              </form>
             </div>
           </div>
-        </section>
-      
+        </div>
+      </section>
+
       {/* : (
         <div>
           <h1>You have no vacations!</h1>
