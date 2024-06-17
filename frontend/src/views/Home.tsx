@@ -2,14 +2,24 @@ import NavBar from "../components/NavBar";
 
 export default function Home() {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <NavBar />
       <h1 className="text-4xl text-center p-4 md:hidden "><b>Welcome to Wanderlust</b></h1>
       <div className="hidden md:block"></div>
-      <div className="px-4 md:px-0"> 
-  <img className="h-auto max-w-full md:max-w-full" src="images/homepage-image-final.jpg" alt="image description" />
-</div>
-      <div>
+      <div className="px-4 md:px-0">
+        <img className="h-auto max-w-full md:max-w-full" src="images/Welcome-to-Wanderlust-2.png" alt="image description" />
+        <div className="absolute bottom-10 md:bottom-20 left-0 right-0 flex items-center justify-center">
+          <a
+            href="http://localhost:5173/signup"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          >
+            Sign Up for Wanderlust
+          </a>
+        </div>
+      </div>
+      {/* <div>
         <p className="mt-0 mb-2 text-gray-500 dark:text-gray-400 md:hidden px-6 py-3 text-justify">
           Wanderlust is your ultimate companion for creating seamless travel itineraries. Whether you're exploring a new city or embarking on a grand adventure, our app simplifies the planning process so you can focus on making memories.
         </p>
@@ -19,7 +29,7 @@ export default function Home() {
         <p className="mt-0 mb-2 text-gray-500 dark:text-gray-400 md:hidden px-6 py-3 text-justify">
           Join the thousands of other travelers who trust Wanderlust to plan their adventures worldwide.
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }
