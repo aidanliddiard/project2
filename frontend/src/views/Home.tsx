@@ -6,8 +6,8 @@ export default function Home() {
       <NavBar />
       <h1 className="text-4xl text-center p-4 md:hidden "><b>Welcome to Wanderlust</b></h1>
       <div className="hidden md:block"></div>
-      <div className="px-4 md:px-0"> {/* Adjust padding as needed */}
-  <img className="h-auto max-w-full md:max-w-full" src="images/image-final.jpg" alt="image description" />
+      <div className="px-4 md:px-0"> 
+  <img className="h-auto max-w-full md:max-w-full" src="images/homepage-image-final.jpg" alt="image description" />
 </div>
       <div>
         <p className="mt-0 mb-2 text-gray-500 dark:text-gray-400 md:hidden px-6 py-3 text-justify">
