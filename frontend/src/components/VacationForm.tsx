@@ -1,8 +1,6 @@
 import React, {
   useState,
-  useContext,
   ChangeEvent,
-  FormEvent,
   useEffect,
 } from "react";
 import { submitVacation } from "../services/vacationform";

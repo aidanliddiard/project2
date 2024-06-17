@@ -63,11 +63,9 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
     };
 
-    if (currentUser) {
-      getVacations();
-    }
+    getVacations();
     getCurrentUser();
-  }, [currentUser]);
+  }, []);
 
   const addVacation = (newVacation: Vacation) => {
     setVacations((prevVacations) => [...prevVacations, newVacation]);
